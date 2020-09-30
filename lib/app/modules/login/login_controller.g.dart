@@ -57,11 +57,33 @@ mixin _$LoginController on _LoginControllerBase, Store {
   }
 
   @override
-  dynamic _navegaHomePage(dynamic context) {
+  dynamic _navegaHomePage(BuildContext context) {
     final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
         name: '_LoginControllerBase._navegaHomePage');
     try {
       return super._navegaHomePage(context);
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic navegateResetarSenha(BuildContext context) {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.navegateResetarSenha');
+    try {
+      return super.navegateResetarSenha(context);
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic navegaRegisterUserPage(BuildContext context) {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.navegaRegisterUserPage');
+    try {
+      return super.navegaRegisterUserPage(context);
     } finally {
       _$_LoginControllerBaseActionController.endAction(_$actionInfo);
     }

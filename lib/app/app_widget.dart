@@ -8,8 +8,9 @@ class AppWidget extends StatelessWidget {
       navigatorKey: Modular.navigatorKey,
       title: 'App TCC',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          fontFamily: 'Inter',
+          primarySwatch: Colors.blue,
+          primaryColor: Color(0xFF007AFE)),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,
     );

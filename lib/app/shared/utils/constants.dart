@@ -1,1 +1,1 @@
-const URL_LOGIN = '';
+class Constants {}

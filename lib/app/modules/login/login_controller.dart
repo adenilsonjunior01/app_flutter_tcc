@@ -49,7 +49,17 @@ abstract class _LoginControllerBase with Store {
 
   // Após login o usuário é direcionado para página Home
   @action
-  _navegaHomePage(context) {
+  _navegaHomePage(BuildContext context) {
     Navigator.pushNamed(context, '/home');
+  }
+
+  @action
+  navegateResetarSenha(BuildContext context) {
+    Modular.link.pushNamed('/resetar-senha');
+  }
+
+  @action
+  navegaRegisterUserPage(BuildContext context) {
+    Modular.link.pushNamed('/cadastro-user');
   }
 }
