@@ -1,5 +1,8 @@
-import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
+import 'package:app_tcc/app/modules/registros/widgets/custom/title_lista_widget.dart';
+import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/build_item_list_cronica_widget.dart';
+import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/button_submit_cronica_widget.dart';
+import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/form_input_cronica_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -18,81 +21,76 @@ class _DoencaCronicaPageState
 
   @override
   Widget build(BuildContext context) {
+    var _altura = MediaQuery.of(context).size.height;
+    var _largura = MediaQuery.of(context).size.width;
+
     return Scaffold(
-        body: Form(
-      child: ListView(
-        padding: EdgeInsets.all(10),
-        children: [
-          _body(context),
-          Padding(
-            child: TextFormField(
-                autocorrect: true,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(17),
-                    labelText: 'Qual doença crônica?',
-                    labelStyle:
-                        TextStyle(color: Color(0xFF3B4349), fontSize: 16),
-                    // border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFFA49FBB))))),
-            padding: EdgeInsets.fromLTRB(0, 25, 0, 10),
+        backgroundColor: Colors.white,
+        body: Container(
+          height: _altura,
+          width: _largura,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/form/bg_cadastro.png'),
+                  fit: BoxFit.fill)),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              children: [
+                _body(context),
+                FormInputCronicaWidget(
+                  controller: controller,
+                  descHint: 'Descrição do medicamento',
+                ),
+                TitleListaWidget('Lista'),
+                Expanded(
+                  child: BuildItemListCronicaWidget(controller: controller),
+                ),
+                ButtonSubmitCronicaWidget(
+                  controller: controller,
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          RaisedButton(
-            textColor: Colors.white,
-            padding: EdgeInsets.all(18),
-            child: Text("Salvar", style: TextStyle(fontSize: 18)),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            onPressed: () {},
-            color: Color(0xFF2D59D8),
-          )
-        ],
-      ),
-    ));
+        ));
   }
 
   _body(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/form/bg-header-form.png'),
-                fit: BoxFit.fill)),
-        child: SafeArea(
-          child: Column(
+    return SafeArea(
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  OutlineButton(
-                    onPressed: () {
-                      controller.backPage(context);
-                    },
-                    child: Icon(Icons.arrow_back),
-                    borderSide: BorderSide(color: Color(0xFFEBEAEC)),
-                    shape: CircleBorder(),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Text(
-                      "Cadastro de Doença Crônica",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color(0xFF3F414E),
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+              OutlineButton(
+                onPressed: () {
+                  controller.backPage(context);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                ),
+                borderSide: BorderSide(color: Color(0xFFEBEAEC)),
+                shape: CircleBorder(),
               )
             ],
           ),
-        ));
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                  "Cadastro de Doença Crônica",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color(0xFF3F414E),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app_tcc/app/modules/login/class/usuario.dart';
+import 'package:app_tcc/app/modules/login/models/usuario.dart';
 import 'package:dio/dio.dart';
 
 class LoginApi {

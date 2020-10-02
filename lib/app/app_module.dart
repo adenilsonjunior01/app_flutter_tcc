@@ -1,15 +1,8 @@
-import 'package:app_tcc/app/modules/home/home_module.dart';
 import 'package:app_tcc/app/modules/login/login_module.dart';
-import 'package:app_tcc/app/modules/login/pages/cadastro_user/cadastro_user_page.dart';
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_page.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_page.dart';
-import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_controller.dart';
-import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_page.dart';
-import 'package:app_tcc/app/modules/registros/registros_controller.dart';
-import 'package:app_tcc/app/modules/registros/registros_module.dart';
-import 'package:app_tcc/app/pages/splash/splash_page.dart';
 import 'package:app_tcc/app/pages/steps-info/step_first/step_first_page.dart';
 import 'package:app_tcc/app/pages/steps-info/step_first/step_first_controller.dart';
 import 'package:app_tcc/app/pages/steps-info/step_second/step_second_controller.dart';
@@ -28,16 +21,13 @@ class AppModule extends MainModule {
         $AppController,
         $StepFirstController,
         $StepSecondController,
-        $RegistrosController,
-        $MedicamentoController,
-        $DoencaCronicaController,
-        $AlergiaController,
+        $AlergiaController
       ];
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter('/', child: (_, args) => SplashPage()),
-        // ModularRouter('/', child: (_, args) => MedicamentoPage()),
+        // ModularRouter('/', child: (_, args) => SplashPage()),
+        ModularRouter('/', child: (_, args) => AlergiaPage()),
         ModularRouter('/first',
             child: (_, args) => StepFirstPage(),
             transition: TransitionType.leftToRight),
@@ -45,12 +35,6 @@ class AppModule extends MainModule {
             child: (_, args) => StepSecondPage(),
             transition: TransitionType.fadeIn),
         ModularRouter('/login', module: LoginModule()),
-        ModularRouter('/registros', module: RegistrosModule()),
-        ModularRouter('/registros/doenca-cronica',
-            child: (_, args) => DoencaCronicaPage()),
-        ModularRouter('/registros/alergia', child: (_, args) => AlergiaPage()),
-        ModularRouter('/registros/medicamento',
-            child: (_, args) => MedicamentoPage())
       ];
 
   @override

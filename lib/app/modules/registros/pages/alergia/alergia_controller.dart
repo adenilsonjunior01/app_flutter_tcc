@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/registros/models/item_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,12 +9,30 @@ part 'alergia_controller.g.dart';
 class AlergiaController = _AlergiaControllerBase with _$AlergiaController;
 
 abstract class _AlergiaControllerBase with Store {
-  @observable
-  int value = 0;
+  final formKey = GlobalKey<FormState>();
+  final desc = TextEditingController();
+  final tipo = TextEditingController();
+
   String tipoAlergia = 'Tipo 1';
+
+  @observable
+  var listItems = ObservableList<ItemModel>();
+
   @action
-  void increment() {
-    value++;
+  addItem({item}) {
+    final item = ItemModel(title: desc.text, tipo: int.parse(tipo.text));
+    listItems.add(item);
+    desc.text = "";
+  }
+
+  @action
+  removeItem(ItemModel model) {
+    listItems.removeWhere((item) => item.title == model.title);
+  }
+
+  @action
+  addLastItem(ItemModel item) {
+    listItems.add(item);
   }
 
   @action

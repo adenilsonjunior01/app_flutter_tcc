@@ -19,18 +19,18 @@ final $DoencaCronicaController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
-  final _$valueAtom = Atom(name: '_DoencaCronicaControllerBase.value');
+  final _$listItemsAtom = Atom(name: '_DoencaCronicaControllerBase.listItems');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  ObservableList<ItemModel> get listItems {
+    _$listItemsAtom.reportRead();
+    return super.listItems;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set listItems(ObservableList<ItemModel> value) {
+    _$listItemsAtom.reportWrite(value, super.listItems, () {
+      super.listItems = value;
     });
   }
 
@@ -38,11 +38,33 @@ mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
       ActionController(name: '_DoencaCronicaControllerBase');
 
   @override
-  void increment() {
+  dynamic addItem({dynamic item}) {
     final _$actionInfo = _$_DoencaCronicaControllerBaseActionController
-        .startAction(name: '_DoencaCronicaControllerBase.increment');
+        .startAction(name: '_DoencaCronicaControllerBase.addItem');
     try {
-      return super.increment();
+      return super.addItem(item: item);
+    } finally {
+      _$_DoencaCronicaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removeItem(ItemModel model) {
+    final _$actionInfo = _$_DoencaCronicaControllerBaseActionController
+        .startAction(name: '_DoencaCronicaControllerBase.removeItem');
+    try {
+      return super.removeItem(model);
+    } finally {
+      _$_DoencaCronicaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic addLastItem(ItemModel item) {
+    final _$actionInfo = _$_DoencaCronicaControllerBaseActionController
+        .startAction(name: '_DoencaCronicaControllerBase.addLastItem');
+    try {
+      return super.addLastItem(item);
     } finally {
       _$_DoencaCronicaControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -62,7 +84,7 @@ mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+listItems: ${listItems}
     ''';
   }
 }

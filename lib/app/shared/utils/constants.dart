@@ -1,1 +1,1 @@
-class Constants {}
+const LOGIN_API = '';

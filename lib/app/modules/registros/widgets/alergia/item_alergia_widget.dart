@@ -1,11 +1,13 @@
 import 'package:app_tcc/app/modules/registros/models/item_model.dart';
+import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_controller.dart';
+import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class ItemWidget extends StatelessWidget {
-  const ItemWidget(
+class ItemAlergiaWidget extends StatelessWidget {
+  const ItemAlergiaWidget(
       {Key key,
       this.item,
       this.controller,
@@ -14,7 +16,7 @@ class ItemWidget extends StatelessWidget {
       : super(key: key);
 
   final ItemModel item;
-  final MedicamentoController controller;
+  final AlergiaController controller;
   final Function desfazerAcao;
   final ItemModel itemRemoved;
 

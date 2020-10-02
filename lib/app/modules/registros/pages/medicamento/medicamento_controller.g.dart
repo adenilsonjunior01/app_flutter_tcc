@@ -34,21 +34,6 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
     });
   }
 
-  final _$objetosAtom = Atom(name: '_MedicamentoControllerBase.objetos');
-
-  @override
-  ObservableList<dynamic> get objetos {
-    _$objetosAtom.reportRead();
-    return super.objetos;
-  }
-
-  @override
-  set objetos(ObservableList<dynamic> value) {
-    _$objetosAtom.reportWrite(value, super.objetos, () {
-      super.objetos = value;
-    });
-  }
-
   final _$listItemsAtom = Atom(name: '_MedicamentoControllerBase.listItems');
 
   @override
@@ -68,33 +53,33 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
       ActionController(name: '_MedicamentoControllerBase');
 
   @override
-  void addSkil() {
-    final _$actionInfo = _$_MedicamentoControllerBaseActionController
-        .startAction(name: '_MedicamentoControllerBase.addSkil');
-    try {
-      return super.addSkil();
-    } finally {
-      _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic addItem() {
+  dynamic addItem({dynamic item}) {
     final _$actionInfo = _$_MedicamentoControllerBaseActionController
         .startAction(name: '_MedicamentoControllerBase.addItem');
     try {
-      return super.addItem();
+      return super.addItem(item: item);
     } finally {
       _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void increment() {
+  dynamic removeItem(ItemModel model) {
     final _$actionInfo = _$_MedicamentoControllerBaseActionController
-        .startAction(name: '_MedicamentoControllerBase.increment');
+        .startAction(name: '_MedicamentoControllerBase.removeItem');
     try {
-      return super.increment();
+      return super.removeItem(model);
+    } finally {
+      _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic addLastItem(ItemModel item) {
+    final _$actionInfo = _$_MedicamentoControllerBaseActionController
+        .startAction(name: '_MedicamentoControllerBase.addLastItem');
+    try {
+      return super.addLastItem(item);
     } finally {
       _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -115,7 +100,6 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
   String toString() {
     return '''
 value: ${value},
-objetos: ${objetos},
 listItems: ${listItems}
     ''';
   }

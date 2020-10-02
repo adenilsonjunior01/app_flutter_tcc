@@ -1,12 +1,12 @@
-import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_controller.dart';
-import 'package:app_tcc/app/modules/registros/widgets/item_widget.dart';
+import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
+import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/item_cronica_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class BuildItemListWidget extends StatelessWidget {
-  BuildItemListWidget({this.controller});
-  MedicamentoController controller;
+class BuildItemListCronicaWidget extends StatelessWidget {
+  BuildItemListCronicaWidget({this.controller});
+  DoencaCronicaController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class BuildItemListWidget extends StatelessWidget {
           itemCount: controller.listItems.length,
           itemBuilder: (context, index) {
             var item = controller.listItems[index];
-            return ItemWidget(
+            return ItemCronicaWidget(
               item: item,
               itemRemoved: item,
               controller: controller,

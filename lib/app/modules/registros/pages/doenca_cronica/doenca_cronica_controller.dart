@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/registros/models/item_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,12 +10,27 @@ class DoencaCronicaController = _DoencaCronicaControllerBase
     with _$DoencaCronicaController;
 
 abstract class _DoencaCronicaControllerBase with Store {
+  final formKey = GlobalKey<FormState>();
+  final descMedicamento = TextEditingController();
+
   @observable
-  int value = 0;
+  var listItems = ObservableList<ItemModel>();
 
   @action
-  void increment() {
-    value++;
+  addItem({item}) {
+    final item = ItemModel(title: descMedicamento.text);
+    listItems.add(item);
+    descMedicamento.text = "";
+  }
+
+  @action
+  removeItem(ItemModel model) {
+    listItems.removeWhere((item) => item.title == model.title);
+  }
+
+  @action
+  addLastItem(ItemModel item) {
+    listItems.add(item);
   }
 
   @action

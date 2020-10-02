@@ -39,6 +39,21 @@ mixin _$ItemModel on _ItemModelBase, Store {
     });
   }
 
+  final _$tipoAtom = Atom(name: '_ItemModelBase.tipo');
+
+  @override
+  int get tipo {
+    _$tipoAtom.reportRead();
+    return super.tipo;
+  }
+
+  @override
+  set tipo(int value) {
+    _$tipoAtom.reportWrite(value, super.tipo, () {
+      super.tipo = value;
+    });
+  }
+
   final _$_ItemModelBaseActionController =
       ActionController(name: '_ItemModelBase');
 
@@ -65,10 +80,22 @@ mixin _$ItemModel on _ItemModelBase, Store {
   }
 
   @override
+  dynamic setTipo(int value) {
+    final _$actionInfo = _$_ItemModelBaseActionController.startAction(
+        name: '_ItemModelBase.setTipo');
+    try {
+      return super.setTipo(value);
+    } finally {
+      _$_ItemModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title},
-check: ${check}
+check: ${check},
+tipo: ${tipo}
     ''';
   }
 }

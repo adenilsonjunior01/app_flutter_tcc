@@ -49,6 +49,17 @@ mixin _$ResetarSenhaController on _ResetarSenhaControllerBase, Store {
   }
 
   @override
+  dynamic backPage(BuildContext context) {
+    final _$actionInfo = _$_ResetarSenhaControllerBaseActionController
+        .startAction(name: '_ResetarSenhaControllerBase.backPage');
+    try {
+      return super.backPage(context);
+    } finally {
+      _$_ResetarSenhaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 value: ${value}
