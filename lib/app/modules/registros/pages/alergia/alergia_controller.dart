@@ -10,13 +10,13 @@ class AlergiaController = _AlergiaControllerBase with _$AlergiaController;
 
 abstract class _AlergiaControllerBase with Store {
   final formKey = GlobalKey<FormState>();
-  final desc = TextEditingController();
-  final tipo = TextEditingController();
+  final TextEditingController desc = TextEditingController();
+  final TextEditingController tipo = TextEditingController();
 
   String tipoAlergia = 'Tipo 1';
 
   @observable
-  var listItems = ObservableList<ItemModel>();
+  ObservableList<ItemModel> listItems = ObservableList<ItemModel>();
 
   @action
   addItem({item}) {

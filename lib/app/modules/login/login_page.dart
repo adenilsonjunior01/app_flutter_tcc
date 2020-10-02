@@ -24,8 +24,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
   }
 
   body(BuildContext context) {
-    var _altura = MediaQuery.of(context).size.height;
-    var _largura = MediaQuery.of(context).size.width;
+    double _altura = MediaQuery.of(context).size.height;
+    double _largura = MediaQuery.of(context).size.width;
     @override
     Widget bg() => Container(
         decoration: BoxDecoration(

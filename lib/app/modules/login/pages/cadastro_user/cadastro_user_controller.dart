@@ -14,16 +14,18 @@ var maskFormatter = new MaskTextInputFormatter(mask: null);
 
 abstract class _CadastroUserControllerBase with Store {
   // Masck
-  var maskFormatterDate = new MaskTextInputFormatter(mask: "##-##-####");
-  var maskFormatterTel = new MaskTextInputFormatter(mask: "(##) # ####-####");
+  MaskTextInputFormatter maskFormatterDate =
+      new MaskTextInputFormatter(mask: "##-##-####");
+  MaskTextInputFormatter maskFormatterTel =
+      new MaskTextInputFormatter(mask: "(##) # ####-####");
 
-  final formKey = GlobalKey<FormState>();
-  final nomeCompleto = TextEditingController();
-  final email = TextEditingController();
-  final telefone = TextEditingController();
+  final GlobalKey formKey = GlobalKey<FormState>();
+  final TextEditingController nomeCompleto = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController telefone = TextEditingController();
   String sexo = 'Masculino';
-  final dtNascimento = TextEditingController();
-  final password = TextEditingController();
+  final TextEditingController dtNascimento = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   buildTextField(String label, TextEditingController controller,
       TextInputType type, String hint, bool o,

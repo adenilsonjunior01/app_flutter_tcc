@@ -28,7 +28,7 @@ avatarItem(String nome, {String imagem}) {
   Color _color = _randomColor.randomColor(
       colorBrightness: ColorBrightness.light, colorHue: ColorHue.blue);
 
-  var primeiraLetra = nome[0].toUpperCase();
+  String primeiraLetra = nome[0].toUpperCase();
   return CircleAvatar(
       backgroundColor: _color,
       foregroundColor: Colors.black,

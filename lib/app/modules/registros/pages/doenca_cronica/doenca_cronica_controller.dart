@@ -11,14 +11,14 @@ class DoencaCronicaController = _DoencaCronicaControllerBase
 
 abstract class _DoencaCronicaControllerBase with Store {
   final formKey = GlobalKey<FormState>();
-  final descMedicamento = TextEditingController();
+  final TextEditingController descMedicamento = TextEditingController();
 
   @observable
-  var listItems = ObservableList<ItemModel>();
+  ObservableList<ItemModel> listItems = ObservableList<ItemModel>();
 
   @action
   addItem({item}) {
-    final item = ItemModel(title: descMedicamento.text);
+    final ItemModel item = ItemModel(title: descMedicamento.text);
     listItems.add(item);
     descMedicamento.text = "";
   }

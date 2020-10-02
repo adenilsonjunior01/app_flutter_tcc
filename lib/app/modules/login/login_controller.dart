@@ -9,8 +9,8 @@ part 'login_controller.g.dart';
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final user = TextEditingController();
-  final password = TextEditingController();
+  final TextEditingController user = TextEditingController();
+  final TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @observable

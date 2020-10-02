@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  final _pageController = PageController();
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {

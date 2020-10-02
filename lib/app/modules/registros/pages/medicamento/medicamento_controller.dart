@@ -15,14 +15,14 @@ abstract class _MedicamentoControllerBase with Store {
   int value = 0;
 
   final formKey = GlobalKey<FormState>();
-  final descMedicamento = TextEditingController();
+  final TextEditingController descMedicamento = TextEditingController();
 
   @observable
-  var listItems = ObservableList<ItemModel>();
+  ObservableList<ItemModel> listItems = ObservableList<ItemModel>();
 
   @action
   addItem({item}) {
-    final item = ItemModel(title: descMedicamento.text);
+    final ItemModel item = ItemModel(title: descMedicamento.text);
     listItems.add(item);
     descMedicamento.text = "";
   }

@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../models/item_model.dart';
+
 class BuildItemListWidget extends StatelessWidget {
   BuildItemListWidget({this.controller});
   MedicamentoController controller;
@@ -15,7 +17,7 @@ class BuildItemListWidget extends StatelessWidget {
           padding: EdgeInsets.only(top: 10),
           itemCount: controller.listItems.length,
           itemBuilder: (context, index) {
-            var item = controller.listItems[index];
+            ItemModel item = controller.listItems[index];
             return ItemWidget(
               item: item,
               itemRemoved: item,
