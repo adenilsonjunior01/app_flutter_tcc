@@ -3,6 +3,7 @@ import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_controller.d
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_page.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_page.dart';
+import 'package:app_tcc/app/pages/splash/splash_page.dart';
 import 'package:app_tcc/app/pages/steps-info/step_first/step_first_page.dart';
 import 'package:app_tcc/app/pages/steps-info/step_first/step_first_controller.dart';
 import 'package:app_tcc/app/pages/steps-info/step_second/step_second_controller.dart';
@@ -26,8 +27,8 @@ class AppModule extends MainModule {
 
   @override
   List<ModularRouter> get routers => [
-        // ModularRouter('/', child: (_, args) => SplashPage()),
-        ModularRouter('/', child: (_, args) => AlergiaPage()),
+        ModularRouter('/', child: (_, args) => SplashPage()),
+        // ModularRouter('/', child: (_, args) => AlergiaPage()),
         ModularRouter('/first',
             child: (_, args) => StepFirstPage(),
             transition: TransitionType.leftToRight),

@@ -26,14 +26,18 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
   body(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
     var _largura = MediaQuery.of(context).size.width;
+
+    @override
+    void dispose() {
+      super.dispose();
+    }
+
     @override
     Widget bg() => Container(
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('assets/images/login/bg_login2.png'),
                 fit: BoxFit.cover)));
-// SingleChildScrollView
-
     return Container(
       child: SingleChildScrollView(
         child: Column(
@@ -134,7 +138,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5),
                                       side: BorderSide(color: Colors.white)),
-                                  onPressed: () {},
+                                  onPressed: () =>
+                                      controller.submitForm(context),
                                   child: Text(
                                     'Entrar',
                                     style: TextStyle(
@@ -188,264 +193,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
           ],
         ),
       ),
-    );
-  }
-
-  _newBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/login/bg_login.png'),
-                      fit: BoxFit.cover)),
-              height: 180,
-            ),
-            Positioned(
-              child: FadeAnimation(
-                  1.6,
-                  Container(
-                    child: Center(
-                      child: Text(
-                        "Autenticação",
-                        style: TextStyle(
-                            color: Color(0xFF388AF7),
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )),
-            ),
-            Padding(
-              padding: EdgeInsets.all(30.0),
-              child: Column(
-                children: <Widget>[
-                  FadeAnimation(
-                      1.8,
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color.fromRGBO(143, 148, 251, .2),
-                                  blurRadius: 20.0,
-                                  offset: Offset(0, 10))
-                            ]),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[100]))),
-                              child: TextFormField(
-                                  controller: controller.user,
-                                  keyboardType: TextInputType.text,
-                                  validator: _validaLogin,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "Email",
-                                      hintStyle:
-                                          TextStyle(color: Colors.grey[400]))),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                  controller: controller.password,
-                                  keyboardType: TextInputType.text,
-                                  validator: _validaSenha,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: "Senha",
-                                      hintStyle:
-                                          TextStyle(color: Colors.grey[400]))),
-                            ),
-                          ],
-                        ),
-                      )),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  FadeAnimation(
-                      2,
-                      Container(
-                        child: ButtonTheme(
-                            minWidth: 1000,
-                            child:
-                                _raisedButton("Enviar", 0xFF007AFE, context)),
-                      )),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  FadeAnimation(
-                      1.5,
-                      Padding(
-                        padding: EdgeInsets.only(top: 40),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Precisa de uma conta NomeApp?",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey[700],
-                                  fontFamily: 'Inter Medium',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            FlatButton(
-                              onPressed: () {
-                                controller.navegaRegisterUserPage(context);
-                              },
-                              child: Text("Crie a sua conta aqui",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xFF388AF7),
-                                      fontFamily: 'Inter Bold',
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  _body(BuildContext context) {
-    return Form(
-        key: controller.formKey,
-        child: ListView(
-          padding: EdgeInsets.fromLTRB(17, 130, 17, 0),
-          children: [
-            Column(
-              children: [
-                SvgPicture.asset(
-                  'assets/images/logo.svg',
-                  height: 100,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
-                  child: Text("Olá, por favor faça o login",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF171f46),
-                        fontSize: 28,
-                      )),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: TextFormField(
-                      controller: controller.user,
-                      keyboardType: TextInputType.text,
-                      validator: _validaLogin,
-                      decoration: InputDecoration(
-                          hintText: "Digite seu e-mail aqui",
-                          contentPadding: EdgeInsets.all(17),
-                          labelText: "E-mail",
-                          icon: Icon(
-                            Icons.email,
-                            color: Color(0xFF37C6F7),
-                          ),
-                          labelStyle:
-                              TextStyle(color: Color(0xFF3B4349), fontSize: 18),
-                          // border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Color(0xFF37C6F7))))),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: TextFormField(
-                      controller: controller.password,
-                      keyboardType: TextInputType.text,
-                      validator: _validaSenha,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          hintText: "Digite sua senha aqui",
-                          contentPadding: EdgeInsets.all(17),
-                          labelText: "Senha",
-                          icon: Icon(
-                            Icons.lock,
-                            color: Color(0xFF37C6F7),
-                          ),
-                          labelStyle:
-                              TextStyle(color: Color(0xFF3B4349), fontSize: 18),
-                          // border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Color(0xFF37C6F7))))),
-                ),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                    child: ButtonTheme(
-                        minWidth: 1000,
-                        child: _raisedButton("Enviar", 0xFF007AFE, context))),
-                Padding(
-                  padding: EdgeInsets.only(top: 150),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Precisa de uma conta NomeApp?",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      FlatButton(
-                        onPressed: () {
-                          controller.navegaRegisterUserPage(context);
-                        },
-                        child: Text("Crie a sua conta aqui",
-                            style: TextStyle(fontSize: 16)),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
-        ));
-  }
-
-  buildTextField(String label, TextEditingController controller,
-      TextInputType type, String hint, bool o,
-      {FormFieldValidator<String> validator}) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: type,
-      obscureText: o,
-      validator: validator,
-      decoration: InputDecoration(
-          hintText: hint,
-          contentPadding: EdgeInsets.all(17),
-          labelText: label,
-          labelStyle: TextStyle(color: Color(0xFF3B4349), fontSize: 18),
-          // border: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF9595E6)))),
-    );
-  }
-
-// Definirção do Button
-  _raisedButton(String label, cor, BuildContext context) {
-    return RaisedButton(
-      padding: EdgeInsets.all(18),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 18),
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      textColor: Colors.white,
-      color: Color(cor),
-      onPressed: () {
-        controller.submitForm(context);
-      },
     );
   }
 

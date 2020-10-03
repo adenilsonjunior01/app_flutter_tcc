@@ -1,3 +1,5 @@
+import 'package:app_tcc/app/modules/login/models/user_auth_model.dart';
+import 'package:app_tcc/app/modules/login/services/login_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -24,33 +26,33 @@ abstract class _LoginControllerBase with Store {
   // Verifica se o formulário é válido, se sim faz o envio dos dados pra autenticar o usuário
   @action
   submitForm(BuildContext context) async {
-    bool formValido = formKey.currentState.validate();
-    if (!formValido) {
-      return;
-    }
+    // bool formValido = formKey.currentState.validate();
+    // if (!formValido) {
+    //   return;
+    // }
 
     String login = user.text;
     String senha = password.text;
 
     print("login: $login senha: $senha");
-    // teste navegação
-    _navegaHomePage(context);
 
-    // var usuario = await LoginApi.login(login, senha);
-    // if (usuario != null) {
-    //   _navegaHomePage(context);
-    // } else {
-    //   final snackbar = SnackBar(
-    //     content: Text('Usuário ou senha inválido'),
-    //   );
-    //   Scaffold.of(context).showSnackBar(snackbar);
-    // }
+    UserAuthModel usuario = await LoginApi.login(login, senha);
+    print(usuario);
+
+    if (usuario != null) {
+      _navegaHomePage(context);
+    } else {
+      final snackbar = SnackBar(
+        content: Text('Usuário ou senha inválido'),
+      );
+      Scaffold.of(context).showSnackBar(snackbar);
+    }
   }
 
   // Após login o usuário é direcionado para página Home
   @action
   _navegaHomePage(BuildContext context) {
-    Navigator.pushNamed(context, '/home');
+    Modular.link.pushNamed('/home');
   }
 
   @action

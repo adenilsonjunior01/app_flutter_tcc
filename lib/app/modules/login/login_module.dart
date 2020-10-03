@@ -1,4 +1,5 @@
 import 'package:app_tcc/app/app_widget.dart';
+import 'package:app_tcc/app/modules/home/home_module.dart';
 import 'package:app_tcc/app/modules/login/pages/cadastro_user/cadastro_user_controller.dart';
 import 'package:app_tcc/app/modules/login/pages/cadastro_user/cadastro_user_page.dart';
 import 'package:app_tcc/app/modules/login/pages/resetar_senha/resetar_senha_page.dart';
@@ -21,7 +22,8 @@ class LoginModule extends ChildModule {
             child: (_, args) => LoginPage(),
             transition: TransitionType.leftToRight),
         ModularRouter('/resetar-senha', child: (_, args) => ResetarSenhaPage()),
-        ModularRouter('/cadastro-user', child: (_, args) => CadastroUserPage())
+        ModularRouter('/cadastro-user', child: (_, args) => CadastroUserPage()),
+        ModularRouter('/home', module: HomeModule())
       ];
 
   @override
