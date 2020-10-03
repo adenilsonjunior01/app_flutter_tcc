@@ -7,7 +7,7 @@ part of 'login_controller.dart';
 // **************************************************************************
 
 final $LoginController = BindInject(
-  (i) => LoginController(),
+  (i) => LoginController(i<AuthRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -34,11 +34,26 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$statusAtom = Atom(name: '_LoginControllerBase.status');
+
+  @override
+  LoginStatus get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(LoginStatus value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
   final _$submitFormAsyncAction =
       AsyncAction('_LoginControllerBase.submitForm');
 
   @override
-  Future submitForm(BuildContext context) {
+  Future<void> submitForm(BuildContext context) {
     return _$submitFormAsyncAction.run(() => super.submitForm(context));
   }
 
@@ -92,7 +107,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+value: ${value},
+status: ${status}
     ''';
   }
 }

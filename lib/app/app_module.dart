@@ -8,6 +8,7 @@ import 'package:app_tcc/app/pages/steps-info/step_first/step_first_page.dart';
 import 'package:app_tcc/app/pages/steps-info/step_first/step_first_controller.dart';
 import 'package:app_tcc/app/pages/steps-info/step_second/step_second_controller.dart';
 import 'package:app_tcc/app/pages/steps-info/step_second/step_second_page.dart';
+import 'package:dio/dio.dart';
 
 import 'pages/splash/splash_controller.dart';
 import 'app_controller.dart';
@@ -18,6 +19,8 @@ import 'package:app_tcc/app/app_widget.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => AppController()),
+        Bind((i) => Dio()),
         $SplashController,
         $AppController,
         $StepFirstController,

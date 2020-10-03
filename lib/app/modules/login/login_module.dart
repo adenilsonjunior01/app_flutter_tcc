@@ -3,6 +3,8 @@ import 'package:app_tcc/app/modules/home/home_module.dart';
 import 'package:app_tcc/app/modules/login/pages/cadastro_user/cadastro_user_controller.dart';
 import 'package:app_tcc/app/modules/login/pages/cadastro_user/cadastro_user_page.dart';
 import 'package:app_tcc/app/modules/login/pages/resetar_senha/resetar_senha_page.dart';
+import 'package:app_tcc/app/modules/login/repositories/auth_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'pages/resetar_senha/resetar_senha_controller.dart';
@@ -13,8 +15,12 @@ import 'login_page.dart';
 
 class LoginModule extends ChildModule {
   @override
-  List<Bind> get binds =>
-      [$ResetarSenhaController, $LoginController, $CadastroUserController];
+  List<Bind> get binds => [
+        Bind((i) => AuthRepository(i.get<Dio>())),
+        $ResetarSenhaController,
+        $LoginController,
+        $CadastroUserController
+      ];
 
   @override
   List<ModularRouter> get routers => [

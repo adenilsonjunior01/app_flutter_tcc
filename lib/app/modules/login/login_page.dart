@@ -28,11 +28,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
     var _largura = MediaQuery.of(context).size.width;
 
     @override
-    void dispose() {
-      super.dispose();
-    }
-
-    @override
     Widget bg() => Container(
         decoration: BoxDecoration(
             image: DecorationImage(
