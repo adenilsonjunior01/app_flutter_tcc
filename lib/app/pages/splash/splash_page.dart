@@ -20,7 +20,7 @@ class _SplashPageState extends ModularState<SplashPage, SplashController> {
     super.initState();
 
     Future.delayed(Duration(seconds: 5))
-        .then((value) => {Modular.to.pushReplacementNamed('/first')});
+        .then((value) => {controller.verificaPrimeiroAcesso()});
   }
 
   @override

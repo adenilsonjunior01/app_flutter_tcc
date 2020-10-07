@@ -23,4 +23,7 @@ abstract class _ItemModelBase with Store {
 
   @action
   setTipo(int value) => tipo = value;
+
+  @action
+  getTitle() => title;
 }

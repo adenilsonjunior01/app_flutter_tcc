@@ -2,6 +2,7 @@ import 'package:app_tcc/app/modules/home/widgets/tiles/titles_cadastro_tile.dart
 import 'package:app_tcc/app/shared/utils/list_title_cadastro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class TitlesCadastroTab extends StatelessWidget {
   dynamic lista = [
@@ -53,7 +54,8 @@ class TitlesCadastroTab extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
-          Navigator.pushNamed(context, '/registros/medicamento');
+          // Navigator.pushNamed(context, '/registros/medicamento');
+          Modular.link.pushNamed('/registro');
         },
       ),
     ]).toList();

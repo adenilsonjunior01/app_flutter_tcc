@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/registros/models/item_medicamento_model.dart';
 import 'package:app_tcc/app/modules/registros/models/item_model.dart';
 import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,10 +14,10 @@ class ItemWidget extends StatelessWidget {
       this.desfazerAcao})
       : super(key: key);
 
-  final ItemModel item;
+  final ItemMedicamentoModel item;
   final MedicamentoController controller;
   final Function desfazerAcao;
-  final ItemModel itemRemoved;
+  final ItemMedicamentoModel itemRemoved;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class ItemWidget extends StatelessWidget {
         onDismissed: (direction) {
           print(itemRemoved);
           controller.removeItem(item);
-          print(item.title);
+          print(item.descricao);
           final snack = SnackBar(
             duration: Duration(seconds: 3),
             content: Text("Item removido"),
@@ -52,7 +53,7 @@ class ItemWidget extends StatelessWidget {
         key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
         child: Observer(builder: (_) {
           return CheckboxListTile(
-            title: Text(item.title),
+            title: Text(item.descricao),
             value: item.check,
             secondary: CircleAvatar(
               backgroundColor: Colors.transparent,

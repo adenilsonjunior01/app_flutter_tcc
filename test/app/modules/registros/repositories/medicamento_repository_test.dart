@@ -2,22 +2,22 @@
 // import 'package:mockito/mockito.dart';
 // import 'package:dio/dio.dart';
 
-// import 'package:app_tcc/app/modules/login/repositories/auth_repository.dart';
+// import 'package:app_tcc/app/modules/registros/repositories/medicamento_repository.dart';
 
 // class MockClient extends Mock implements Dio {}
 
 // void main() {
-//   AuthRepository repository;
+//   // MedicamentoRepository repository;
 //   // MockClient client;
 
 //   setUp(() {
-//     // repository = AuthRepository();
+//     // repository = MedicamentoRepository();
 //     // client = MockClient();
 //   });
 
-//   group('AuthRepository Test', () {
+//   group('MedicamentoRepository Test', () {
 //     //  test("First Test", () {
-//     //    expect(repository, isInstanceOf<AuthRepository>());
+//     //    expect(repository, isInstanceOf<MedicamentoRepository>());
 //     //  });
 
 //     test('returns a Post if the http call completes successfully', () async {

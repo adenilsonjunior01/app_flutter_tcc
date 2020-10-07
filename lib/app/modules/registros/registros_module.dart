@@ -4,16 +4,22 @@ import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronic
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_page.dart';
 import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_page.dart';
+import 'package:app_tcc/app/modules/registros/repositories/medicamento_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class RegistrosModule extends ChildModule {
   @override
-  List<Bind> get binds =>
-      [$AlergiaController, $MedicamentoController, $DoencaCronicaController];
+  List<Bind> get binds => [
+        Bind((i) => MedicamentoRepository(i.get<Dio>())),
+        $AlergiaController,
+        $MedicamentoController,
+        $DoencaCronicaController
+      ];
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter('/', child: (_, args) => DoencaCronicaPage()),
+        ModularRouter('/', child: (_, args) => MedicamentoPage()),
         ModularRouter('/registros/alergia', child: (_, args) => AlergiaPage()),
         ModularRouter('/registros/medicamento',
             child: (_, args) => MedicamentoPage())

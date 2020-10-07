@@ -1,9 +1,11 @@
 import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_controller.dart';
+import 'package:app_tcc/app/modules/registros/registro_status_request.dart';
 import 'package:app_tcc/app/modules/registros/widgets/build_item_list_widget.dart';
 import 'package:app_tcc/app/modules/registros/widgets/custom/title_lista_widget.dart';
 import 'package:app_tcc/app/modules/registros/widgets/medicamento/button_submit_medicamento_widget.dart';
 import 'package:app_tcc/app/modules/registros/widgets/medicamento/form_input_medicamento_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MedicamentoPage extends StatefulWidget {
@@ -30,33 +32,84 @@ class _MedicamentoPageState
     var _largura = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          height: _altura,
-          width: _largura,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/form/bg_cadastro.png'),
-                  fit: BoxFit.fill)),
-          child: Form(
-            key: controller.formKey,
-            child: Column(
-              children: [
-                _body(context),
-                FormInputMedicamentoWidget(
-                  controller: controller,
-                  descHint: 'Descrição do medicamento',
+        body: Observer(builder: (_) {
+          if (controller.status == RegistroStatusRequest.loading) {
+            return Container(
+              alignment: Alignment.center,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (controller.status == RegistroStatusRequest.none) {
+            return Container(
+              height: _altura,
+              width: _largura,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/form/bg_cadastro.png'),
+                      fit: BoxFit.fill)),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    _body(context),
+
+                    // Input e botão de adiconar novo medicamento
+                    FormInputMedicamentoWidget(
+                      controller: controller,
+                      descHint: 'Descrição do medicamento',
+                    ),
+                    // Título da Lista
+                    TitleListaWidget('Lista'),
+
+                    // Lista de Medicamento cadastrados
+                    Expanded(
+                      child: BuildItemListWidget(controller: controller),
+                    ),
+
+                    // ButtonSubmitMedicamentoWidget(
+                    //   controller: controller,
+                    // ),
+                  ],
                 ),
-                TitleListaWidget('Lista'),
-                Expanded(
-                  child: BuildItemListWidget(controller: controller),
+              ),
+            );
+          } else {
+            return Container(
+              height: _altura,
+              width: _largura,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/form/bg_cadastro.png'),
+                      fit: BoxFit.fill)),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    _body(context),
+
+                    // Input e botão de adiconar novo medicamento
+                    FormInputMedicamentoWidget(
+                      controller: controller,
+                      descHint: 'Descrição do medicamento',
+                    ),
+                    // Título da Lista
+                    TitleListaWidget('Lista'),
+
+                    // Lista de Medicamento cadastrados
+                    Expanded(
+                      child: BuildItemListWidget(controller: controller),
+                    ),
+
+                    // ButtonSubmitMedicamentoWidget(
+                    //   controller: controller,
+                    // ),
+                  ],
                 ),
-                ButtonSubmitMedicamentoWidget(
-                  controller: controller,
-                ),
-              ],
-            ),
-          ),
-        ));
+              ),
+            );
+          }
+        }));
   }
 
   _body(BuildContext context) {

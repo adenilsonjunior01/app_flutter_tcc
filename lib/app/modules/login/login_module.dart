@@ -1,3 +1,4 @@
+import 'repositories/register_user_repository.dart';
 import 'package:app_tcc/app/app_widget.dart';
 import 'package:app_tcc/app/modules/home/home_module.dart';
 import 'package:app_tcc/app/modules/login/pages/cadastro_user/cadastro_user_controller.dart';
@@ -16,6 +17,7 @@ import 'login_page.dart';
 class LoginModule extends ChildModule {
   @override
   List<Bind> get binds => [
+        $RegisterUserRepository,
         Bind((i) => AuthRepository(i.get<Dio>())),
         $ResetarSenhaController,
         $LoginController,

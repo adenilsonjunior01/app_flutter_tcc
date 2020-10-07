@@ -1,5 +1,7 @@
 import 'package:app_tcc/app/modules/login/animation/fade_animation.dart';
+import 'package:app_tcc/app/modules/login/login_status.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'login_controller.dart';
@@ -16,10 +18,28 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
   //use 'controller' variable to access controller
   @override
   Widget build(BuildContext context) {
+    @override
+    initState() {
+      controller.status = LoginStatus.none;
+    }
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: body(context),
-      ),
+      body: Observer(builder: (_) {
+        if (controller.status == LoginStatus.loading) {
+          return Container(
+            alignment: Alignment.center,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        } else if (controller.status == LoginStatus.none) {
+          return SingleChildScrollView(
+            child: body(context),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: body(context),
+          );
+        }
+      }),
     );
   }
 
@@ -48,6 +68,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               child: Padding(
                 padding: EdgeInsets.all(30),
                 child: SingleChildScrollView(
+                    child: Form(
+                  key: controller.formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -182,7 +204,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                       )
                     ],
                   ),
-                ),
+                )),
               ),
             ),
           ],

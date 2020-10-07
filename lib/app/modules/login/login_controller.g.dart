@@ -105,6 +105,17 @@ mixin _$LoginController on _LoginControllerBase, Store {
   }
 
   @override
+  dynamic initInputs() {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.initInputs');
+    try {
+      return super.initInputs();
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 value: ${value},

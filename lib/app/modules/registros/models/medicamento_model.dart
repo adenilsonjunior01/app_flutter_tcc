@@ -1,5 +1,5 @@
 class MedicamentoModel {
-  String desc;
+  var desc;
 
   MedicamentoModel({this.desc});
 
@@ -11,5 +11,9 @@ class MedicamentoModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['desc'] = this.desc;
     return data;
+  }
+
+  Map toJson2(String desc) {
+    return {'desc': desc};
   }
 }

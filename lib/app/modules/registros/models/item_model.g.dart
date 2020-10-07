@@ -91,6 +91,17 @@ mixin _$ItemModel on _ItemModelBase, Store {
   }
 
   @override
+  dynamic getTitle() {
+    final _$actionInfo = _$_ItemModelBaseActionController.startAction(
+        name: '_ItemModelBase.getTitle');
+    try {
+      return super.getTitle();
+    } finally {
+      _$_ItemModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title},

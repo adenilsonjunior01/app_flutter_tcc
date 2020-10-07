@@ -34,6 +34,23 @@ mixin _$SplashController on _SplashControllerBase, Store {
     });
   }
 
+  final _$verificaPrimeiroAcessoAsyncAction =
+      AsyncAction('_SplashControllerBase.verificaPrimeiroAcesso');
+
+  @override
+  Future<void> verificaPrimeiroAcesso() {
+    return _$verificaPrimeiroAcessoAsyncAction
+        .run(() => super.verificaPrimeiroAcesso());
+  }
+
+  final _$setPrimeiroAcessoAsyncAction =
+      AsyncAction('_SplashControllerBase.setPrimeiroAcesso');
+
+  @override
+  Future<void> setPrimeiroAcesso() {
+    return _$setPrimeiroAcessoAsyncAction.run(() => super.setPrimeiroAcesso());
+  }
+
   final _$_SplashControllerBaseActionController =
       ActionController(name: '_SplashControllerBase');
 

@@ -2,6 +2,7 @@ import 'package:app_tcc/app/modules/home/widgets/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:random_color/random_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/user_login_model.dart';
 
@@ -15,8 +16,8 @@ part 'login_controller.g.dart';
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final user = TextEditingController();
-  final password = TextEditingController();
+  TextEditingController user = TextEditingController();
+  TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final AuthRepository repository;
 
@@ -36,18 +37,24 @@ abstract class _LoginControllerBase with Store {
   // Verifica se o formulário é válido, se sim faz o envio dos dados pra autenticar o usuário
   @action
   Future<void> submitForm(BuildContext context) async {
-    // bool formValido = formKey.currentState.validate();
-    // if (!formValido) {
-    //   return;
-    // }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    bool formValido = formKey.currentState.validate();
+    if (!formValido) {
+      return;
+    }
 
     status = LoginStatus.loading;
+    Map<String, dynamic> params = {
+      'email': user.text,
+      'senha': password.text,
+    };
     Map paramsLogin = {
       "email": 'felixbastos.lucas@gmail.com',
       "senha": "asdqwe123"
     };
     // UserLoginModel body = UserLoginModel.fromJson(paramsLogin);
-    var body = json.encode(paramsLogin);
+    var body = json.encode(params);
 
     String login = user.text;
     String senha = password.text;
@@ -56,7 +63,7 @@ abstract class _LoginControllerBase with Store {
       // var usuario = await LoginApi.login(login, senha);
       final usuario = await repository.authentication(body);
       status = LoginStatus.success..value = usuario;
-      print(usuario);
+      await prefs.setString('token', usuario.token);
       if (usuario != null) {
         _navegaHomePage(context);
       } else {
@@ -84,5 +91,11 @@ abstract class _LoginControllerBase with Store {
   @action
   navegaRegisterUserPage(BuildContext context) {
     Modular.link.pushNamed('/cadastro-user');
+  }
+
+  @action
+  initInputs() {
+    user.text = '';
+    password.text = '';
   }
 }

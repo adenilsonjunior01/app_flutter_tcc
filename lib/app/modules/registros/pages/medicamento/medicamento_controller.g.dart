@@ -7,7 +7,7 @@ part of 'medicamento_controller.dart';
 // **************************************************************************
 
 final $MedicamentoController = BindInject(
-  (i) => MedicamentoController(),
+  (i) => MedicamentoController(i<MedicamentoRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -34,19 +34,42 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
     });
   }
 
+  final _$statusAtom = Atom(name: '_MedicamentoControllerBase.status');
+
+  @override
+  RegistroStatusRequest get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(RegistroStatusRequest value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
   final _$listItemsAtom = Atom(name: '_MedicamentoControllerBase.listItems');
 
   @override
-  ObservableList<ItemModel> get listItems {
+  ObservableList<ItemMedicamentoModel> get listItems {
     _$listItemsAtom.reportRead();
     return super.listItems;
   }
 
   @override
-  set listItems(ObservableList<ItemModel> value) {
+  set listItems(ObservableList<ItemMedicamentoModel> value) {
     _$listItemsAtom.reportWrite(value, super.listItems, () {
       super.listItems = value;
     });
+  }
+
+  final _$submitFormAsyncAction =
+      AsyncAction('_MedicamentoControllerBase.submitForm');
+
+  @override
+  Future<void> submitForm(BuildContext context) {
+    return _$submitFormAsyncAction.run(() => super.submitForm(context));
   }
 
   final _$_MedicamentoControllerBaseActionController =
@@ -64,7 +87,7 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
   }
 
   @override
-  dynamic removeItem(ItemModel model) {
+  dynamic removeItem(ItemMedicamentoModel model) {
     final _$actionInfo = _$_MedicamentoControllerBaseActionController
         .startAction(name: '_MedicamentoControllerBase.removeItem');
     try {
@@ -75,7 +98,7 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
   }
 
   @override
-  dynamic addLastItem(ItemModel item) {
+  dynamic addLastItem(ItemMedicamentoModel item) {
     final _$actionInfo = _$_MedicamentoControllerBaseActionController
         .startAction(name: '_MedicamentoControllerBase.addLastItem');
     try {
@@ -100,6 +123,7 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
   String toString() {
     return '''
 value: ${value},
+status: ${status},
 listItems: ${listItems}
     ''';
   }

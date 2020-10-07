@@ -41,7 +41,8 @@ class FormInputMedicamentoWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(color: Color(0xFFA49FBB))),
                   onPressed: () {
-                    controller.addItem();
+                    // controller.addItem();
+                    controller.submitForm(context);
                   },
                   child: Text(
                     'Add',

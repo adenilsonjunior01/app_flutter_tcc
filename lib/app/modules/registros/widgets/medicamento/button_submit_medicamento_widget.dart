@@ -17,7 +17,9 @@ class ButtonSubmitMedicamentoWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
               side: BorderSide(color: Color(0xFFA49FBB))),
-          onPressed: () {},
+          onPressed: () {
+            controller.submitForm(context);
+          },
           child: Text(
             'Salvar',
             style: TextStyle(
