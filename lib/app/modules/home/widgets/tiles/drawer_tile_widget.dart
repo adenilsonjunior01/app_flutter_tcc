@@ -5,8 +5,10 @@ class DrawerTile extends StatelessWidget {
   final String text;
   final PageController pageController;
   final int page;
+  final Widget logout;
 
-  DrawerTile(this.icon, this.text, this.pageController, this.page);
+  DrawerTile(this.icon, this.text, this.pageController, this.page,
+      {this.logout});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +20,19 @@ class DrawerTile extends StatelessWidget {
           pageController.jumpToPage(page);
         },
         child: Container(
-          height: 60,
+          height: 50,
           padding: EdgeInsets.only(left: 23),
           child: Row(
             children: [
               Icon(
                 icon,
-                size: 30,
+                size: 25,
                 color: pageController.page.round() == page
                     ? Theme.of(context).primaryColor
                     : Colors.grey[700],
               ),
               SizedBox(
-                width: 32,
+                width: 20,
               ),
               Text(
                 text,
@@ -38,7 +40,7 @@ class DrawerTile extends StatelessWidget {
                     fontSize: 16,
                     color: Color(0xFF222222),
                     fontWeight: FontWeight.w400),
-              )
+              ),
             ],
           ),
         ),

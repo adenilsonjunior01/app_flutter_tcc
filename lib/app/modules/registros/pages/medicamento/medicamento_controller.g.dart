@@ -7,7 +7,7 @@ part of 'medicamento_controller.dart';
 // **************************************************************************
 
 final $MedicamentoController = BindInject(
-  (i) => MedicamentoController(i<MedicamentoRepository>()),
+  (i) => MedicamentoController(i<IMedicamentoRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -49,19 +49,68 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
     });
   }
 
-  final _$listItemsAtom = Atom(name: '_MedicamentoControllerBase.listItems');
+  final _$oldValueMedicamentoAtom =
+      Atom(name: '_MedicamentoControllerBase.oldValueMedicamento');
 
   @override
-  ObservableList<ItemMedicamentoModel> get listItems {
-    _$listItemsAtom.reportRead();
-    return super.listItems;
+  Medicamentos get oldValueMedicamento {
+    _$oldValueMedicamentoAtom.reportRead();
+    return super.oldValueMedicamento;
   }
 
   @override
-  set listItems(ObservableList<ItemMedicamentoModel> value) {
-    _$listItemsAtom.reportWrite(value, super.listItems, () {
-      super.listItems = value;
+  set oldValueMedicamento(Medicamentos value) {
+    _$oldValueMedicamentoAtom.reportWrite(value, super.oldValueMedicamento, () {
+      super.oldValueMedicamento = value;
     });
+  }
+
+  final _$listMedicamentoAtom =
+      Atom(name: '_MedicamentoControllerBase.listMedicamento');
+
+  @override
+  ObservableList<Medicamentos> get listMedicamento {
+    _$listMedicamentoAtom.reportRead();
+    return super.listMedicamento;
+  }
+
+  @override
+  set listMedicamento(ObservableList<Medicamentos> value) {
+    _$listMedicamentoAtom.reportWrite(value, super.listMedicamento, () {
+      super.listMedicamento = value;
+    });
+  }
+
+  final _$medicamentosAtom =
+      Atom(name: '_MedicamentoControllerBase.medicamentos');
+
+  @override
+  dynamic get medicamentos {
+    _$medicamentosAtom.reportRead();
+    return super.medicamentos;
+  }
+
+  @override
+  set medicamentos(dynamic value) {
+    _$medicamentosAtom.reportWrite(value, super.medicamentos, () {
+      super.medicamentos = value;
+    });
+  }
+
+  final _$removeItemAsyncAction =
+      AsyncAction('_MedicamentoControllerBase.removeItem');
+
+  @override
+  Future removeItem(dynamic item, BuildContext context) {
+    return _$removeItemAsyncAction.run(() => super.removeItem(item, context));
+  }
+
+  final _$editItemAsyncAction =
+      AsyncAction('_MedicamentoControllerBase.editItem');
+
+  @override
+  Future editItem(Medicamentos item) {
+    return _$editItemAsyncAction.run(() => super.editItem(item));
   }
 
   final _$submitFormAsyncAction =
@@ -76,33 +125,11 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
       ActionController(name: '_MedicamentoControllerBase');
 
   @override
-  dynamic addItem({dynamic item}) {
+  dynamic setOldValueMedicamento() {
     final _$actionInfo = _$_MedicamentoControllerBaseActionController
-        .startAction(name: '_MedicamentoControllerBase.addItem');
+        .startAction(name: '_MedicamentoControllerBase.setOldValueMedicamento');
     try {
-      return super.addItem(item: item);
-    } finally {
-      _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic removeItem(ItemMedicamentoModel model) {
-    final _$actionInfo = _$_MedicamentoControllerBaseActionController
-        .startAction(name: '_MedicamentoControllerBase.removeItem');
-    try {
-      return super.removeItem(model);
-    } finally {
-      _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic addLastItem(ItemMedicamentoModel item) {
-    final _$actionInfo = _$_MedicamentoControllerBaseActionController
-        .startAction(name: '_MedicamentoControllerBase.addLastItem');
-    try {
-      return super.addLastItem(item);
+      return super.setOldValueMedicamento();
     } finally {
       _$_MedicamentoControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -124,7 +151,9 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
     return '''
 value: ${value},
 status: ${status},
-listItems: ${listItems}
+oldValueMedicamento: ${oldValueMedicamento},
+listMedicamento: ${listMedicamento},
+medicamentos: ${medicamentos}
     ''';
   }
 }

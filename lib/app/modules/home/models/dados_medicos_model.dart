@@ -1,11 +1,11 @@
-import 'package:app_tcc/app/modules/registros/models/medicamento_model.dart';
+import 'package:app_tcc/app/modules/registros/models/registros_model.dart';
 
 class DadosMedicosModel {
   int id;
   String tipoSanguineo;
   String dtAtualizacao;
   List<Null> doencasCronicas;
-  List<MedicamentoModel> medicamentos;
+  List<RegistrosModel> medicamentos;
   List<Null> alergias;
 
   DadosMedicosModel(
@@ -20,24 +20,6 @@ class DadosMedicosModel {
     id = json['id'];
     tipoSanguineo = json['tipoSanguineo'];
     dtAtualizacao = json['dt_atualizacao'];
-    // if (json['doencasCronicas'] != null) {
-    //   doencasCronicas = new List<Null>();
-    //   json['doencasCronicas'].forEach((v) {
-    //     doencasCronicas.add(new Null.fromJson(v));
-    //   });
-    // }
-    // if (json['medicamentos'] != null) {
-    //   medicamentos = new List<Null>();
-    //   json['medicamentos'].forEach((v) {
-    //     medicamentos.add(new Null.fromJson(v));
-    //   });
-    // }
-    // if (json['alergias'] != null) {
-    //   alergias = new List<Null>();
-    //   json['alergias'].forEach((v) {
-    //     alergias.add(new Null.fromJson(v));
-    //   });
-    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -45,16 +27,10 @@ class DadosMedicosModel {
     data['id'] = this.id;
     data['tipoSanguineo'] = this.tipoSanguineo;
     data['dt_atualizacao'] = this.dtAtualizacao;
-    // if (this.doencasCronicas != null) {
-    //   data['doencasCronicas'] =
-    //       this.doencasCronicas.map((v) => v.toJson()).toList();
-    // }
+
     if (this.medicamentos != null) {
       data['medicamentos'] = this.medicamentos.map((v) => v.toJson()).toList();
     }
-    // if (this.alergias != null) {
-    //   data['alergias'] = this.alergias.map((v) => v.toJson()).toList();
-    // }
     return data;
   }
 }

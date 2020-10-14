@@ -25,7 +25,7 @@ class ItemAlergiaWidget extends StatelessWidget {
     return Dismissible(
         onDismissed: (direction) {
           print(itemRemoved);
-          controller.removeItem(item);
+          // controller.removeItem(item);
           print(item.title);
           final snack = SnackBar(
             duration: Duration(seconds: 3),

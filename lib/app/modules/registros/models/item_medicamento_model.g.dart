@@ -9,33 +9,34 @@ part of 'item_medicamento_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ItemMedicamentoModel on _ItemMedicamentoModelBase, Store {
-  final _$descricaoAtom = Atom(name: '_ItemMedicamentoModelBase.descricao');
+  final _$descMedicamentoAtom =
+      Atom(name: '_ItemMedicamentoModelBase.descMedicamento');
 
   @override
-  String get descricao {
-    _$descricaoAtom.reportRead();
-    return super.descricao;
+  String get descMedicamento {
+    _$descMedicamentoAtom.reportRead();
+    return super.descMedicamento;
   }
 
   @override
-  set descricao(String value) {
-    _$descricaoAtom.reportWrite(value, super.descricao, () {
-      super.descricao = value;
+  set descMedicamento(String value) {
+    _$descMedicamentoAtom.reportWrite(value, super.descMedicamento, () {
+      super.descMedicamento = value;
     });
   }
 
-  final _$checkAtom = Atom(name: '_ItemMedicamentoModelBase.check');
+  final _$idAtom = Atom(name: '_ItemMedicamentoModelBase.id');
 
   @override
-  bool get check {
-    _$checkAtom.reportRead();
-    return super.check;
+  int get id {
+    _$idAtom.reportRead();
+    return super.id;
   }
 
   @override
-  set check(bool value) {
-    _$checkAtom.reportWrite(value, super.check, () {
-      super.check = value;
+  set id(int value) {
+    _$idAtom.reportWrite(value, super.id, () {
+      super.id = value;
     });
   }
 
@@ -54,7 +55,7 @@ mixin _$ItemMedicamentoModel on _ItemMedicamentoModelBase, Store {
   }
 
   @override
-  dynamic setChcek(bool value) {
+  dynamic setChcek(int value) {
     final _$actionInfo = _$_ItemMedicamentoModelBaseActionController
         .startAction(name: '_ItemMedicamentoModelBase.setChcek');
     try {
@@ -78,8 +79,8 @@ mixin _$ItemMedicamentoModel on _ItemMedicamentoModelBase, Store {
   @override
   String toString() {
     return '''
-descricao: ${descricao},
-check: ${check}
+descMedicamento: ${descMedicamento},
+id: ${id}
     ''';
   }
 }

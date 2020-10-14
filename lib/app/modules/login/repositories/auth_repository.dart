@@ -16,7 +16,6 @@ class AuthRepository extends Disposable {
   AuthRepository(this.client) {
     client.options.headers = {"Content-type": "application/json"};
     client.interceptors.add(InterceptorDio());
-    client.options.connectTimeout = 5000;
   }
 
   Future<UserAuthModel> authentication(data) async {

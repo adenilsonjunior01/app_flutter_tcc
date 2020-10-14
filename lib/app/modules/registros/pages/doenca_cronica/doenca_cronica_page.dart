@@ -1,9 +1,14 @@
+import 'package:app_tcc/app/modules/registros/models/registros_model.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
+import 'package:app_tcc/app/modules/registros/registro_status_request.dart';
+import 'package:app_tcc/app/modules/registros/widgets/custom/text_delete_item_widget.dart';
 import 'package:app_tcc/app/modules/registros/widgets/custom/title_lista_widget.dart';
-import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/build_item_list_cronica_widget.dart';
-import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/button_submit_cronica_widget.dart';
 import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/form_input_cronica_widget.dart';
+import 'package:app_tcc/app/shared/widgets/custom-error-request-widget.dart';
+import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
+import 'package:app_tcc/app/shared/widgets/not_found_404.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class DoencaCronicaPage extends StatefulWidget {
@@ -18,6 +23,12 @@ class DoencaCronicaPage extends StatefulWidget {
 class _DoencaCronicaPageState
     extends ModularState<DoencaCronicaPage, DoencaCronicaController> {
   //use 'controller' variable to access controller
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.getDoencasCronicas(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +44,113 @@ class _DoencaCronicaPageState
               image: DecorationImage(
                   image: AssetImage('assets/images/form/bg_cadastro.png'),
                   fit: BoxFit.fill)),
-          child: Form(
-            key: controller.formKey,
-            child: Column(
-              children: [
-                _body(context),
-                FormInputCronicaWidget(
-                  controller: controller,
-                  descHint: 'Descrição do medicamento',
-                ),
-                TitleListaWidget('Lista'),
-                Expanded(
-                  child: BuildItemListCronicaWidget(controller: controller),
-                ),
-                ButtonSubmitCronicaWidget(
-                  controller: controller,
-                ),
-              ],
-            ),
+          child: Observer(
+            builder: (context) {
+              if (controller.status == RegistroStatusRequest.loading) {
+                return LoadingLottie();
+              } else if (controller.status == RegistroStatusRequest.success) {
+                return Column(
+                  children: [
+                    _body(context),
+                    FormInputCronicaWidget(
+                      controller: controller,
+                      descHint: 'Descrição da doença crônica',
+                    ),
+                    TexteDeleteItemWidget(),
+                    TitleListaWidget('Lista'),
+                    Expanded(child: Observer(
+                      builder: (_) {
+                        if (controller.listDoencaCronica.length < 1) {
+                          return NotFound404(
+                            message: 'Nenhum registro encontrado.',
+                          );
+                        } else {
+                          return Observer(builder: (_) {
+                            return ListView.builder(
+                                padding: EdgeInsets.only(top: 10),
+                                itemCount: controller.listDoencaCronica.length,
+                                itemBuilder: (_, index) {
+                                  var list =
+                                      controller.listDoencaCronica[index];
+                                  return Container(
+                                      child: Dismissible(
+                                          onDismissed: (direction) {
+                                            _confirmDialog(context, list);
+                                          },
+                                          background: Container(
+                                            color: Colors.red,
+                                            child: Align(
+                                              alignment: Alignment(-0.9, 00.0),
+                                              child: Icon(
+                                                Icons.delete,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          direction:
+                                              DismissDirection.startToEnd,
+                                          key: Key(DateTime.now()
+                                              .millisecondsSinceEpoch
+                                              .toString()),
+                                          child: ListTile(
+                                            title: Text(
+                                                list.descDoencaCronica == null
+                                                    ? ''
+                                                    : list.descDoencaCronica),
+                                            // leading: ,
+                                            trailing: IconButton(
+                                              icon: Icon(
+                                                Icons.edit,
+                                                color: Colors.grey,
+                                              ),
+                                              onPressed: () {
+                                                _dialog(list);
+                                              },
+                                            ),
+                                          )));
+                                });
+                          });
+                        }
+                      },
+                    ))
+                  ],
+                );
+              } else {
+                return Container(
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  alignment: Alignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomErrorRequestWidget(
+                        message:
+                            'Ocorreu um erro ao tentar carregar a Lista de doenças crônicas.',
+                      ),
+                      ButtonTheme(
+                        child: FlatButton(
+                          padding: EdgeInsets.all(10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              side: BorderSide(color: Color(0xFFA49FBB))),
+                          onPressed: () {
+                            controller.getDoencasCronicas(context);
+                          },
+                          child: Text(
+                            'Tentar novamente',
+                            style: TextStyle(
+                                color: Color(0xFF3B4349),
+                                fontFamily: 'Inter Medium',
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
           ),
         ));
   }
@@ -77,19 +177,117 @@ class _DoencaCronicaPageState
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 35),
                 child: Text(
-                  "Cadastro de Doença Crônica",
+                  "Cadastro de Doenças Crônicas",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Color(0xFF3F414E),
                       fontSize: 28,
                       fontWeight: FontWeight.bold),
                 ),
-              )
+              ),
             ],
           )
         ],
+      ),
+    );
+  }
+
+  _dialog(DoencasCronicas item) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text(
+              "Editar Medicamento",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Color(0xFF3F414E),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            content: Form(
+              key: controller.formKey,
+              child: TextFormField(
+                  autocorrect: true,
+                  controller: controller.newdescDoencaCronica,
+                  validator: _inputVazio,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                      contentPadding: EdgeInsets.all(8),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFA49FBB))),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFFA49FBB))),
+                      // hintText: "Descrição do medicamento",
+                      hintText: 'Descrição do medicamento',
+                      hintStyle:
+                          TextStyle(color: Color(0xFF3B4349), fontSize: 14))),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  item.descDoencaCronica = controller.newdescDoencaCronica.text;
+                  controller.editItem(item);
+                  bool formValido = controller.formKey.currentState.validate();
+                  if (!formValido) {
+                    return;
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Salvar'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancelar'),
+              )
+            ],
+          );
+        });
+  }
+
+  String _inputVazio(String text) {
+    if (text.isEmpty) return "Campo obrigatório";
+    return null;
+  }
+
+  _confirmDialog(BuildContext context, DoencasCronicas med) {
+    Widget cancelButton = FlatButton(
+      child: Text('Não'),
+      onPressed: () {
+        // controller.setOldValueMedicamento();
+        controller.getDoencasCronicas(context);
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text('Sim, continuar'),
+      onPressed: () {
+        controller.removeItem(med, context);
+        Navigator.pop(context);
+      },
+    );
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          "Excluir Medicamento",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Color(0xFF3F414E),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          'Essa ação não poderá ser revertida, tem certeza que deseja continuar?',
+          style: TextStyle(color: Color(0xFF3B4349), fontSize: 16),
+        ),
+        actions: [cancelButton, continueButton],
       ),
     );
   }

@@ -57,6 +57,15 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return _$submitFormAsyncAction.run(() => super.submitForm(context));
   }
 
+  final _$_navegaHomePageAsyncAction =
+      AsyncAction('_LoginControllerBase._navegaHomePage');
+
+  @override
+  Future _navegaHomePage(BuildContext context) {
+    return _$_navegaHomePageAsyncAction
+        .run(() => super._navegaHomePage(context));
+  }
+
   final _$_LoginControllerBaseActionController =
       ActionController(name: '_LoginControllerBase');
 
@@ -66,17 +75,6 @@ mixin _$LoginController on _LoginControllerBase, Store {
         name: '_LoginControllerBase.increment');
     try {
       return super.increment();
-    } finally {
-      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic _navegaHomePage(BuildContext context) {
-    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
-        name: '_LoginControllerBase._navegaHomePage');
-    try {
-      return super._navegaHomePage(context);
     } finally {
       _$_LoginControllerBaseActionController.endAction(_$actionInfo);
     }

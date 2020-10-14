@@ -5,20 +5,20 @@ class ItemMedicamentoModel = _ItemMedicamentoModelBase
     with _$ItemMedicamentoModel;
 
 abstract class _ItemMedicamentoModelBase with Store {
-  _ItemMedicamentoModelBase({this.descricao = '', this.check = false});
+  _ItemMedicamentoModelBase({this.descMedicamento = '', this.id = 0});
 
   @observable
-  String descricao;
+  String descMedicamento;
 
   @observable
-  bool check;
+  int id;
 
   @action
-  setDescricao(String value) => descricao = value;
+  setDescricao(String value) => descMedicamento = value;
 
   @action
-  setChcek(bool value) => check = value;
+  setChcek(int value) => id = value;
 
   @action
-  getDescricao() => descricao;
+  getDescricao() => descMedicamento;
 }

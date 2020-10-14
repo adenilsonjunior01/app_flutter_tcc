@@ -28,7 +28,7 @@ class TitlesCadastroTab extends StatelessWidget {
         ),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
-          Navigator.pushNamed(context, '/registros/alergia');
+          Modular.link.pushNamed('/registro/alergia');
         },
       ),
       ListTile(
@@ -42,7 +42,7 @@ class TitlesCadastroTab extends StatelessWidget {
         ),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
-          Navigator.pushNamed(context, '/registros/doenca-cronica');
+          Modular.link.pushNamed('/registro/doenca-cronica');
         },
       ),
       ListTile(
@@ -55,7 +55,7 @@ class TitlesCadastroTab extends StatelessWidget {
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
           // Navigator.pushNamed(context, '/registros/medicamento');
-          Modular.link.pushNamed('/registro');
+          Modular.link.pushNamed('/registro/medicamento');
         },
       ),
     ]).toList();

@@ -1,5 +1,6 @@
 import 'package:app_tcc/app/modules/login/animation/fade_animation.dart';
 import 'package:app_tcc/app/modules/login/login_status.dart';
+import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -26,10 +27,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
     return Scaffold(
       body: Observer(builder: (_) {
         if (controller.status == LoginStatus.loading) {
-          return Container(
-            alignment: Alignment.center,
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return LoadingLottie();
         } else if (controller.status == LoginStatus.none) {
           return SingleChildScrollView(
             child: body(context),

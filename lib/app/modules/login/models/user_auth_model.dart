@@ -1,4 +1,9 @@
-class UserAuthModel {
+import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class UserAuthModel extends Model {
   String token;
 
   UserAuthModel({this.token});

@@ -13,13 +13,23 @@ class BuildItemListWidget extends StatelessWidget {
     return Observer(builder: (_) {
       return ListView.builder(
           padding: EdgeInsets.only(top: 10),
-          itemCount: controller.listItems.length,
-          itemBuilder: (context, index) {
-            var item = controller.listItems[index];
-            return ItemWidget(
-              item: item,
-              itemRemoved: item,
-              controller: controller,
+          itemCount: controller.listMedicamento.length,
+          itemBuilder: (_, index) {
+            var list = controller.listMedicamento[index];
+            return Observer(
+              builder: (_) {
+                return ListTile(
+                  title: Text(list.descMedicamento),
+                  // leading: ,
+                  trailing: IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {},
+                  ),
+                );
+              },
             );
           });
     });

@@ -7,7 +7,7 @@ part of 'doenca_cronica_controller.dart';
 // **************************************************************************
 
 final $DoencaCronicaController = BindInject(
-  (i) => DoencaCronicaController(),
+  (i) => DoencaCronicaController(i<IDoencaCronicaRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -19,56 +19,88 @@ final $DoencaCronicaController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
-  final _$listItemsAtom = Atom(name: '_DoencaCronicaControllerBase.listItems');
+  final _$statusAtom = Atom(name: '_DoencaCronicaControllerBase.status');
 
   @override
-  ObservableList<ItemModel> get listItems {
-    _$listItemsAtom.reportRead();
-    return super.listItems;
+  RegistroStatusRequest get status {
+    _$statusAtom.reportRead();
+    return super.status;
   }
 
   @override
-  set listItems(ObservableList<ItemModel> value) {
-    _$listItemsAtom.reportWrite(value, super.listItems, () {
-      super.listItems = value;
+  set status(RegistroStatusRequest value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
     });
+  }
+
+  final _$oldValueMedicamentoAtom =
+      Atom(name: '_DoencaCronicaControllerBase.oldValueMedicamento');
+
+  @override
+  DoencasCronicas get oldValueMedicamento {
+    _$oldValueMedicamentoAtom.reportRead();
+    return super.oldValueMedicamento;
+  }
+
+  @override
+  set oldValueMedicamento(DoencasCronicas value) {
+    _$oldValueMedicamentoAtom.reportWrite(value, super.oldValueMedicamento, () {
+      super.oldValueMedicamento = value;
+    });
+  }
+
+  final _$listDoencaCronicaAtom =
+      Atom(name: '_DoencaCronicaControllerBase.listDoencaCronica');
+
+  @override
+  ObservableList<DoencasCronicas> get listDoencaCronica {
+    _$listDoencaCronicaAtom.reportRead();
+    return super.listDoencaCronica;
+  }
+
+  @override
+  set listDoencaCronica(ObservableList<DoencasCronicas> value) {
+    _$listDoencaCronicaAtom.reportWrite(value, super.listDoencaCronica, () {
+      super.listDoencaCronica = value;
+    });
+  }
+
+  final _$submitFormAsyncAction =
+      AsyncAction('_DoencaCronicaControllerBase.submitForm');
+
+  @override
+  Future<void> submitForm(BuildContext context) {
+    return _$submitFormAsyncAction.run(() => super.submitForm(context));
+  }
+
+  final _$getDoencasCronicasAsyncAction =
+      AsyncAction('_DoencaCronicaControllerBase.getDoencasCronicas');
+
+  @override
+  Future getDoencasCronicas(BuildContext context) {
+    return _$getDoencasCronicasAsyncAction
+        .run(() => super.getDoencasCronicas(context));
+  }
+
+  final _$removeItemAsyncAction =
+      AsyncAction('_DoencaCronicaControllerBase.removeItem');
+
+  @override
+  Future removeItem(dynamic item, BuildContext context) {
+    return _$removeItemAsyncAction.run(() => super.removeItem(item, context));
+  }
+
+  final _$editItemAsyncAction =
+      AsyncAction('_DoencaCronicaControllerBase.editItem');
+
+  @override
+  Future editItem(DoencasCronicas item) {
+    return _$editItemAsyncAction.run(() => super.editItem(item));
   }
 
   final _$_DoencaCronicaControllerBaseActionController =
       ActionController(name: '_DoencaCronicaControllerBase');
-
-  @override
-  dynamic addItem({dynamic item}) {
-    final _$actionInfo = _$_DoencaCronicaControllerBaseActionController
-        .startAction(name: '_DoencaCronicaControllerBase.addItem');
-    try {
-      return super.addItem(item: item);
-    } finally {
-      _$_DoencaCronicaControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic removeItem(ItemModel model) {
-    final _$actionInfo = _$_DoencaCronicaControllerBaseActionController
-        .startAction(name: '_DoencaCronicaControllerBase.removeItem');
-    try {
-      return super.removeItem(model);
-    } finally {
-      _$_DoencaCronicaControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic addLastItem(ItemModel item) {
-    final _$actionInfo = _$_DoencaCronicaControllerBaseActionController
-        .startAction(name: '_DoencaCronicaControllerBase.addLastItem');
-    try {
-      return super.addLastItem(item);
-    } finally {
-      _$_DoencaCronicaControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   dynamic backPage(BuildContext context) {
@@ -84,7 +116,9 @@ mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
   @override
   String toString() {
     return '''
-listItems: ${listItems}
+status: ${status},
+oldValueMedicamento: ${oldValueMedicamento},
+listDoencaCronica: ${listDoencaCronica}
     ''';
   }
 }

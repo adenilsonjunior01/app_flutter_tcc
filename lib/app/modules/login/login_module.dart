@@ -1,3 +1,4 @@
+import 'pages/edit_profile/edit_profile_controller.dart';
 import 'repositories/register_user_repository.dart';
 import 'package:app_tcc/app/app_widget.dart';
 import 'package:app_tcc/app/modules/home/home_module.dart';
@@ -17,6 +18,7 @@ import 'login_page.dart';
 class LoginModule extends ChildModule {
   @override
   List<Bind> get binds => [
+        $EditProfileController,
         $RegisterUserRepository,
         Bind((i) => AuthRepository(i.get<Dio>())),
         $ResetarSenhaController,
@@ -29,7 +31,11 @@ class LoginModule extends ChildModule {
         ModularRouter('/',
             child: (_, args) => LoginPage(),
             transition: TransitionType.leftToRight),
-        ModularRouter('/resetar-senha', child: (_, args) => ResetarSenhaPage()),
+        ModularRouter(
+          '/resetar-senha',
+          child: (_, args) => ResetarSenhaPage(),
+          transition: TransitionType.downToUp,
+        ),
         ModularRouter('/cadastro-user', child: (_, args) => CadastroUserPage()),
         ModularRouter('/home', module: HomeModule())
       ];

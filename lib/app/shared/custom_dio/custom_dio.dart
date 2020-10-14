@@ -10,6 +10,5 @@ class CustomDio {
     client.options.baseUrl = url;
     client.options.headers = {"Content-type": "application/json"};
     client.interceptors.add(InterceptorDio());
-    client.options.connectTimeout = 5000;
   }
 }

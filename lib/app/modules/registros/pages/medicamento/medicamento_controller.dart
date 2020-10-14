@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:app_tcc/app/modules/registros/models/item_medicamento_model.dart';
-import 'package:app_tcc/app/modules/registros/models/medicamento_model.dart';
+import 'package:app_tcc/app/modules/registros/interfaces/medicamento_repository_interface.dart';
+import 'package:app_tcc/app/modules/registros/models/registros_model.dart';
 import 'package:app_tcc/app/modules/registros/registro_status_request.dart';
-import 'package:app_tcc/app/modules/registros/repositories/medicamento_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -23,28 +23,63 @@ abstract class _MedicamentoControllerBase with Store {
   @observable
   RegistroStatusRequest status = RegistroStatusRequest.none;
 
-  GlobalKey formKey = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
+  GlobalKey<FormBuilderState> formBuilderKey = GlobalKey<FormBuilderState>();
   TextEditingController descMedicamento = TextEditingController();
-  MedicamentoRepository repository;
+  TextEditingController newDescMedicamento = TextEditingController();
+  IMedicamentoRepository repository;
 
   @observable
-  var listItems = ObservableList<ItemMedicamentoModel>();
+  Medicamentos oldValueMedicamento;
+
+  @observable
+  var listMedicamento = ObservableList<Medicamentos>();
+
+  @observable
+  var medicamentos;
 
   @action
-  addItem({item}) {
-    final item = ItemMedicamentoModel(descricao: descMedicamento.text);
-    listItems.add(item);
-    descMedicamento.text = "";
+  removeItem(item, BuildContext context) async {
+    var medicamento = item.id;
+    try {
+      status = RegistroStatusRequest.loading;
+      var response = await repository.deleteMedicamento(medicamento);
+      if (response == 400 || response == 500) {
+        listMedicamento.add(oldValueMedicamento);
+      } else {
+        getMedicamentos(context);
+      }
+      status = RegistroStatusRequest.success;
+    } catch (e) {
+      status = RegistroStatusRequest.error..value = e;
+    }
   }
 
   @action
-  removeItem(ItemMedicamentoModel model) {
-    listItems.removeWhere((item) => item.descricao == model.descricao);
+  setOldValueMedicamento() {
+    listMedicamento.clear();
+    medicamentos.forEach((e) => listMedicamento.add(e));
   }
 
   @action
-  addLastItem(ItemMedicamentoModel item) {
-    listItems.add(item);
+  editItem(Medicamentos item) async {
+    bool formValido = formKey.currentState.validate();
+    if (!formValido) {
+      return;
+    }
+
+    try {
+      var newValue = [
+        {"id": item.id, "desc": item.descMedicamento}
+      ];
+      var valueParser = jsonEncode(newValue);
+      status = RegistroStatusRequest.loading;
+      var response = await repository.editMedicamento(valueParser);
+      status = RegistroStatusRequest.success;
+    } catch (e) {
+      status = RegistroStatusRequest.error..value = e;
+    }
+    _clearInputDesMedicamento();
   }
 
   @action
@@ -54,25 +89,45 @@ abstract class _MedicamentoControllerBase with Store {
 
   @action
   Future<void> submitForm(BuildContext context) async {
-    // POR VALIDAÇÃO NO INPUT
-    addItem();
-    MedicamentoModel medicamentoModel;
-    var aux = listItems.toList().map((e) => toJson2(e.descricao)).toList();
-    String body = jsonEncode(aux);
+    if (formBuilderKey.currentState.saveAndValidate()) {
+      var body = toJson2(descMedicamento.text);
+      status = RegistroStatusRequest.loading;
+      try {
+        final jsonConvert = jsonEncode(body);
+        final medicamento =
+            await repository.registerNewMedicamento(jsonConvert);
+        listMedicamento.add(medicamento);
+        status = RegistroStatusRequest.success;
+        _clearInputDesMedicamento();
+      } catch (e) {
+        status = RegistroStatusRequest.error..value = e;
+      }
+    } else {
+      return null;
+    }
+  }
 
-    print('>>>>>>${body}');
+  toJson2(String desc) {
+    return [
+      {'desc': desc}
+    ];
+  }
 
+  getMedicamentos(BuildContext context) async {
     status = RegistroStatusRequest.loading;
-
     try {
-      final medicamento = await repository.registerNewMedicamento(body);
+      var medicamentos = await repository.getMedicamentoFuture;
+      medicamentos = medicamentos.medicamentos;
+      listMedicamento.clear();
+      medicamentos.forEach((e) => listMedicamento.add(e));
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
     }
   }
 
-  Map toJson2(String desc) {
-    return {'desc': desc};
+  _clearInputDesMedicamento() {
+    descMedicamento.text = '';
+    newDescMedicamento.text = '';
   }
 }

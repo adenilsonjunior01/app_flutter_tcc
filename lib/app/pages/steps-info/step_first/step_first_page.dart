@@ -28,8 +28,8 @@ class _StepFirstPageState
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          height: _altura,
-          width: _largura,
+          // height: _altura,
+          // width: _largura,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/step/bg_step.png'),

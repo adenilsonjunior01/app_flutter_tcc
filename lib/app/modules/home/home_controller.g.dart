@@ -34,6 +34,28 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$usersAtom = Atom(name: '_HomeControllerBase.users');
+
+  @override
+  String get users {
+    _$usersAtom.reportRead();
+    return super.users;
+  }
+
+  @override
+  set users(String value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
+    });
+  }
+
+  final _$jwtDecodeAsyncAction = AsyncAction('_HomeControllerBase.jwtDecode');
+
+  @override
+  Future<dynamic> jwtDecode() {
+    return _$jwtDecodeAsyncAction.run(() => super.jwtDecode());
+  }
+
   final _$_HomeControllerBaseActionController =
       ActionController(name: '_HomeControllerBase');
 
@@ -49,9 +71,21 @@ mixin _$HomeController on _HomeControllerBase, Store {
   }
 
   @override
+  dynamic logout() {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.logout');
+    try {
+      return super.logout();
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-value: ${value}
+value: ${value},
+users: ${users}
     ''';
   }
 }

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/login/login_status.dart';
 import 'package:app_tcc/app/modules/login/repositories/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,8 +81,14 @@ abstract class _LoginControllerBase with Store {
 
   // Após login o usuário é direcionado para página Home
   @action
-  _navegaHomePage(BuildContext context) {
-    Modular.link.pushNamed('/home');
+  _navegaHomePage(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var jwtToken = prefs.getString('token');
+    Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
+    JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
+    var nameUser = user.nome;
+
+    Modular.link.pushNamed('/home', arguments: nameUser);
   }
 
   @action

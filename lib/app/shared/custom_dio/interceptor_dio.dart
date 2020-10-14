@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class InterceptorDio extends InterceptorsWrapper {
   @override
@@ -18,7 +19,9 @@ class InterceptorDio extends InterceptorsWrapper {
   Future onError(DioError err) {
     // TODO: implement onError
     print("ERROR[${err.response.statusCode}] => PATH: ${err.request.path}");
-    // if(err.response.statusCode == 404)
+    // if (err.response.statusCode == 403) {
+    //   return Modular.link.pushNamed('/login');
+    // }
     return super.onError(err);
   }
 }

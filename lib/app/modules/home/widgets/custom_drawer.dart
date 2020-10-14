@@ -1,14 +1,38 @@
+import 'package:app_tcc/app/modules/home/home_controller.dart';
+import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/home/widgets/tiles/drawer_tile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   final PageController pageController;
 
   CustomDrawer(this.pageController);
 
   @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  HomeController controller = HomeController();
+
+  @observable
+  String nameUser;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    jwtDecode();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userName = ModalRoute.of(context).settings.arguments;
+    print('USUARIO>>> $userName');
     Widget _buildDrawerBack() => Container(
           color: Color(0xFFF4F4F4),
         );
@@ -23,11 +47,11 @@ class CustomDrawer extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/home/bg_header.png'),
+                        image: AssetImage('assets/images/step/bg_step.png'),
                         fit: BoxFit.fill)),
                 margin: EdgeInsets.only(bottom: 8),
                 padding: EdgeInsets.fromLTRB(32, 22, 16, 8),
-                height: 220,
+                height: 200,
                 child: Stack(
                   children: [
                     Positioned(
@@ -37,7 +61,7 @@ class CustomDrawer extends StatelessWidget {
                         'App Flutter \nTCC',
                         style: TextStyle(
                             fontSize: 35,
-                            color: Colors.white,
+                            color: Color(0xFF3B4349),
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -48,18 +72,18 @@ class CustomDrawer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Olá, ',
+                            'Olá,',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                color: Color(0xFF3B4349)),
                           ),
                           Text(
-                            'Nome do Usuário',
+                            nameUser != null ? nameUser : '',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                                color: Color(0xFF3B4349)),
                           )
                         ],
                       ),
@@ -67,14 +91,70 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              DrawerTile(Icons.home, "Início", pageController, 0),
-              DrawerTile(Icons.add, "Cadastro", pageController, 1),
-              DrawerTile(Icons.list, "Histórico", pageController, 2),
-              DrawerTile(Icons.vpn_key, "Alterar Senha", pageController, 3),
+              Divider(),
+              DrawerTile(Icons.home, "Início", widget.pageController, 0),
+              DrawerTile(Icons.add, "Cadastro", widget.pageController, 1),
+              DrawerTile(Icons.list, "Histórico", widget.pageController, 2),
+              DrawerTile(
+                  Icons.vpn_key, "Alterar Senha", widget.pageController, 3),
+              DrawerTile(Icons.account_box, "Perfil", widget.pageController, 4),
+              DrawerTile(
+                Icons.exit_to_app,
+                "Sair",
+                widget.pageController,
+                5,
+                logout: _logout(),
+              ),
+              InkWell(
+                onTap: () {
+                  // CORRIGIR LOGOUT
+                  Navigator.of(context).pop();
+                  controller.logout();
+                },
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(left: 23),
+                  child: Row(
+                    children: [
+                      Icon(Icons.ac_unit, size: 25, color: Colors.grey[700]),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'SAIR',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF222222),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           )
         ],
       ),
     );
+  }
+
+  Widget _logout() {
+    return FlatButton(
+      onPressed: () {
+        print('click!');
+        controller.logout();
+      },
+      child: null,
+    );
+  }
+
+  Future jwtDecode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var jwtToken = prefs.getString('token');
+    Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
+    JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
+    nameUser = user.nome;
+
+    print(user.nome);
   }
 }

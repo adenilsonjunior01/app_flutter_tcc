@@ -19,34 +19,26 @@ final $ResetarSenhaController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ResetarSenhaController on _ResetarSenhaControllerBase, Store {
-  final _$valueAtom = Atom(name: '_ResetarSenhaControllerBase.value');
+  final _$requestResetPasswordAsyncAction =
+      AsyncAction('_ResetarSenhaControllerBase.requestResetPassword');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  Future<dynamic> requestResetPassword() {
+    return _$requestResetPasswordAsyncAction
+        .run(() => super.requestResetPassword());
   }
 
+  final _$requestConfirmCodeAsyncAction =
+      AsyncAction('_ResetarSenhaControllerBase.requestConfirmCode');
+
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
-    });
+  Future<dynamic> requestConfirmCode() {
+    return _$requestConfirmCodeAsyncAction
+        .run(() => super.requestConfirmCode());
   }
 
   final _$_ResetarSenhaControllerBaseActionController =
       ActionController(name: '_ResetarSenhaControllerBase');
-
-  @override
-  void increment() {
-    final _$actionInfo = _$_ResetarSenhaControllerBaseActionController
-        .startAction(name: '_ResetarSenhaControllerBase.increment');
-    try {
-      return super.increment();
-    } finally {
-      _$_ResetarSenhaControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   dynamic backPage(BuildContext context) {
@@ -60,9 +52,20 @@ mixin _$ResetarSenhaController on _ResetarSenhaControllerBase, Store {
   }
 
   @override
+  dynamic verifyAction(BuildContext context) {
+    final _$actionInfo = _$_ResetarSenhaControllerBaseActionController
+        .startAction(name: '_ResetarSenhaControllerBase.verifyAction');
+    try {
+      return super.verifyAction(context);
+    } finally {
+      _$_ResetarSenhaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-value: ${value}
+
     ''';
   }
 }

@@ -20,104 +20,52 @@ class _ResetarSenhaPageState
     var _altura = MediaQuery.of(context).size.height;
     var _largura = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-          height: _altura,
-          width: _largura,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/login/bg_cadastro_user.png'),
-                  fit: BoxFit.fill)),
-          child: SingleChildScrollView(
-            child: SafeArea(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: OutlineButton(
-                          onPressed: () {
-                            controller.backPage(context);
-                          },
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                          ),
-                          borderSide: BorderSide(color: Colors.white),
-                          shape: CircleBorder(),
-                        ),
-                      )
-                    ],
+    return Container(
+      height: _altura,
+      width: _largura,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/login/bg_cadastro_user.png'),
+              fit: BoxFit.fill)),
+      child: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                snap: true,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: const Text(
+                    '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Color(0xFF3B4349),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
                   ),
-                  _form(context),
-                  Container(
-                    child: Text(
-                      "Conseguiu resetar sua senha?",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () => {},
-                    child: Text(
-                      'Entrar',
-                      style: TextStyle(
-                          shadows: [
-                            Shadow(
-                              offset: Offset(1, 1),
-                              blurRadius: 2.0,
-                              color: Colors.black,
-                            ),
-                            Shadow(
-                              offset: Offset(1, 1),
-                              blurRadius: 2.0,
-                              color: Colors.black,
-                            )
-                          ],
-                          color: Colors.white,
-                          fontFamily: 'Inter Medium',
-                          fontSize: 18),
-                    ),
-                  )
-                ],
-              ),
+                  centerTitle: true,
+                ),
+              )
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 140),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [_form(context)],
             ),
-          )),
-    );
-  }
-
-  Widget _titleForm(BuildContext context) {
-    return Text(
-      "Resetar Senha",
-      style: (TextStyle(fontSize: 32, color: Colors.white)),
-    );
-  }
-
-  Widget _buttonEnviar(BuildContext context) {
-    return FlatButton(
-      padding: EdgeInsets.only(left: 30, right: 30),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-          side: BorderSide(color: Colors.white)),
-      onPressed: () => {},
-      child: Text(
-        'Entrar',
-        style: TextStyle(
-            color: Colors.white, fontFamily: 'Inter Medium', fontSize: 18),
+          )
+        ],
       ),
     );
   }
 
   Widget _form(BuildContext context) {
-    var _altura = MediaQuery.of(context).size.height;
-    var _largura = MediaQuery.of(context).size.width;
-    return Container(
-      height: _altura / 2 + 220,
-      width: _largura,
-      padding: EdgeInsets.all(30),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Flexible(
+      child: ListView(
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -132,12 +80,36 @@ class _ResetarSenhaPageState
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                   // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  contentPadding: EdgeInsets.all(15),
+                  contentPadding: EdgeInsets.all(13),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white10)),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white)),
                   hintText: "Email",
+                  hintStyle: TextStyle(color: Colors.white))),
+          Padding(
+            padding: EdgeInsets.only(top: 15, bottom: 15),
+            child: Text(
+              'Ou',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          TextFormField(
+              style: TextStyle(color: Colors.white70),
+              controller: controller.codigoVerificacao,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                  // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  contentPadding: EdgeInsets.all(13),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white10)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  hintText: "Código de validação",
                   hintStyle: TextStyle(color: Colors.white))),
           SizedBox(
             height: 20,
@@ -146,8 +118,65 @@ class _ResetarSenhaPageState
             alignment: Alignment.centerLeft,
             child: _buttonEnviar(context),
           ),
+          SizedBox(
+            height: 30,
+          ),
+          _footer(context)
         ],
       ),
+    );
+  }
+
+  Widget _titleForm(BuildContext context) {
+    return Text(
+      "Digite seu e-mail de cadastro",
+      style: (TextStyle(fontSize: 28, color: Colors.white)),
+    );
+  }
+
+  Widget _buttonEnviar(BuildContext context) {
+    return FlatButton(
+      padding: EdgeInsets.only(left: 30, right: 30),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(color: Colors.white)),
+      onPressed: () => controller.verifyAction(context),
+      child: Text(
+        'Enviar',
+        style: TextStyle(
+            color: Colors.white, fontFamily: 'Inter Medium', fontSize: 18),
+      ),
+    );
+  }
+
+  Widget _footer(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          child: Text(
+            "Conseguiu resetar sua senha?",
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+        FlatButton(
+          onPressed: () => {},
+          child: Text(
+            'Entrar',
+            style: TextStyle(shadows: [
+              Shadow(
+                offset: Offset(1, 1),
+                blurRadius: 2.0,
+                color: Colors.black,
+              ),
+              Shadow(
+                offset: Offset(1, 1),
+                blurRadius: 2.0,
+                color: Colors.black,
+              )
+            ], color: Colors.white, fontFamily: 'Inter Medium', fontSize: 18),
+          ),
+        )
+      ],
     );
   }
 }
