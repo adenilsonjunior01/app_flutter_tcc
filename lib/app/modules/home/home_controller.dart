@@ -37,6 +37,6 @@ abstract class _HomeControllerBase with Store {
 
   @action
   logout() {
-    Modular.link.pushNamed('/login');
+    Modular.link.pop();
   }
 }

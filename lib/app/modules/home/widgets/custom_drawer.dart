@@ -31,7 +31,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     final userName = ModalRoute.of(context).settings.arguments;
-    print('USUARIO>>> $userName');
     Widget _buildDrawerBack() => Container(
           color: Color(0xFFF4F4F4),
         );
@@ -101,13 +100,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
               DrawerTile(
                   Icons.vpn_key, "Alterar Senha", widget.pageController, 3),
               DrawerTile(Icons.account_box, "Perfil", widget.pageController, 4),
-              DrawerTile(
-                Icons.exit_to_app,
-                "Sair",
-                widget.pageController,
-                5,
-                logout: _logout(),
-              ),
               InkWell(
                 onTap: () {
                   // CORRIGIR LOGOUT
@@ -119,7 +111,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: EdgeInsets.only(left: 23),
                   child: Row(
                     children: [
-                      Icon(Icons.ac_unit, size: 25, color: Colors.grey[700]),
+                      Icon(Icons.exit_to_app,
+                          size: 25, color: Colors.grey[700]),
                       SizedBox(
                         width: 20,
                       ),
