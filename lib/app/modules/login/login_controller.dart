@@ -51,10 +51,6 @@ abstract class _LoginControllerBase with Store {
       'email': user.text,
       'senha': password.text,
     };
-    Map paramsLogin = {
-      "email": 'felixbastos.lucas@gmail.com',
-      "senha": "asdqwe123"
-    };
     // UserLoginModel body = UserLoginModel.fromJson(paramsLogin);
     var body = json.encode(params);
 

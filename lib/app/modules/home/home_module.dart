@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/login/login_controller.dart';
 import 'package:app_tcc/app/modules/login/login_module.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/alergia_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/doenca_cronica_repository_interface.dart';
@@ -33,7 +34,8 @@ class HomeModule extends ChildModule {
         $HomeController,
         $AlergiaController,
         $MedicamentoController,
-        $DoencaCronicaController
+        $DoencaCronicaController,
+        $LoginController
       ];
 
   @override

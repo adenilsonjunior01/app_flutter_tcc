@@ -3,6 +3,7 @@ import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/home/widgets/tiles/drawer_tile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mobx/mobx.dart';
@@ -20,13 +21,11 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   HomeController controller = HomeController();
 
-  @observable
-  String nameUser;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    jwtDecode();
+    controller.jwtDecode();
   }
 
   @override
@@ -78,13 +77,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF3B4349)),
                           ),
-                          Text(
-                            nameUser != null ? nameUser : '',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF3B4349)),
-                          )
+                          Observer(builder: (_) {
+                            return Text(
+                              controller.users != null
+                                  ? controller.users.toUpperCase()
+                                  : '',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF3B4349)),
+                            );
+                          })
                         ],
                       ),
                     )
@@ -141,20 +144,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Widget _logout() {
     return FlatButton(
       onPressed: () {
-        print('click!');
         controller.logout();
       },
       child: null,
     );
-  }
-
-  Future jwtDecode() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var jwtToken = prefs.getString('token');
-    Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
-    JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
-    nameUser = user.nome;
-
-    print(user.nome);
   }
 }

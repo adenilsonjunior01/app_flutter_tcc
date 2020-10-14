@@ -43,7 +43,6 @@ class HomeScreen extends StatelessWidget {
         //   drawer: CustomDrawer(_pageController),
         // ),
         // PAGINA DE LOGIN
-        Container()
       ],
     );
   }
