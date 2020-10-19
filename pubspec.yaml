@@ -50,6 +50,8 @@ dependencies:
   datetime_picker_formfield: ^1.0.0
   flutter_ckb_localization: ^0.0.6
   jwt_decoder: ^1.0.2
+  qr_flutter: ^3.2.0
+  qrcode: ^1.0.4
   scoped_model: ^1.0.1
   flutter:
     sdk: flutter
@@ -92,6 +94,7 @@ flutter:
     - assets/images/login/bg_cadastro_user.png
     - assets/lotties-animation/lottie-splash-3.json
     - assets/lotties-animation/loading.json
+    - assets/lotties-animation/check-success.json
     - assets/lotties-animation/not-found-404.json
     - assets/lotties-animation/error-request.json
   # To add assets to your application, add an assets section, like this:

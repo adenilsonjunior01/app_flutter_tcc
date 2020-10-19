@@ -69,6 +69,7 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
                         } else {
                           return Observer(builder: (_) {
                             return ListView.builder(
+                                shrinkWrap: true,
                                 padding: EdgeInsets.only(top: 10),
                                 itemCount: controller.listAlergias.length,
                                 itemBuilder: (_, index) {

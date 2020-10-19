@@ -3,6 +3,8 @@ import 'package:app_tcc/app/modules/home/widgets/custom_drawer.dart';
 import 'package:app_tcc/app/modules/home/widgets/tab/home_tab.dart';
 import 'package:app_tcc/app/modules/home/widgets/tab/titles_cadastro_tab.dart';
 import 'package:app_tcc/app/modules/login/pages/resetar_senha/resetar_senha_page.dart';
+import 'package:app_tcc/app/modules/profile/profile_page.dart';
+import 'package:app_tcc/app/modules/qr_code/qr_code_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -38,11 +40,14 @@ class HomeScreen extends StatelessWidget {
           drawer: CustomDrawer(_pageController),
         ),
         // PAGINA DE PERFIL
-        // Scaffold(
-        //   body: HomeTab(),
-        //   drawer: CustomDrawer(_pageController),
-        // ),
-        // PAGINA DE LOGIN
+        Scaffold(
+          body: ProfilePage(),
+          drawer: CustomDrawer(_pageController),
+        ),
+        Scaffold(
+          body: QrCodePage(),
+          drawer: CustomDrawer(_pageController),
+        ),
       ],
     );
   }

@@ -95,11 +95,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ),
               Divider(),
               DrawerTile(Icons.home, "Início", widget.pageController, 0),
+              DrawerTile(
+                  Icons.account_box, "Meus Dados", widget.pageController, 4),
+              DrawerTile(
+                  Icons.account_box, "QR Code", widget.pageController, 5),
               DrawerTile(Icons.add, "Cadastro", widget.pageController, 1),
               DrawerTile(Icons.list, "Histórico", widget.pageController, 2),
               DrawerTile(
                   Icons.vpn_key, "Alterar Senha", widget.pageController, 3),
-              DrawerTile(Icons.account_box, "Perfil", widget.pageController, 4),
               InkWell(
                 onTap: () {
                   // CORRIGIR LOGOUT
@@ -117,7 +120,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         width: 20,
                       ),
                       Text(
-                        'SAIR',
+                        'Sair',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color(0xFF222222),

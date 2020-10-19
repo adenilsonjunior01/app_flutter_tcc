@@ -89,7 +89,7 @@ abstract class _LoginControllerBase with Store {
 
   @action
   navegateResetarSenha(BuildContext context) {
-    Modular.link.pushNamed('/resetar-senha');
+    Modular.link.pushNamed('/resetar-senha', arguments: 'pageLogin');
   }
 
   @action

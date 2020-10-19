@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'resetar_senha_controller.dart';
 
@@ -19,48 +20,95 @@ class _ResetarSenhaPageState
   Widget build(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
     var _largura = MediaQuery.of(context).size.width;
-
-    return Container(
-      height: _altura,
-      width: _largura,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/login/bg_cadastro_user.png'),
-              fit: BoxFit.fill)),
-      child: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: const Text(
-                    '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xFF3B4349),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  centerTitle: true,
+    final rota = ModalRoute.of(context).settings.arguments;
+    print(rota);
+    if (rota == 'pageLogin') {
+      return Scaffold(
+        body: Container(
+          height: _altura,
+          width: _largura,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/login/bg_cadastro_user.png'),
+                  fit: BoxFit.fill)),
+          child: Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    floating: true,
+                    snap: true,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: const Text(
+                        '',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color(0xFF3B4349),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      centerTitle: true,
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 140),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [_form(context)],
                 ),
               )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 140),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [_form(context)],
+        ),
+      );
+    } else {
+      return Container(
+        height: _altura,
+        width: _largura,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/login/bg_cadastro_user.png'),
+                fit: BoxFit.fill)),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: const Text(
+                      '',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color(0xFF3B4349),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    centerTitle: true,
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
-    );
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 140),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [_form(context)],
+              ),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   Widget _form(BuildContext context) {
@@ -74,43 +122,56 @@ class _ResetarSenhaPageState
           SizedBox(
             height: 20,
           ),
-          TextFormField(
-              style: TextStyle(color: Colors.white70),
-              controller: controller.email,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                  // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  contentPadding: EdgeInsets.all(13),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white10)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
-                  hintText: "Email",
-                  hintStyle: TextStyle(color: Colors.white))),
-          Padding(
-            padding: EdgeInsets.only(top: 15, bottom: 15),
-            child: Text(
-              'Ou',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+          Container(
+            child: SingleChildScrollView(
+              child: FormBuilder(
+                key: controller.formBuilderKey,
+                child: Column(
+                  children: [
+                    FormBuilderTextField(
+                        attribute: 'Email',
+                        controller: controller.email,
+                        decoration: InputDecoration(
+                            // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            contentPadding: EdgeInsets.all(13),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            // hintText: "Descrição do medicamento",
+                            hintText: 'Email',
+                            hintStyle:
+                                TextStyle(color: Colors.white, fontSize: 14))),
+                    Padding(
+                      padding: EdgeInsets.only(top: 15, bottom: 15),
+                      child: Text(
+                        'Ou',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    FormBuilderTextField(
+                        attribute: 'Código de validação',
+                        controller: controller.codigoVerificacao,
+                        decoration: InputDecoration(
+                            // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            contentPadding: EdgeInsets.all(13),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            // hintText: "Descrição do medicamento",
+                            hintText: 'Código de validação',
+                            hintStyle:
+                                TextStyle(color: Colors.white, fontSize: 14))),
+                  ],
+                ),
+              ),
             ),
           ),
-          TextFormField(
-              style: TextStyle(color: Colors.white70),
-              controller: controller.codigoVerificacao,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                  // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  contentPadding: EdgeInsets.all(13),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white10)),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white)),
-                  hintText: "Código de validação",
-                  hintStyle: TextStyle(color: Colors.white))),
           SizedBox(
             height: 20,
           ),

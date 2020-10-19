@@ -1,5 +1,13 @@
 import 'package:app_tcc/app/modules/login/login_controller.dart';
 import 'package:app_tcc/app/modules/login/login_module.dart';
+import 'package:app_tcc/app/modules/profile/profile_controller.dart';
+import 'package:app_tcc/app/modules/profile/profile_module.dart';
+import 'package:app_tcc/app/modules/profile/repositories/interfaces/profile_repository_interface.dart';
+import 'package:app_tcc/app/modules/profile/repositories/profile_repository.dart';
+import 'package:app_tcc/app/modules/qr_code/qr_code_controller.dart';
+import 'package:app_tcc/app/modules/qr_code/qr_code_module.dart';
+import 'package:app_tcc/app/modules/qr_code/repositories/interfaces/qr_code_repository_interface.dart';
+import 'package:app_tcc/app/modules/qr_code/repositories/qr_code_repository.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/alergia_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/doenca_cronica_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/medicamento_repository_interface.dart';
@@ -30,12 +38,16 @@ class HomeModule extends ChildModule {
         Bind<IDoencaCronicaRepository>(
             (i) => DoencaCronicaRepository(i.get<Dio>())),
         Bind<IAlergiaRepostory>((i) => AlergiaRepository(i.get<Dio>())),
+        Bind<IProfileRepository>((i) => ProfileRepository(i.get<Dio>())),
+        Bind<IQrCodeRepository>((i) => QrCodeRepository(i.get<Dio>())),
         $RegistrosController,
         $HomeController,
         $AlergiaController,
         $MedicamentoController,
         $DoencaCronicaController,
-        $LoginController
+        $LoginController,
+        $ProfileController,
+        $QrCodeController
       ];
 
   @override
@@ -54,7 +66,9 @@ class HomeModule extends ChildModule {
         ModularRouter('/registro/doenca-cronica',
             transition: TransitionType.downToUp,
             child: (_, args) => DoencaCronicaPage()),
-        ModularRouter('/login', module: LoginModule())
+        ModularRouter('/login', module: LoginModule()),
+        ModularRouter('/profile', module: ProfileModule()),
+        ModularRouter('/qr-code', module: QrCodeModule()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

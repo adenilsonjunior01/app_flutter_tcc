@@ -40,14 +40,7 @@ class _HomeTabState extends State<HomeTab> {
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: const Text(
-                    'Início',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xFF3B4349),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
+                  title: const Text(''),
                   centerTitle: true,
                 ),
               )
@@ -80,7 +73,9 @@ class _HomeTabState extends State<HomeTab> {
                       padding: const EdgeInsets.all(8.0),
                       child: Observer(builder: (_) {
                         return Text(
-                          controller.users,
+                          controller.users != null
+                              ? controller.users.toUpperCase()
+                              : '',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Inter Medium',
