@@ -78,7 +78,8 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 10, left: 20, right: 20),
                     child: ButtonTheme(
                       child: FlatButton(
                         padding: EdgeInsets.all(13),
@@ -93,13 +94,14 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                           style: TextStyle(
                               color: Colors.black54,
                               fontFamily: 'Inter Medium',
-                              fontSize: 14),
+                              fontSize: 16),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 10, left: 20, right: 20),
                     child: ButtonTheme(
                       child: FlatButton(
                         padding: EdgeInsets.only(
@@ -117,7 +119,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                           style: TextStyle(
                               color: Colors.black54,
                               fontFamily: 'Inter Medium',
-                              fontSize: 14),
+                              fontSize: 16),
                         ),
                       ),
                     ),
@@ -155,7 +157,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                           width: 250,
                           height: 250,
                           child: QrImage(
-                            data: "1234567890",
+                            data: controller.mock,
                             version: QrVersions.auto,
                             size: 200.0,
                           ),

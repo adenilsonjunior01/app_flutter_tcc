@@ -51,12 +51,12 @@ abstract class _ProfileControllerBase with Store {
   @action
   Future editUser(BuildContext context) async {
     Map<String, dynamic> params = {
-      'email': null,
-      'nome': nameUser.text != '' ? nameUser.text : null,
-      'dtNascimento': null,
-      'sexo': null,
-      'senha': null,
-      'telefone': telUser.text != '' ? telUser.text : null
+      'email': '',
+      'nome': nameUser.text != '' ? nameUser.text : '',
+      'dtNascimento': '',
+      'sexo': '',
+      'senha': '',
+      'telefone': telUser.text != '' ? telUser.text : ''
     };
 
     var body = jsonEncode(params);

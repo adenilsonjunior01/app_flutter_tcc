@@ -97,8 +97,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               DrawerTile(Icons.home, "Início", widget.pageController, 0),
               DrawerTile(
                   Icons.account_box, "Meus Dados", widget.pageController, 4),
-              DrawerTile(
-                  Icons.account_box, "QR Code", widget.pageController, 5),
+              DrawerTile(Icons.code, "QR Code", widget.pageController, 5),
               DrawerTile(Icons.add, "Cadastro", widget.pageController, 1),
               DrawerTile(Icons.list, "Histórico", widget.pageController, 2),
               DrawerTile(

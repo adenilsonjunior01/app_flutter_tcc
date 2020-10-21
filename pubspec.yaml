@@ -49,8 +49,9 @@ dependencies:
   flutter_form_builder: ^3.12.0
   datetime_picker_formfield: ^1.0.0
   flutter_ckb_localization: ^0.0.6
-  jwt_decoder: ^1.0.2
+  jwt_decoder: ^1.0.3
   qr_flutter: ^3.2.0
+  flutter_launcher_icons: ^0.8.1
   qrcode: ^1.0.4
   scoped_model: ^1.0.1
   flutter:
@@ -128,3 +129,8 @@ flutter:
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"

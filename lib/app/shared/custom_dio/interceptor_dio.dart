@@ -19,9 +19,9 @@ class InterceptorDio extends InterceptorsWrapper {
   Future onError(DioError err) {
     // TODO: implement onError
     print("ERROR[${err.response.statusCode}] => PATH: ${err.request.path}");
-    // if (err.response.statusCode == 403) {
-    //   return Modular.link.pushNamed('/login');
-    // }
+    if (err.response.statusCode == 403) {
+      Modular.link.pop();
+    }
     return super.onError(err);
   }
 }

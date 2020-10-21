@@ -55,11 +55,16 @@ class _ResetarSenhaPageState
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 140),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [_form(context)],
+                  children: [
+                    SizedBox(
+                      height: _altura / 2 - 200,
+                    ),
+                    _form(context)
+                  ],
                 ),
               )
             ],
@@ -98,11 +103,16 @@ class _ResetarSenhaPageState
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 140),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [_form(context)],
+                children: [
+                  SizedBox(
+                    height: _altura / 2 - 200,
+                  ),
+                  _form(context)
+                ],
               ),
             )
           ],

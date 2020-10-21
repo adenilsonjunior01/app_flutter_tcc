@@ -18,12 +18,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends ModularState<LoginPage, LoginController> {
   //use 'controller' variable to access controller
   @override
-  Widget build(BuildContext context) {
-    @override
-    initState() {
-      controller.status = LoginStatus.none;
-    }
+  initState() {
+    super.initState();
+    controller.verifyToken();
+    controller.status = LoginStatus.none;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(builder: (_) {
         if (controller.status == LoginStatus.loading) {

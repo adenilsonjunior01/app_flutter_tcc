@@ -66,6 +66,14 @@ mixin _$LoginController on _LoginControllerBase, Store {
         .run(() => super._navegaHomePage(context));
   }
 
+  final _$verifyTokenAsyncAction =
+      AsyncAction('_LoginControllerBase.verifyToken');
+
+  @override
+  Future verifyToken() {
+    return _$verifyTokenAsyncAction.run(() => super.verifyToken());
+  }
+
   final _$_LoginControllerBaseActionController =
       ActionController(name: '_LoginControllerBase');
 

@@ -36,7 +36,9 @@ abstract class _HomeControllerBase with Store {
   }
 
   @action
-  logout() {
+  logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
     Modular.link.pop();
   }
 }

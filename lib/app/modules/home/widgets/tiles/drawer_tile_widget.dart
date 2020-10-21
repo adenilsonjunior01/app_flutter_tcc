@@ -29,7 +29,7 @@ class DrawerTile extends StatelessWidget {
                 size: 25,
                 color: pageController.page.round() == page
                     ? Theme.of(context).primaryColor
-                    : Colors.grey[700],
+                    : Colors.black54,
               ),
               SizedBox(
                 width: 20,

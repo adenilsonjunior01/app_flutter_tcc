@@ -73,6 +73,7 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                     controller.status == ProfileStatusRequest.none) {
                   return Column(
                     children: [
+                      SizedBox(height: MediaQuery.of(context).size.height / 9),
                       CircleAvatar(
                         backgroundColor: _color,
                         foregroundColor: _color,

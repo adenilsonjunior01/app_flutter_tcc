@@ -49,71 +49,76 @@ class _DoencaCronicaPageState
               if (controller.status == RegistroStatusRequest.loading) {
                 return LoadingLottie();
               } else if (controller.status == RegistroStatusRequest.success) {
-                return Column(
-                  children: [
-                    _body(context),
-                    FormInputCronicaWidget(
-                      controller: controller,
-                      descHint: 'Descrição da doença crônica',
-                    ),
-                    TexteDeleteItemWidget(),
-                    TitleListaWidget('Lista'),
-                    Expanded(child: Observer(
-                      builder: (_) {
-                        if (controller.listDoencaCronica.length < 1) {
-                          return NotFound404(
-                            message: 'Nenhum registro encontrado.',
-                          );
-                        } else {
-                          return Observer(builder: (_) {
-                            return ListView.builder(
-                                padding: EdgeInsets.only(top: 10),
-                                itemCount: controller.listDoencaCronica.length,
-                                itemBuilder: (_, index) {
-                                  var list =
-                                      controller.listDoencaCronica[index];
-                                  return Container(
-                                      child: Dismissible(
-                                          onDismissed: (direction) {
-                                            _confirmDialog(context, list);
-                                          },
-                                          background: Container(
-                                            color: Colors.red,
-                                            child: Align(
-                                              alignment: Alignment(-0.9, 00.0),
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: Colors.white,
+                return Padding(
+                  padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
+                  child: Column(
+                    children: [
+                      _body(context),
+                      FormInputCronicaWidget(
+                        controller: controller,
+                        descHint: 'Descrição da doença crônica',
+                      ),
+                      TexteDeleteItemWidget(),
+                      TitleListaWidget('Lista'),
+                      Expanded(child: Observer(
+                        builder: (_) {
+                          if (controller.listDoencaCronica.length < 1) {
+                            return NotFound404(
+                              message: 'Nenhum registro encontrado.',
+                            );
+                          } else {
+                            return Observer(builder: (_) {
+                              return ListView.builder(
+                                  padding: EdgeInsets.only(top: 10),
+                                  itemCount:
+                                      controller.listDoencaCronica.length,
+                                  itemBuilder: (_, index) {
+                                    var list =
+                                        controller.listDoencaCronica[index];
+                                    return Container(
+                                        child: Dismissible(
+                                            onDismissed: (direction) {
+                                              _confirmDialog(context, list);
+                                            },
+                                            background: Container(
+                                              color: Colors.red,
+                                              child: Align(
+                                                alignment:
+                                                    Alignment(-0.9, 00.0),
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          direction:
-                                              DismissDirection.startToEnd,
-                                          key: Key(DateTime.now()
-                                              .millisecondsSinceEpoch
-                                              .toString()),
-                                          child: ListTile(
-                                            title: Text(
-                                                list.descDoencaCronica == null
-                                                    ? ''
-                                                    : list.descDoencaCronica),
-                                            // leading: ,
-                                            trailing: IconButton(
-                                              icon: Icon(
-                                                Icons.edit,
-                                                color: Colors.grey,
+                                            direction:
+                                                DismissDirection.startToEnd,
+                                            key: Key(DateTime.now()
+                                                .millisecondsSinceEpoch
+                                                .toString()),
+                                            child: ListTile(
+                                              title: Text(
+                                                  list.descDoencaCronica == null
+                                                      ? ''
+                                                      : list.descDoencaCronica),
+                                              // leading: ,
+                                              trailing: IconButton(
+                                                icon: Icon(
+                                                  Icons.edit,
+                                                  color: Colors.grey,
+                                                ),
+                                                onPressed: () {
+                                                  _dialog(list);
+                                                },
                                               ),
-                                              onPressed: () {
-                                                _dialog(list);
-                                              },
-                                            ),
-                                          )));
-                                });
-                          });
-                        }
-                      },
-                    ))
-                  ],
+                                            )));
+                                  });
+                            });
+                          }
+                        },
+                      ))
+                    ],
+                  ),
                 );
               } else {
                 return Container(
@@ -176,16 +181,16 @@ class _DoencaCronicaPageState
           ),
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 35),
-                child: Text(
-                  "Cadastro de Doenças Crônicas",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color(0xFF3F414E),
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
-                ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 4,
+              ),
+              Text(
+                "Cadastro de Doenças Crônicas",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Color(0xFF3F414E),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           )

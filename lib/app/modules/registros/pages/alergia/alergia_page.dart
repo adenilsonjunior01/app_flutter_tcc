@@ -49,77 +49,85 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
               if (controller.status == RegistroStatusRequest.loading) {
                 return LoadingLottie();
               } else if (controller.status == RegistroStatusRequest.success) {
-                return Column(
-                  children: [
-                    _body(context),
-                    // Input e botão de adiconar novo medicamento
-                    FormInputAlergiaWidget(
-                      controller: controller,
-                      descHint: 'Descrição do medicamento',
-                    ),
-                    // Título da Lista
-                    TexteDeleteItemWidget(),
-                    TitleListaWidget('Lista'),
-                    Expanded(child: Observer(
-                      builder: (_) {
-                        if (controller.listAlergias.length < 1) {
-                          return NotFound404(
-                            message: 'Nenhum registro encontrado.',
-                          );
-                        } else {
-                          return Observer(builder: (_) {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.only(top: 10),
-                                itemCount: controller.listAlergias.length,
-                                itemBuilder: (_, index) {
-                                  var list = controller.listAlergias[index];
-                                  return Container(
-                                      child: Dismissible(
-                                          onDismissed: (direction) {
-                                            _confirmDialog(context, list);
-                                          },
-                                          background: Container(
-                                            color: Colors.red,
-                                            child: Align(
-                                              alignment: Alignment(-0.9, 00.0),
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: Colors.white,
+                return Padding(
+                  padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
+                  child: Column(
+                    children: [
+                      _body(context),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      // Input e botão de adiconar novo medicamento
+                      FormInputAlergiaWidget(
+                        controller: controller,
+                        descHint: 'Descrição do medicamento',
+                      ),
+                      // Título da Lista
+                      TexteDeleteItemWidget(),
+                      TitleListaWidget('Lista'),
+                      Expanded(child: Observer(
+                        builder: (_) {
+                          if (controller.listAlergias.length < 1) {
+                            return NotFound404(
+                              message: 'Nenhum registro encontrado.',
+                            );
+                          } else {
+                            return Observer(builder: (_) {
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.only(top: 10),
+                                  itemCount: controller.listAlergias.length,
+                                  itemBuilder: (_, index) {
+                                    var list = controller.listAlergias[index];
+                                    return Container(
+                                        child: Dismissible(
+                                            onDismissed: (direction) {
+                                              _confirmDialog(context, list);
+                                            },
+                                            background: Container(
+                                              color: Colors.red,
+                                              child: Align(
+                                                alignment:
+                                                    Alignment(-0.9, 00.0),
+                                                child: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          direction:
-                                              DismissDirection.startToEnd,
-                                          key: Key(DateTime.now()
-                                              .millisecondsSinceEpoch
-                                              .toString()),
-                                          child: ListTile(
-                                            title: Text(list.descAlergia == null
-                                                ? ''
-                                                : list.descAlergia),
-                                            // leading: ,
-                                            trailing: IconButton(
-                                              icon: Icon(
-                                                Icons.edit,
-                                                color: Colors.grey,
+                                            direction:
+                                                DismissDirection.startToEnd,
+                                            key: Key(DateTime.now()
+                                                .millisecondsSinceEpoch
+                                                .toString()),
+                                            child: ListTile(
+                                              title: Text(
+                                                  list.descAlergia == null
+                                                      ? ''
+                                                      : list.descAlergia),
+                                              // leading: ,
+                                              trailing: IconButton(
+                                                icon: Icon(
+                                                  Icons.edit,
+                                                  color: Colors.grey,
+                                                ),
+                                                onPressed: () {
+                                                  _dialog(list, context);
+                                                },
                                               ),
-                                              onPressed: () {
-                                                _dialog(list, context);
-                                              },
-                                            ),
-                                            subtitle: Text(list
-                                                        .tipoAlergia.descTipo ==
-                                                    null
-                                                ? ''
-                                                : list.tipoAlergia.descTipo),
-                                          )));
-                                });
-                          });
-                        }
-                      },
-                    )),
-                  ],
+                                              subtitle: Text(list.tipoAlergia
+                                                          .descTipo ==
+                                                      null
+                                                  ? ''
+                                                  : list.tipoAlergia.descTipo),
+                                            )));
+                                  });
+                            });
+                          }
+                        },
+                      )),
+                    ],
+                  ),
                 );
               } else if (controller.status == RegistroStatusRequest.error) {
                 return Column(
@@ -180,16 +188,16 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
           ),
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  "Cadastro de Medicamentos",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color(0xFF3F414E),
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
-                ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 4,
+              ),
+              Text(
+                "Cadastro de Alergias",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    color: Color(0xFF3F414E),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
               ),
             ],
           )

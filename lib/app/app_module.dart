@@ -1,3 +1,5 @@
+import 'package:app_tcc/app/modules/home/home_controller.dart';
+import 'package:app_tcc/app/modules/home/home_module.dart';
 import 'package:app_tcc/app/modules/login/login_module.dart';
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_page.dart';
@@ -26,7 +28,8 @@ class AppModule extends MainModule {
         $AppController,
         $StepFirstController,
         $StepSecondController,
-        $AlergiaController
+        $AlergiaController,
+        $HomeController
       ];
 
   @override
@@ -40,6 +43,7 @@ class AppModule extends MainModule {
             child: (_, args) => StepSecondPage(),
             transition: TransitionType.fadeIn),
         ModularRouter('/login', module: LoginModule()),
+        ModularRouter('/home', module: HomeModule()),
       ];
 
   @override

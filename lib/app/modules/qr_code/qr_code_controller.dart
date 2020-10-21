@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -20,4 +22,7 @@ abstract class _QrCodeControllerBase with Store {
 
   @observable
   bool readQrCode = true;
+
+  var mock =
+      jsonEncode({'name': 'adenislon', 'idade': 27, 'sexo': 'masculino'});
 }

@@ -10,8 +10,6 @@ import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'models/user_login_model.dart';
-
 part 'login_controller.g.dart';
 
 @Injectable()
@@ -101,5 +99,23 @@ abstract class _LoginControllerBase with Store {
   initInputs() {
     user.text = '';
     password.text = '';
+  }
+
+  @action
+  verifyToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var jwtToken = prefs.getString('token');
+
+    try {
+      if (jwtToken != null) {
+        Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
+        JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
+        var nameUser = user.nome;
+        bool isTokenExpired = JwtDecoder.isExpired(jwtToken);
+        if (!isTokenExpired) {
+          Modular.link.pushNamed('/home', arguments: nameUser);
+        }
+      }
+    } catch (e) {}
   }
 }
