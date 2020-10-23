@@ -2,6 +2,7 @@ import 'package:app_tcc/app/modules/login/models/user_auth_model.dart';
 import 'package:app_tcc/app/modules/login/models/user_login_model.dart';
 import 'package:app_tcc/app/shared/custom_dio/custom_dio.dart';
 import 'package:app_tcc/app/shared/custom_dio/interceptor_dio.dart';
+import 'package:app_tcc/app/shared/custom_dio/interceptor_login_dio.dart';
 import 'package:app_tcc/app/shared/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,7 +16,7 @@ class AuthRepository extends Disposable {
 
   AuthRepository(this.client) {
     client.options.headers = {"Content-type": "application/json"};
-    client.interceptors.add(InterceptorDio());
+    client.interceptors.add(InterceptorLoginDio());
   }
 
   Future<UserAuthModel> authentication(data) async {

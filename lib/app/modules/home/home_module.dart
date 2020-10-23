@@ -46,8 +46,6 @@ class HomeModule extends ChildModule {
         $MedicamentoController,
         $DoencaCronicaController,
         $LoginController,
-        $ProfileController,
-        $QrCodeController
       ];
 
   @override
@@ -67,8 +65,6 @@ class HomeModule extends ChildModule {
             transition: TransitionType.downToUp,
             child: (_, args) => DoencaCronicaPage()),
         ModularRouter('/login', module: LoginModule()),
-        ModularRouter('/profile', module: ProfileModule()),
-        ModularRouter('/qr-code', module: QrCodeModule()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

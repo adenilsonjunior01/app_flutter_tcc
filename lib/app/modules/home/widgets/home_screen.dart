@@ -18,35 +18,36 @@ class HomeScreen extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: [
         Scaffold(
-          drawer: CustomDrawer(_pageController),
+          drawer: CustomDrawer(pageController: _pageController),
           body: HomeTab(),
         ),
         Scaffold(
           appBar: AppBar(
+            backgroundColor: Color(0xFF388AF7),
             title: Text("Cadastro"),
             centerTitle: true,
           ),
-          drawer: CustomDrawer(_pageController),
+          drawer: CustomDrawer(pageController: _pageController),
           body: TitlesCadastroTab(),
         ),
         // PAGINA DO HISTÓRICO
         Scaffold(
           body: HomeTab(),
-          drawer: CustomDrawer(_pageController),
+          drawer: CustomDrawer(pageController: _pageController),
         ),
         // PAGINA DE ALTERAR SENHA
         Scaffold(
           body: ResetarSenhaPage(),
-          drawer: CustomDrawer(_pageController),
+          drawer: CustomDrawer(pageController: _pageController),
         ),
         // PAGINA DE PERFIL
         Scaffold(
           body: ProfilePage(),
-          drawer: CustomDrawer(_pageController),
+          drawer: CustomDrawer(pageController: _pageController),
         ),
         Scaffold(
           body: QrCodePage(),
-          drawer: CustomDrawer(_pageController),
+          drawer: CustomDrawer(pageController: _pageController),
         ),
       ],
     );

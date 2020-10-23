@@ -6,9 +6,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class TitlesCadastroTab extends StatelessWidget {
   dynamic lista = [
-    {"id": 1, "name": "Alergia", "icon": ""},
-    {"id": 2, "name": "Doença Crônica", "icon": ""},
-    {"id": 3, "name": "Medicamento", "icon": ""},
+    {"id": 1, "name": "Dados Médicos", "icon": ""},
+    {"id": 2, "name": "Alergia", "icon": ""},
+    {"id": 3, "name": "Doença Crônica", "icon": ""},
+    {"id": 4, "name": "Medicamento", "icon": ""},
   ];
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,23 @@ class TitlesCadastroTab extends StatelessWidget {
         ),
         title: Text(
           lista[1]['name'],
+          style: TextStyle(
+              color: Color(0xFF222222),
+              fontSize: 18,
+              fontWeight: FontWeight.w400),
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () {
+          Modular.link.pushNamed('/registro/alergia');
+        },
+      ),
+      ListTile(
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundColor: Colors.transparent,
+        ),
+        title: Text(
+          lista[2]['name'],
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
         ),
         trailing: Icon(Icons.keyboard_arrow_right),
@@ -50,7 +68,7 @@ class TitlesCadastroTab extends StatelessWidget {
           radius: 25,
           backgroundColor: Colors.transparent,
         ),
-        title: Text(lista[2]['name'],
+        title: Text(lista[3]['name'],
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
         trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {

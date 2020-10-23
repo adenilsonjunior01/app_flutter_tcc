@@ -34,6 +34,21 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$errorLoginAtom = Atom(name: '_LoginControllerBase.errorLogin');
+
+  @override
+  bool get errorLogin {
+    _$errorLoginAtom.reportRead();
+    return super.errorLogin;
+  }
+
+  @override
+  set errorLogin(bool value) {
+    _$errorLoginAtom.reportWrite(value, super.errorLogin, () {
+      super.errorLogin = value;
+    });
+  }
+
   final _$statusAtom = Atom(name: '_LoginControllerBase.status');
 
   @override
@@ -125,6 +140,7 @@ mixin _$LoginController on _LoginControllerBase, Store {
   String toString() {
     return '''
 value: ${value},
+errorLogin: ${errorLogin},
 status: ${status}
     ''';
   }

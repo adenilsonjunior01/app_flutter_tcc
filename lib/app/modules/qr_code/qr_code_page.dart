@@ -37,6 +37,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
+          color: Colors.white,
           image: DecorationImage(
               image: AssetImage('assets/images/form/bg_cadastro.png'),
               fit: BoxFit.fill)),

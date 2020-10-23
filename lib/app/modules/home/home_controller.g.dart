@@ -56,6 +56,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$jwtDecodeAsyncAction.run(() => super.jwtDecode());
   }
 
+  final _$logoutAsyncAction = AsyncAction('_HomeControllerBase.logout');
+
+  @override
+  Future logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   final _$_HomeControllerBaseActionController =
       ActionController(name: '_HomeControllerBase');
 
@@ -65,17 +72,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
         name: '_HomeControllerBase.increment');
     try {
       return super.increment();
-    } finally {
-      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic logout() {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.logout');
-    try {
-      return super.logout();
     } finally {
       _$_HomeControllerBaseActionController.endAction(_$actionInfo);
     }

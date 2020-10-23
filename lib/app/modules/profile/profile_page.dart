@@ -33,106 +33,116 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
     RandomColor _randomColor = RandomColor();
     Color _color = _randomColor.randomColor(
         colorBrightness: ColorBrightness.light, colorHue: ColorHue.blue);
-    return Container(
-      height: _altura,
-      width: _largura,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/form/bg_cadastro.png'),
-              fit: BoxFit.fill)),
-      child: Stack(
-        children: [
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: const Text(
-                    '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xFF3B4349),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  centerTitle: true,
-                ),
-              ),
-            ],
-          ),
-          Container(
-              height: _altura,
-              padding: EdgeInsets.only(top: 110),
-              child: Observer(builder: (_) {
-                if (controller.status == ProfileStatusRequest.loading) {
-                  return LoadingLottie();
-                } else if (controller.status == ProfileStatusRequest.success ||
-                    controller.status == ProfileStatusRequest.none) {
-                  return Column(
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height / 9),
-                      CircleAvatar(
-                        backgroundColor: _color,
-                        foregroundColor: _color,
-                        radius: 55,
-                        child: Text(
-                          controller.firstLetter,
-                          style: TextStyle(color: Colors.white, fontSize: 38),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50, bottom: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                controller.users.toUpperCase() != null
-                                    ? controller.users.toUpperCase()
-                                    : '',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xFF3B4349), fontSize: 20),
-                              ),
-                              flex: 3,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: IconButton(
-                                icon: Icon(Icons.edit, color: Colors.grey),
-                                onPressed: () {
-                                  _dialog(context);
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Text(
-                        controller.email != null ? controller.email : '',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black38, fontSize: 14),
-                      )
-                    ],
-                  );
-                } else {
-                  return Text(
-                    controller.users != null
-                        ? controller.users.toUpperCase()
-                        : '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Inter Medium',
-                      fontSize: 20,
-                      color: Color(0xFF121212),
+    return Scaffold(
+      body: Container(
+        height: _altura,
+        width: _largura,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            image: DecorationImage(
+                image: AssetImage('assets/images/form/bg_cadastro.png'),
+                fit: BoxFit.fill)),
+        child: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  snap: true,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: const Text(
+                      '',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color(0xFF3B4349),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
                     ),
-                  );
-                }
-              }))
-        ],
+                    centerTitle: true,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ListView(
+                    shrinkWrap: true,
+                    children: [
+                      Observer(builder: (_) {
+                        if (controller.status == ProfileStatusRequest.loading) {
+                          return LoadingLottie();
+                        } else if (controller.status ==
+                                ProfileStatusRequest.success ||
+                            controller.status == ProfileStatusRequest.none) {
+                          return Container(
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: _color,
+                                  foregroundColor: _color,
+                                  radius: 55,
+                                  child: Text(
+                                    controller.firstLetter,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 38),
+                                  ),
+                                ),
+
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   children: [
+                                //     IconButton(
+                                //       icon: Icon(Icons.edit, color: Colors.grey),
+                                //       onPressed: () {
+                                //         _dialog(context);
+                                //       },
+                                //     ),
+                                //   ],
+                                // ),
+                                Text(
+                                  controller.users.toUpperCase() != null
+                                      ? controller.users.toUpperCase()
+                                      : '',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color(0xFF3B4349), fontSize: 20),
+                                ),
+                                Text(
+                                  controller.email != null
+                                      ? controller.email
+                                      : '',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.black38, fontSize: 14),
+                                )
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Text(
+                            controller.users != null
+                                ? controller.users.toUpperCase()
+                                : '',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Inter Medium',
+                              fontSize: 20,
+                              color: Color(0xFF121212),
+                            ),
+                          );
+                        }
+                      })
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

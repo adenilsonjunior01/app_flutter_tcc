@@ -22,57 +22,8 @@ class _ResetarSenhaPageState
     var _largura = MediaQuery.of(context).size.width;
     final rota = ModalRoute.of(context).settings.arguments;
     print(rota);
-    if (rota == 'pageLogin') {
-      return Scaffold(
-        body: Container(
-          height: _altura,
-          width: _largura,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/login/bg_cadastro_user.png'),
-                  fit: BoxFit.fill)),
-          child: Stack(
-            children: [
-              CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    floating: true,
-                    snap: true,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: const Text(
-                        '',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Color(0xFF3B4349),
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      centerTitle: true,
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: _altura / 2 - 200,
-                    ),
-                    _form(context)
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    } else {
-      return Container(
+    return Scaffold(
+      body: Container(
         height: _altura,
         width: _largura,
         decoration: BoxDecoration(
@@ -109,7 +60,7 @@ class _ResetarSenhaPageState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: _altura / 2 - 200,
+                    height: _altura / 2 - 150,
                   ),
                   _form(context)
                 ],
@@ -117,8 +68,8 @@ class _ResetarSenhaPageState
             )
           ],
         ),
-      );
-    }
+      ),
+    );
   }
 
   Widget _form(BuildContext context) {
@@ -189,10 +140,10 @@ class _ResetarSenhaPageState
             alignment: Alignment.centerLeft,
             child: _buttonEnviar(context),
           ),
-          SizedBox(
-            height: 30,
-          ),
-          _footer(context)
+          // SizedBox(
+          //   height: 30,
+          // ),
+          // _footer(context)
         ],
       ),
     );
@@ -230,7 +181,7 @@ class _ResetarSenhaPageState
           ),
         ),
         FlatButton(
-          onPressed: () => {},
+          onPressed: () => {Modular.link.pushNamed('/')},
           child: Text(
             'Entrar',
             style: TextStyle(shadows: [

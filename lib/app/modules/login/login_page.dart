@@ -134,6 +134,21 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                         hintStyle:
                                             TextStyle(color: Colors.white))),
                               ),
+                              // Container(
+                              //   padding: EdgeInsets.only(top: 5, bottom: 0),
+                              //   child: Observer(
+                              //     builder: (context) {
+                              //       if (controller.errorLogin) {
+                              //         return Text(
+                              //           'Usuário ou senha inválidos',
+                              //           style: TextStyle(color: Colors.red),
+                              //         );
+                              //       } else {
+                              //         return Text('');
+                              //       }
+                              //     },
+                              //   ),
+                              // ),
                               Container(
                                 alignment: Alignment.centerRight,
                                 child: FlatButton(
@@ -151,7 +166,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: FlatButton(
-                                  padding: EdgeInsets.all(10),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5),
                                       side: BorderSide(color: Colors.white)),
@@ -167,7 +181,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(top: 10, bottom: 0),
+                                padding: EdgeInsets.only(top: 30, bottom: 0),
                                 child: Text(
                                   "Precisa de uma conta?",
                                   style: TextStyle(

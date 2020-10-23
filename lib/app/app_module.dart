@@ -1,6 +1,8 @@
 import 'package:app_tcc/app/modules/home/home_controller.dart';
 import 'package:app_tcc/app/modules/home/home_module.dart';
 import 'package:app_tcc/app/modules/login/login_module.dart';
+import 'package:app_tcc/app/modules/profile/profile_module.dart';
+import 'package:app_tcc/app/modules/qr_code/qr_code_module.dart';
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/alergia/alergia_page.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
@@ -29,7 +31,6 @@ class AppModule extends MainModule {
         $StepFirstController,
         $StepSecondController,
         $AlergiaController,
-        $HomeController
       ];
 
   @override
@@ -44,6 +45,9 @@ class AppModule extends MainModule {
             transition: TransitionType.fadeIn),
         ModularRouter('/login', module: LoginModule()),
         ModularRouter('/home', module: HomeModule()),
+        ModularRouter('/profile', module: ProfileModule()),
+        ModularRouter('/qrcode', module: QrCodeModule()),
+        ModularRouter('/registro', module: RegistrosModule()),
       ];
 
   @override

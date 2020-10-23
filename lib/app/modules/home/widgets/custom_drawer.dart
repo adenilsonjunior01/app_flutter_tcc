@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomDrawer extends StatefulWidget {
   final PageController pageController;
 
-  CustomDrawer(this.pageController);
+  CustomDrawer({this.pageController});
 
   @override
   _CustomDrawerState createState() => _CustomDrawerState();
@@ -43,10 +43,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             padding: EdgeInsets.only(top: 0),
             children: [
               Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/step/bg_step.png'),
-                        fit: BoxFit.fill)),
+                decoration: BoxDecoration(color: Color(0xFF388AF7)),
                 margin: EdgeInsets.only(bottom: 8),
                 padding: EdgeInsets.fromLTRB(32, 22, 16, 8),
                 height: 200,
@@ -59,7 +56,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         'App Flutter \nTCC',
                         style: TextStyle(
                             fontSize: 35,
-                            color: Color(0xFF3B4349),
+                            color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -74,7 +71,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF3B4349)),
+                                color: Colors.white),
                           ),
                           Observer(builder: (_) {
                             return Text(
@@ -84,7 +81,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: Color(0xFF3B4349)),
+                                  color: Colors.white),
                             );
                           })
                         ],
@@ -93,18 +90,86 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ],
                 ),
               ),
-              Divider(),
               DrawerTile(Icons.home, "Início", widget.pageController, 0),
-              DrawerTile(
-                  Icons.account_box, "Meus Dados", widget.pageController, 4),
-              DrawerTile(Icons.code, "QR Code", widget.pageController, 5),
-              DrawerTile(Icons.add, "Cadastro", widget.pageController, 1),
-              DrawerTile(Icons.list, "Histórico", widget.pageController, 2),
-              DrawerTile(
-                  Icons.vpn_key, "Alterar Senha", widget.pageController, 3),
+              // Meus Dados
               InkWell(
                 onTap: () {
-                  // CORRIGIR LOGOUT
+                  Modular.to.pushNamed('/profile');
+                },
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(left: 23),
+                  child: Row(
+                    children: [
+                      Icon(Icons.account_box,
+                          size: 25, color: Colors.grey[700]),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Meus Dados',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF222222),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // QR Code
+              InkWell(
+                onTap: () {
+                  Modular.to.pushNamed('/qrcode');
+                },
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(left: 23),
+                  child: Row(
+                    children: [
+                      Icon(Icons.code, size: 25, color: Colors.grey[700]),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'QR Code',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF222222),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              DrawerTile(Icons.add, "Cadastro", widget.pageController, 1),
+              DrawerTile(Icons.list, "Histórico", widget.pageController, 2),
+              InkWell(
+                onTap: () {
+                  Modular.to.pushNamed('/login/resetar-senha');
+                },
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(left: 23),
+                  child: Row(
+                    children: [
+                      Icon(Icons.vpn_key, size: 25, color: Colors.grey[700]),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Alterar Senha',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF222222),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
                   Navigator.of(context).pop();
                   controller.logout();
                 },
@@ -128,7 +193,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           )
         ],

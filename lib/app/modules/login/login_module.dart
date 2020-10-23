@@ -1,3 +1,6 @@
+import 'package:app_tcc/app/modules/profile/profile_module.dart';
+import 'package:app_tcc/app/modules/qr_code/qr_code_module.dart';
+
 import 'pages/edit_profile/edit_profile_controller.dart';
 import 'repositories/register_user_repository.dart';
 import 'package:app_tcc/app/app_widget.dart';
@@ -37,7 +40,6 @@ class LoginModule extends ChildModule {
           transition: TransitionType.downToUp,
         ),
         ModularRouter('/cadastro-user', child: (_, args) => CadastroUserPage()),
-        ModularRouter('/home', module: HomeModule())
       ];
 
   @override

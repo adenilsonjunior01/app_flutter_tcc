@@ -18,6 +18,7 @@ class LoginController = _LoginControllerBase with _$LoginController;
 abstract class _LoginControllerBase with Store {
   TextEditingController user = TextEditingController();
   TextEditingController password = TextEditingController();
+  GlobalKey scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   final AuthRepository repository;
 
@@ -25,6 +26,9 @@ abstract class _LoginControllerBase with Store {
 
   @observable
   int value = 0;
+
+  @observable
+  bool errorLogin = false;
 
   @observable
   LoginStatus status = LoginStatus.none;
@@ -57,18 +61,13 @@ abstract class _LoginControllerBase with Store {
 
     try {
       // var usuario = await LoginApi.login(login, senha);
+      errorLogin = false;
       final usuario = await repository.authentication(body);
       status = LoginStatus.success..value = usuario;
       await prefs.setString('token', usuario.token);
-      if (usuario != null) {
-        _navegaHomePage(context);
-      } else {
-        final snackbar = SnackBar(
-          content: Text('Usuário ou senha inválido'),
-        );
-        Scaffold.of(context).showSnackBar(snackbar);
-      }
+      _navegaHomePage(context);
     } catch (e) {
+      errorLogin = true;
       status = LoginStatus.error..value = e;
     }
   }
@@ -82,7 +81,7 @@ abstract class _LoginControllerBase with Store {
     JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
     var nameUser = user.nome;
 
-    Modular.link.pushNamed('/home', arguments: nameUser);
+    Modular.to.pushNamed('/home', arguments: nameUser);
   }
 
   @action
