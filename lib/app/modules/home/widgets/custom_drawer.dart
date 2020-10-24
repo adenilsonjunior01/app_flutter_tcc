@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -90,7 +91,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ],
                 ),
               ),
-              DrawerTile(Icons.home, "Início", widget.pageController, 0),
+              DrawerTile('icon_inicio.svg', "Início", widget.pageController, 0),
               // Meus Dados
               InkWell(
                 onTap: () {
@@ -101,8 +102,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: EdgeInsets.only(left: 23),
                   child: Row(
                     children: [
-                      Icon(Icons.account_box,
-                          size: 25, color: Colors.grey[700]),
+                      SvgPicture.asset(
+                          'assets/images/home/icon_meus_dados.svg'),
                       SizedBox(
                         width: 20,
                       ),
@@ -110,7 +111,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         'Meus Dados',
                         style: TextStyle(
                             fontSize: 16,
-                            color: Color(0xFF222222),
+                            color: Color(0xFF3B4349),
                             fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -127,7 +128,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: EdgeInsets.only(left: 23),
                   child: Row(
                     children: [
-                      Icon(Icons.code, size: 25, color: Colors.grey[700]),
+                      SvgPicture.asset('assets/images/home/icon_qrcode.svg'),
                       SizedBox(
                         width: 20,
                       ),
@@ -135,15 +136,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         'QR Code',
                         style: TextStyle(
                             fontSize: 16,
-                            color: Color(0xFF222222),
+                            color: Color(0xFF3B4349),
                             fontWeight: FontWeight.w400),
                       ),
                     ],
                   ),
                 ),
               ),
-              DrawerTile(Icons.add, "Cadastro", widget.pageController, 1),
-              DrawerTile(Icons.list, "Histórico", widget.pageController, 2),
+              DrawerTile(
+                  'icon_cadastro.svg', "Cadastro", widget.pageController, 1),
+              DrawerTile(
+                  'icon_historico.svg', "Histórico", widget.pageController, 2),
               InkWell(
                 onTap: () {
                   Modular.to.pushNamed('/login/resetar-senha');
@@ -153,7 +156,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: EdgeInsets.only(left: 23),
                   child: Row(
                     children: [
-                      Icon(Icons.vpn_key, size: 25, color: Colors.grey[700]),
+                      SvgPicture.asset('assets/images/home/icon_edit.svg'),
                       SizedBox(
                         width: 20,
                       ),
@@ -161,7 +164,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         'Alterar Senha',
                         style: TextStyle(
                             fontSize: 16,
-                            color: Color(0xFF222222),
+                            color: Color(0xFF3B4349),
                             fontWeight: FontWeight.w400),
                       ),
                     ],
@@ -178,8 +181,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: EdgeInsets.only(left: 23),
                   child: Row(
                     children: [
-                      Icon(Icons.exit_to_app,
-                          size: 25, color: Colors.grey[700]),
+                      SvgPicture.asset('assets/images/home/icon_sair.svg'),
                       SizedBox(
                         width: 20,
                       ),
@@ -187,7 +189,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         'Sair',
                         style: TextStyle(
                             fontSize: 16,
-                            color: Color(0xFF222222),
+                            color: Color(0xFF3B4349),
                             fontWeight: FontWeight.w400),
                       ),
                     ],

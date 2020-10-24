@@ -1,5 +1,5 @@
 name: app_tcc
-description: A new Flutter project.
+description: App Tcc.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -92,6 +92,13 @@ flutter:
     - assets/images/home/icon_alergia.png
     - assets/images/home/icon_medicamentos.png
     - assets/images/home/icon_doenca_cronica.png
+    - assets/images/home/icon_inicio.svg
+    - assets/images/home/icon_edit.svg
+    - assets/images/home/icon_historico.svg
+    - assets/images/home/icon_meus_dados.svg
+    - assets/images/home/icon_qrcode.svg
+    - assets/images/home/icon_sair.svg
+    - assets/images/home/icon_cadastro.svg
     - assets/images/login/bg_login.png
     - assets/images/login/bg_login2.png
     - assets/images/step/bg_step.png

@@ -101,17 +101,22 @@ class _StepFirstPageState
               ),
             ),
             Text(
-              "Title",
+              "",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
             ),
             Container(
-              width: 300,
+              width: 250,
               child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut.",
-                  textAlign: TextAlign.center),
+                "Registre seus dados médicos e acompanhe sua rotina com facilidade.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Inter Medium',
+                ),
+              ),
             )
           ],
         ),

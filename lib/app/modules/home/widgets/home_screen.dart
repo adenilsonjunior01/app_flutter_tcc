@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
-
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -19,7 +19,9 @@ class HomeScreen extends StatelessWidget {
       children: [
         Scaffold(
           drawer: CustomDrawer(pageController: _pageController),
-          body: HomeTab(),
+          body: HomeTab(
+            scaffoldKey: scaffoldKey,
+          ),
         ),
         Scaffold(
           appBar: AppBar(

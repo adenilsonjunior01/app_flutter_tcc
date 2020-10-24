@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class DrawerTile extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String text;
   final PageController pageController;
   final int page;
@@ -24,12 +25,11 @@ class DrawerTile extends StatelessWidget {
           padding: EdgeInsets.only(left: 23),
           child: Row(
             children: [
-              Icon(
-                icon,
-                size: 25,
+              SvgPicture.asset(
+                'assets/images/home/${icon}',
                 color: pageController.page.round() == page
                     ? Theme.of(context).primaryColor
-                    : Colors.black54,
+                    : null,
               ),
               SizedBox(
                 width: 20,

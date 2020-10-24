@@ -19,6 +19,39 @@ final $CadastroUserController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CadastroUserController on _CadastroUserControllerBase, Store {
+  final _$messageRequestAtom =
+      Atom(name: '_CadastroUserControllerBase.messageRequest');
+
+  @override
+  String get messageRequest {
+    _$messageRequestAtom.reportRead();
+    return super.messageRequest;
+  }
+
+  @override
+  set messageRequest(String value) {
+    _$messageRequestAtom.reportWrite(value, super.messageRequest, () {
+      super.messageRequest = value;
+    });
+  }
+
+  final _$messagesRequestErrorsAtom =
+      Atom(name: '_CadastroUserControllerBase.messagesRequestErrors');
+
+  @override
+  ObservableList<dynamic> get messagesRequestErrors {
+    _$messagesRequestErrorsAtom.reportRead();
+    return super.messagesRequestErrors;
+  }
+
+  @override
+  set messagesRequestErrors(ObservableList<dynamic> value) {
+    _$messagesRequestErrorsAtom.reportWrite(value, super.messagesRequestErrors,
+        () {
+      super.messagesRequestErrors = value;
+    });
+  }
+
   final _$statusAtom = Atom(name: '_CadastroUserControllerBase.status');
 
   @override
@@ -51,6 +84,8 @@ mixin _$CadastroUserController on _CadastroUserControllerBase, Store {
   @override
   String toString() {
     return '''
+messageRequest: ${messageRequest},
+messagesRequestErrors: ${messagesRequestErrors},
 status: ${status}
     ''';
   }

@@ -6,7 +6,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeTab extends StatefulWidget {
-  HomeTab({Key key}) : super(key: key);
+  GlobalKey<ScaffoldState> scaffoldKey;
+
+  HomeTab({this.scaffoldKey});
 
   @override
   _HomeTabState createState() => _HomeTabState();
@@ -14,12 +16,13 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   HomeController controller = HomeController();
-
+  GlobalKey<ScaffoldState> scaffoldKey;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     controller.jwtDecode();
+    scaffoldKey = widget.scaffoldKey;
   }
 
   @override
@@ -38,6 +41,12 @@ class _HomeTabState extends State<HomeTab> {
               SliverAppBar(
                 floating: true,
                 snap: true,
+                // leading: IconButton(
+                //   icon: Icon(Icons.access_time),
+                //   onPressed: () {
+                //     scaffoldKey.currentState.openDrawer();
+                //   },
+                // ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
@@ -105,20 +114,6 @@ class _HomeTabState extends State<HomeTab> {
                         height: 30,
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 15, bottom: 10),
-                    //   child: Align(
-                    //     alignment: Alignment.centerLeft,
-                    //     child: Text(
-                    //       'Cadastro',
-                    //       textAlign: TextAlign.start,
-                    //       style: TextStyle(
-                    //           color: Color(0xFF3B4349),
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 16),
-                    //     ),
-                    //   ),
-                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

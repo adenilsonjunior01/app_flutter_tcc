@@ -1,6 +1,7 @@
 import 'package:app_tcc/app/modules/profile/profile_status_request.dart';
 import 'package:app_tcc/app/shared/widgets/custom-error-request-widget.dart';
 import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
+import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -44,30 +45,11 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                 fit: BoxFit.fill)),
         child: Stack(
           children: [
-            CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: const Text(
-                      '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color(0xFF3B4349),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    centerTitle: true,
-                  ),
-                ),
-              ],
-            ),
+            NavBarSilverWidget(),
             Container(
+              padding:
+                  EdgeInsets.only(top: MediaQuery.of(context).size.width / 3),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ListView(
                     shrinkWrap: true,
@@ -81,28 +63,47 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                           return Container(
                             child: Column(
                               children: [
-                                CircleAvatar(
-                                  backgroundColor: _color,
-                                  foregroundColor: _color,
-                                  radius: 55,
-                                  child: Text(
-                                    controller.firstLetter,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 38),
+                                Container(
+                                  height: 120,
+                                  width: 120,
+                                  child: Stack(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: _color,
+                                        foregroundColor: _color,
+                                        radius: 55,
+                                        child: Text(
+                                          controller.firstLetter,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 38),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Container(
+                                          height: 35,
+                                          width: 35,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF388AF7),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: IconButton(
+                                              icon: Icon(Icons.edit,
+                                                  size: 20,
+                                                  color: Colors.white),
+                                              onPressed: () {
+                                                _dialog(context);
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.center,
-                                //   children: [
-                                //     IconButton(
-                                //       icon: Icon(Icons.edit, color: Colors.grey),
-                                //       onPressed: () {
-                                //         _dialog(context);
-                                //       },
-                                //     ),
-                                //   ],
-                                // ),
                                 Text(
                                   controller.users.toUpperCase() != null
                                       ? controller.users.toUpperCase()

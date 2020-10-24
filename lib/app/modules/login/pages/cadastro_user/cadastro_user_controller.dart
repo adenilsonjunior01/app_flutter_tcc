@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:app_tcc/app/modules/login/login_status.dart';
 import 'package:app_tcc/app/modules/login/models/create_user_model.dart';
+import 'package:app_tcc/app/modules/login/models/error_cadastro_array_model.dart';
+import 'package:app_tcc/app/modules/login/models/error_cadastro_user_model.dart';
 import 'package:app_tcc/app/modules/login/repositories/register_user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,12 @@ abstract class _CadastroUserControllerBase with Store {
   TextEditingController senha = TextEditingController();
 
   @observable
+  String messageRequest = '';
+
+  @observable
+  var messagesRequestErrors = ObservableList();
+
+  @observable
   LoginStatus status = LoginStatus.none;
 
   Future<void> submitForm(BuildContext context) async {
@@ -47,8 +55,10 @@ abstract class _CadastroUserControllerBase with Store {
         'dtNascimento': dtNascimento.text,
         'sexo': tipoSexo,
         'senha': senha.text,
-        'telefone': telefone.text
+        'telefone': telefone.text.split(" ").join("")
       };
+      messagesRequestErrors.clear();
+      messageRequest = '';
 
       // CreateUserModel body = CreateUserModel.fromJson(params);
       var body = json.encode(params);
@@ -56,24 +66,23 @@ abstract class _CadastroUserControllerBase with Store {
 
       try {
         final user = await repository.registerNewUser(body);
-        status = LoginStatus.success..value = user;
-        _resetInputsForm();
-        // Scaffold.of(context).showSnackBar(
-        //   SnackBar(
-        //   duration: Duration(seconds: 3),
-        //   content: Text('Usuário criado com sucesso!'),
-        // )
-        // );
+        if (user.statusCode == 400) {
+          var response2 = ErrorCadastroArrayModel.fromJson(user.data);
+          if (response2.errors != null) {
+            messagesRequestErrors.add(response2.errors[0]);
+            messageRequest = null;
+          } else {
+            var response = ErrorCadastroUserModel.fromJson(user.data);
+            messageRequest = response.message;
+          }
+          status = LoginStatus.error..value = user;
+        } else {
+          status = LoginStatus.success..value = user;
+          _resetInputsForm();
+        }
       } catch (e) {
         status = LoginStatus.error..value = e;
-        // final snackbar = SnackBar(
-        //   duration: Duration(seconds: 3),
-        //   content: Text(
-        //       'Desculpa, ocorreu um erro ao criar usuário, tente novamente.'),
-        // );
-        // Scaffold.of(context).showSnackBar(snackbar);
       }
-      print(body);
     } else {
       return null;
     }

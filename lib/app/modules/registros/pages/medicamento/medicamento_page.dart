@@ -9,6 +9,7 @@ import 'package:app_tcc/app/modules/registros/widgets/medicamento/form_input_med
 import 'package:app_tcc/app/shared/widgets/custom-error-request-widget.dart';
 import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:app_tcc/app/shared/widgets/not_found_404.dart';
+import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -46,120 +47,130 @@ class _MedicamentoPageState
                 image: DecorationImage(
                     image: AssetImage('assets/images/form/bg_cadastro.png'),
                     fit: BoxFit.fill)),
-            child: Observer(
-              builder: (context) {
-                if (controller.status == RegistroStatusRequest.loading) {
-                  return LoadingLottie();
-                } else if (controller.status == RegistroStatusRequest.success) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
-                    child: Column(
-                      children: [
-                        _body(context),
-                        // Input e botão de adiconar novo medicamento
-                        FormInputMedicamentoWidget(
-                          controller: controller,
-                          descHint: 'Descrição do medicamento',
-                        ),
-                        // Título da Lista
-                        TexteDeleteItemWidget(),
-                        TitleListaWidget('Lista'),
-                        Expanded(child: Observer(
-                          builder: (_) {
-                            if (controller.listMedicamento.length < 1) {
-                              return NotFound404(
-                                message: 'Nenhum registro encontrado.',
-                              );
-                            } else {
-                              return Observer(builder: (_) {
-                                return ListView.builder(
-                                    padding: EdgeInsets.only(top: 10),
-                                    itemCount:
-                                        controller.listMedicamento.length,
-                                    itemBuilder: (_, index) {
-                                      var list =
-                                          controller.listMedicamento[index];
-                                      return Container(
-                                          child: Dismissible(
-                                              onDismissed: (direction) {
-                                                _confirmDialog(context, list);
-                                              },
-                                              background: Container(
-                                                color: Colors.red,
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment(-0.9, 00.0),
-                                                  child: Icon(
-                                                    Icons.delete,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                              direction:
-                                                  DismissDirection.startToEnd,
-                                              key: Key(DateTime.now()
-                                                  .millisecondsSinceEpoch
-                                                  .toString()),
-                                              child: ListTile(
-                                                title: Text(
-                                                    list.descMedicamento == null
-                                                        ? ''
-                                                        : list.descMedicamento),
-                                                // leading: ,
-                                                trailing: IconButton(
-                                                  icon: Icon(
-                                                    Icons.edit,
-                                                    color: Colors.grey,
-                                                  ),
-                                                  onPressed: () {
-                                                    _dialog(list);
-                                                  },
-                                                ),
-                                              )));
-                                    });
-                              });
-                            }
-                          },
-                        )),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Container(
-                    height: MediaQuery.of(context).size.height,
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    alignment: Alignment.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomErrorRequestWidget(
-                          message:
-                              'Desculpe, ocorreu um erro ao tentar carregar a Lista de Medicamentos.',
-                        ),
-                        ButtonTheme(
-                          child: FlatButton(
-                            padding: EdgeInsets.all(10),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                side: BorderSide(color: Color(0xFFA49FBB))),
-                            onPressed: () {
-                              controller.getMedicamentos(context);
-                            },
-                            child: Text(
-                              'Tentar novamente',
-                              style: TextStyle(
-                                  color: Color(0xFF3B4349),
-                                  fontFamily: 'Inter Medium',
-                                  fontSize: 16),
+            child: Stack(
+              children: [
+                NavBarSilverWidget(),
+                Observer(
+                  builder: (context) {
+                    if (controller.status == RegistroStatusRequest.loading) {
+                      return LoadingLottie();
+                    } else if (controller.status ==
+                        RegistroStatusRequest.success) {
+                      return Padding(
+                        padding:
+                            const EdgeInsets.only(top: 2, left: 20, right: 20),
+                        child: Column(
+                          children: [
+                            _body(context),
+                            // Input e botão de adiconar novo medicamento
+                            FormInputMedicamentoWidget(
+                              controller: controller,
+                              descHint: 'Descrição do medicamento',
                             ),
-                          ),
+                            // Título da Lista
+                            TexteDeleteItemWidget(),
+                            TitleListaWidget('Lista'),
+                            Expanded(child: Observer(
+                              builder: (_) {
+                                if (controller.listMedicamento.length < 1) {
+                                  return NotFound404(
+                                    message: 'Nenhum registro encontrado.',
+                                  );
+                                } else {
+                                  return Observer(builder: (_) {
+                                    return ListView.builder(
+                                        padding: EdgeInsets.only(top: 10),
+                                        itemCount:
+                                            controller.listMedicamento.length,
+                                        itemBuilder: (_, index) {
+                                          var list =
+                                              controller.listMedicamento[index];
+                                          return Container(
+                                              child: Dismissible(
+                                                  onDismissed: (direction) {
+                                                    _confirmDialog(
+                                                        context, list);
+                                                  },
+                                                  background: Container(
+                                                    color: Colors.red,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment(-0.9, 00.0),
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  direction: DismissDirection
+                                                      .startToEnd,
+                                                  key: Key(DateTime.now()
+                                                      .millisecondsSinceEpoch
+                                                      .toString()),
+                                                  child: ListTile(
+                                                    title: Text(
+                                                        list.descMedicamento ==
+                                                                null
+                                                            ? ''
+                                                            : list
+                                                                .descMedicamento),
+                                                    // leading: ,
+                                                    trailing: IconButton(
+                                                      icon: Icon(
+                                                        Icons.edit,
+                                                        color: Colors.grey,
+                                                      ),
+                                                      onPressed: () {
+                                                        _dialog(list);
+                                                      },
+                                                    ),
+                                                  )));
+                                        });
+                                  });
+                                }
+                              },
+                            )),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                }
-              },
+                      );
+                    } else {
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        alignment: Alignment.center,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomErrorRequestWidget(
+                              message:
+                                  'Desculpe, ocorreu um erro ao tentar carregar a Lista de Medicamentos.',
+                            ),
+                            ButtonTheme(
+                              child: FlatButton(
+                                padding: EdgeInsets.all(10),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(color: Color(0xFFA49FBB))),
+                                onPressed: () {
+                                  controller.getMedicamentos(context);
+                                },
+                                child: Text(
+                                  'Tentar novamente',
+                                  style: TextStyle(
+                                      color: Color(0xFF3B4349),
+                                      fontFamily: 'Inter Medium',
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                )
+              ],
             )));
   }
 
@@ -167,21 +178,6 @@ class _MedicamentoPageState
     return SafeArea(
       child: Column(
         children: [
-          Row(
-            children: [
-              OutlineButton(
-                onPressed: () {
-                  controller.backPage(context);
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-                borderSide: BorderSide(color: Color(0xFFEBEAEC)),
-                shape: CircleBorder(),
-              )
-            ],
-          ),
           Column(
             children: [
               SizedBox(

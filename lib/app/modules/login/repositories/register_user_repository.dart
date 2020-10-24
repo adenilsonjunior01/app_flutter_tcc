@@ -21,7 +21,7 @@ class RegisterUserRepository extends Disposable {
       var response = await client.post('${URL_API}/user', data: data);
       return response;
     } on DioError catch (e) {
-      throw (e.message);
+      return e.response;
     }
   }
 

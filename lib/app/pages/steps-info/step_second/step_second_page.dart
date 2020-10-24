@@ -112,7 +112,7 @@ class _StepSecondPageState
                 height: 10,
               ),
               Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut.",
+                "Escaneie e gere QR Codes para obter dados Médicos.",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Color(0xFF3B4349)),
               )
@@ -127,7 +127,7 @@ class _StepSecondPageState
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ButtonTheme(
-        minWidth: 200,
+        minWidth: 250,
         child: FlatButton(
           padding: EdgeInsets.all(10),
           shape: RoundedRectangleBorder(

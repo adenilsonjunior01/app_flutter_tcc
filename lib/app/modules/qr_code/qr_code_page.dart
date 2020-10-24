@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -43,27 +44,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
               fit: BoxFit.fill)),
       child: Stack(
         children: [
-          CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                floating: true,
-                snap: true,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: const Text(
-                    '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color(0xFF3B4349),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  centerTitle: true,
-                ),
-              ),
-            ],
-          ),
+          NavBarSilverWidget(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

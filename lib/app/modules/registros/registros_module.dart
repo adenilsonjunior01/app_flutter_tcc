@@ -1,5 +1,6 @@
 import 'package:app_tcc/app/modules/registros/interfaces/doenca_cronica_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_controller.dart';
+import 'package:app_tcc/app/modules/registros/pages/doenca_cronica/doenca_cronica_page.dart';
 import 'package:app_tcc/app/modules/registros/pages/medicamento/medicamento_page.dart';
 
 import 'repositories/doenca_cronica_repository.dart';
@@ -30,8 +31,9 @@ class RegistrosModule extends ChildModule {
   List<ModularRouter> get routers => [
         ModularRouter('/', child: (_, args) => AlergiaPage()),
         ModularRouter('/medicamento', child: (_, args) => MedicamentoPage()),
-        ModularRouter('/alergia', child: (_, args) => MedicamentoPage()),
-        ModularRouter('/doenca-cronica', child: (_, args) => MedicamentoPage()),
+        ModularRouter('/alergia', child: (_, args) => AlergiaPage()),
+        ModularRouter('/doenca-cronica',
+            child: (_, args) => DoencaCronicaPage()),
       ];
 
   static Inject get to => Inject<RegistrosModule>.of();

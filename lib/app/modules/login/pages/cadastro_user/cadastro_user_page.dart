@@ -1,9 +1,11 @@
 import 'package:app_tcc/app/modules/login/login_status.dart';
+import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'cadastro_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -36,10 +38,7 @@ class _CadastroUserPageState
       body: Observer(
         builder: (_) {
           if (controller.status == LoginStatus.loading) {
-            return Container(
-              alignment: Alignment.center,
-              child: Center(child: CircularProgressIndicator()),
-            );
+            return LoadingLottie();
           } else if (controller.status == LoginStatus.none) {
             return Container(
               height: _altura,
@@ -106,8 +105,7 @@ class _CadastroUserPageState
           Column(
             children: [
               Container(
-                padding:
-                    EdgeInsets.only(left: 30, right: 30, bottom: 20, top: 90),
+                padding: EdgeInsets.only(left: 30, right: 30, top: 90),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Crie sua conta",
@@ -126,18 +124,64 @@ class _CadastroUserPageState
 
   _body(BuildContext context) {
     final format = DateFormat("dd-MM-yyyy");
-
+    var maskFormatter = new MaskTextInputFormatter(
+        mask: '## # #### ####', filter: {"#": RegExp(r'[0-9]')});
     return Column(
       children: [
+        Observer(
+          builder: (context) {
+            if (controller.status == LoginStatus.error) {
+              return Container(
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  child: Column(
+                    children: [
+                      Text(
+                          controller.messageRequest != null
+                              ? controller.messageRequest
+                              : '',
+                          style: (TextStyle(color: Colors.red, fontSize: 13))),
+                      ListView.builder(
+                          padding: EdgeInsets.all(0),
+                          shrinkWrap: true,
+                          itemCount: controller.messagesRequestErrors.length,
+                          itemBuilder: (_, index) => ListTile(
+                                title: Text(
+                                  controller.messagesRequestErrors[index] !=
+                                          null
+                                      ? controller.messagesRequestErrors[index]
+                                          .nomeCampo
+                                      : controller.messageRequest,
+                                  style: (TextStyle(
+                                      color: Colors.red, fontSize: 13)),
+                                ),
+                                subtitle: Text(
+                                  controller.messagesRequestErrors[index] !=
+                                          null
+                                      ? controller
+                                          .messagesRequestErrors[index].mensagem
+                                      : '',
+                                  style: (TextStyle(
+                                      color: Colors.red, fontSize: 13)),
+                                ),
+                              ))
+                    ],
+                  ));
+            } else {
+              return Container();
+            }
+          },
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
           child: FormBuilderTextField(
               attribute: 'Nome Completo',
               controller: controller.nome,
+              style: TextStyle(color: Colors.white),
               validators: [
                 FormBuilderValidators.required(errorText: 'Campo obrigatório')
               ],
               decoration: InputDecoration(
+
                   // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                   contentPadding: EdgeInsets.all(13),
                   focusedBorder: OutlineInputBorder(
@@ -151,6 +195,7 @@ class _CadastroUserPageState
           padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
           child: FormBuilderTextField(
               attribute: 'E-mail',
+              style: TextStyle(color: Colors.white),
               controller: controller.email,
               validators: [
                 FormBuilderValidators.required(errorText: 'Campo obrigatório'),
@@ -171,6 +216,7 @@ class _CadastroUserPageState
           child: FormBuilderDateTimePicker(
               attribute: 'Data de nascimento',
               inputType: InputType.date,
+              style: TextStyle(color: Colors.white),
               controller: controller.dtNascimento,
               format: format,
               validators: [
@@ -190,7 +236,9 @@ class _CadastroUserPageState
           padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
           child: FormBuilderTextField(
               attribute: 'Telefone',
+              inputFormatters: [maskFormatter],
               controller: controller.telefone,
+              style: TextStyle(color: Colors.white),
               validators: [
                 FormBuilderValidators.required(errorText: 'Campo obrigatório')
               ],
@@ -208,15 +256,20 @@ class _CadastroUserPageState
           padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
           child: FormBuilderDropdown(
               attribute: 'Sexo',
-              validators: [FormBuilderValidators.required()],
+              validators: [
+                FormBuilderValidators.required(errorText: 'Campo obrigatório')
+              ],
               onChanged: (newValue) {
                 setState(() {
                   controller.sexo = newValue;
                 });
               },
               items: ['Masculino', 'Feminino', 'Prefiro não optar']
-                  .map((sexo) =>
-                      DropdownMenuItem(value: sexo, child: Text("$sexo")))
+                  .map((sexo) => DropdownMenuItem(
+                      value: sexo,
+                      child: Text(
+                        "$sexo",
+                      )))
                   .toList(),
               decoration: InputDecoration(
                   // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -233,6 +286,7 @@ class _CadastroUserPageState
           child: FormBuilderTextField(
               attribute: 'Senha',
               controller: controller.senha,
+              style: TextStyle(color: Colors.white),
               obscureText: true,
               validators: [
                 FormBuilderValidators.required(errorText: 'Campo obrigatório')
@@ -248,30 +302,28 @@ class _CadastroUserPageState
                   hintStyle: TextStyle(color: Colors.white))),
         ),
         Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
-          child: FlatButton(
-            padding: EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-                side: BorderSide(color: Colors.white)),
-            onPressed: () {
-              controller.submitForm(context);
-              final snackbar = SnackBar(
-                duration: Duration(seconds: 3),
-                content: Text('Usuário criado com sucesso!'),
-              );
-              Scaffold.of(context).showSnackBar(snackbar);
-            },
-            child: Text(
-              'Cadastrar',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Inter Medium',
-                  fontSize: 18),
-            ),
-          ),
-        )
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
+            child: Column(
+              children: [
+                FlatButton(
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(color: Colors.white)),
+                  onPressed: () {
+                    controller.submitForm(context);
+                  },
+                  child: Text(
+                    'Cadastrar',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Inter Medium',
+                        fontSize: 18),
+                  ),
+                ),
+              ],
+            ))
       ],
     );
   }

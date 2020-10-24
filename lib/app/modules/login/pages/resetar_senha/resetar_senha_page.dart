@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -32,27 +33,7 @@ class _ResetarSenhaPageState
                 fit: BoxFit.fill)),
         child: Stack(
           children: [
-            CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: const Text(
-                      '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color(0xFF3B4349),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    centerTitle: true,
-                  ),
-                )
-              ],
-            ),
+            NavBarSilverWidget(),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
               child: Column(
