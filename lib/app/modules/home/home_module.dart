@@ -58,13 +58,13 @@ class HomeModule extends ChildModule {
           child: (_, args) => AlergiaPage(),
           transition: TransitionType.downToUp,
         ),
-        ModularRouter('/registro/medicamento',
-            transition: TransitionType.downToUp,
-            child: (_, args) => MedicamentoPage()),
-        ModularRouter('/registro/doenca-cronica',
-            transition: TransitionType.downToUp,
-            child: (_, args) => DoencaCronicaPage()),
-        ModularRouter('/login', module: LoginModule()),
+        // ModularRouter('/registro/medicamento',
+        //     transition: TransitionType.downToUp,
+        //     child: (_, args) => MedicamentoPage()),
+        // ModularRouter('/registro/doenca-cronica',
+        //     transition: TransitionType.downToUp,
+        //     child: (_, args) => DoencaCronicaPage()),
+        // ModularRouter('/login', module: LoginModule()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

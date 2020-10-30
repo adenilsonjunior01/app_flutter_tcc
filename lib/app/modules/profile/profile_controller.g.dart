@@ -64,6 +64,22 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
     });
   }
 
+  final _$listProcedimentosAtom =
+      Atom(name: '_ProfileControllerBase.listProcedimentos');
+
+  @override
+  ObservableList<dynamic> get listProcedimentos {
+    _$listProcedimentosAtom.reportRead();
+    return super.listProcedimentos;
+  }
+
+  @override
+  set listProcedimentos(ObservableList<dynamic> value) {
+    _$listProcedimentosAtom.reportWrite(value, super.listProcedimentos, () {
+      super.listProcedimentos = value;
+    });
+  }
+
   final _$statusAtom = Atom(name: '_ProfileControllerBase.status');
 
   @override
@@ -94,6 +110,24 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
     return _$editUserAsyncAction.run(() => super.editUser(context));
   }
 
+  final _$getProcedimentosMedicosAsyncAction =
+      AsyncAction('_ProfileControllerBase.getProcedimentosMedicos');
+
+  @override
+  Future<dynamic> getProcedimentosMedicos() {
+    return _$getProcedimentosMedicosAsyncAction
+        .run(() => super.getProcedimentosMedicos());
+  }
+
+  final _$deleteProcedimentoMedicoAsyncAction =
+      AsyncAction('_ProfileControllerBase.deleteProcedimentoMedico');
+
+  @override
+  Future deleteProcedimentoMedico(int id) {
+    return _$deleteProcedimentoMedicoAsyncAction
+        .run(() => super.deleteProcedimentoMedico(id));
+  }
+
   final _$_ProfileControllerBaseActionController =
       ActionController(name: '_ProfileControllerBase');
 
@@ -114,6 +148,7 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
 users: ${users},
 firstLetter: ${firstLetter},
 email: ${email},
+listProcedimentos: ${listProcedimentos},
 status: ${status}
     ''';
   }

@@ -29,7 +29,7 @@ class DoencaCronicaRepository extends Disposable
     var token = prefs.getString('token');
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
-      var response = await client.delete('${URL_API}/doenca-cronica/${id}');
+      var response = await client.delete('${URL_API}/doencaCronica/${id}');
       return response.statusCode;
     } on DioError catch (e) {}
   }
@@ -40,7 +40,7 @@ class DoencaCronicaRepository extends Disposable
     var token = prefs.getString('token');
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
-      var response = await client.put('${URL_API}/doenca-cronica', data: data);
+      var response = await client.put('${URL_API}/doencaCronica', data: data);
       return response.data;
     } on DioError catch (e) {}
   }
@@ -67,7 +67,7 @@ class DoencaCronicaRepository extends Disposable
     var token = prefs.getString('token');
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
-      var response = await client.post('${URL_API}/doenca-cronica', data: data);
+      var response = await client.post('${URL_API}/doencaCronica', data: data);
       var values = response.data[0];
       var convert = DoencasCronicas.fromJson(values);
       return convert;

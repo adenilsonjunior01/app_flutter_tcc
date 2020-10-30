@@ -21,7 +21,7 @@ class RegistrosModel {
         : null;
     dtAtualizacao = json['dt_atualizacao'];
     if (json['doencasCronicas'] != null) {
-      doencasCronicas = new List<Null>();
+      doencasCronicas = new List<DoencasCronicas>();
       json['doencasCronicas'].forEach((v) {
         doencasCronicas.add(new DoencasCronicas.fromJson(v));
       });
@@ -101,19 +101,19 @@ class Medicamentos {
 
 class DoencasCronicas {
   int id;
-  String descDoencaCronica;
+  String descDoenca;
 
-  DoencasCronicas({this.id, this.descDoencaCronica});
+  DoencasCronicas({this.id, this.descDoenca});
 
   DoencasCronicas.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    descDoencaCronica = json['descDoencaCronica'];
+    descDoenca = json['descDoenca'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['descDoencaCronica'] = this.descDoencaCronica;
+    data['descDoenca'] = this.descDoenca;
     return data;
   }
 }

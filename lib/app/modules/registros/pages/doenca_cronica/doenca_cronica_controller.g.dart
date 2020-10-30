@@ -66,6 +66,22 @@ mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
     });
   }
 
+  final _$isEmptyListAtom =
+      Atom(name: '_DoencaCronicaControllerBase.isEmptyList');
+
+  @override
+  bool get isEmptyList {
+    _$isEmptyListAtom.reportRead();
+    return super.isEmptyList;
+  }
+
+  @override
+  set isEmptyList(bool value) {
+    _$isEmptyListAtom.reportWrite(value, super.isEmptyList, () {
+      super.isEmptyList = value;
+    });
+  }
+
   final _$submitFormAsyncAction =
       AsyncAction('_DoencaCronicaControllerBase.submitForm');
 
@@ -118,7 +134,8 @@ mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
     return '''
 status: ${status},
 oldValueMedicamento: ${oldValueMedicamento},
-listDoencaCronica: ${listDoencaCronica}
+listDoencaCronica: ${listDoencaCronica},
+isEmptyList: ${isEmptyList}
     ''';
   }
 }

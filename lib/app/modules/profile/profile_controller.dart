@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/profile/profile_status_request.dart';
 import 'package:app_tcc/app/modules/profile/repositories/profile_repository.dart';
+import 'package:app_tcc/app/modules/registros/models/get_procedimento_medico.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -32,6 +33,9 @@ abstract class _ProfileControllerBase with Store {
 
   @observable
   String email = '';
+
+  @observable
+  var listProcedimentos = ObservableList();
 
   @observable
   ProfileStatusRequest status = ProfileStatusRequest.none;
@@ -74,5 +78,31 @@ abstract class _ProfileControllerBase with Store {
   clearInputDesMedicamento() {
     nameUser.text = '';
     telUser.text = '';
+  }
+
+  @action
+  Future getProcedimentosMedicos() async {
+    status = ProfileStatusRequest.loading;
+    try {
+      var procedimentos = await repository.getProcedimentosMedicos;
+      listProcedimentos.clear();
+      procedimentos.forEach((value) => listProcedimentos.add(value));
+      status = ProfileStatusRequest.success;
+    } catch (e) {
+      status = ProfileStatusRequest.error..value = e;
+    }
+  }
+
+  @action
+  deleteProcedimentoMedico(int id) async {
+    status = ProfileStatusRequest.loading;
+    try {
+      var procedimento = await repository.deteleProcedimentoMedico(id);
+      if (procedimento == 200 || procedimento == 204) {
+        getProcedimentosMedicos();
+      }
+    } catch (e) {
+      status = ProfileStatusRequest.error..value = e;
+    }
   }
 }

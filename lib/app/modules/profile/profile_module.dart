@@ -1,4 +1,5 @@
 import 'package:app_tcc/app/modules/profile/repositories/interfaces/profile_repository_interface.dart';
+import 'package:app_tcc/app/modules/registros/registros_module.dart';
 import 'package:dio/dio.dart';
 import 'repositories/profile_repository.dart';
 import 'profile_controller.dart';
@@ -16,6 +17,7 @@ class ProfileModule extends ChildModule {
   @override
   List<ModularRouter> get routers => [
         ModularRouter(Modular.initialRoute, child: (_, args) => ProfilePage()),
+        ModularRouter('/registro', module: RegistrosModule()),
       ];
 
   static Inject get to => Inject<ProfileModule>.of();

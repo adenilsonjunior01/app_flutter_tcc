@@ -1,9 +1,11 @@
 import 'package:app_tcc/app/modules/login/models/create_user_model.dart';
+import 'package:app_tcc/app/modules/registros/models/get_procedimento_medico.dart';
 import 'package:app_tcc/app/shared/custom_dio/interceptor_dio.dart';
 import 'package:app_tcc/app/shared/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'interfaces/profile_repository_interface.dart';
 
@@ -38,6 +40,34 @@ class ProfileRepository implements IProfileRepository {
     try {
       var response = await client.put('${URL_API}/user', data: data);
       return response.data;
+    } on DioError catch (e) {
+      throw (e.message);
+    }
+  }
+
+  @override
+  Future get getProcedimentosMedicos async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    client.options.headers = {"Authorization": "Bearer ${token}"};
+    try {
+      var response = await client.get('${URL_API}/procedimentoMedico');
+      var values = response.data
+          .map((value) => GetProcedimentoMedicoModel.fromJson(value));
+      return values;
+    } on DioError catch (e) {
+      throw (e.message);
+    }
+  }
+
+  @override
+  Future deteleProcedimentoMedico(id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    client.options.headers = {"Authorization": "Bearer ${token}"};
+    try {
+      var response = await client.delete('${URL_API}/procedimentoMedico/${id}');
+      return response.statusCode;
     } on DioError catch (e) {
       throw (e.message);
     }

@@ -10,6 +10,7 @@ class TitlesCadastroTab extends StatelessWidget {
     {"id": 2, "name": "Alergia", "icon": ""},
     {"id": 3, "name": "Doença Crônica", "icon": ""},
     {"id": 4, "name": "Medicamento", "icon": ""},
+    {"id": 5, "name": "Procedimento Médico", "icon": ""},
   ];
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,19 @@ class TitlesCadastroTab extends StatelessWidget {
         onTap: () {
           // Navigator.pushNamed(context, '/registros/medicamento');
           Modular.link.pushNamed('/registro/medicamento');
+        },
+      ),
+      ListTile(
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundColor: Colors.transparent,
+        ),
+        title: Text(lista[4]['name'],
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
+        trailing: Icon(Icons.keyboard_arrow_right),
+        onTap: () {
+          // Navigator.pushNamed(context, '/registros/medicamento');
+          Modular.link.pushNamed('/registro/procedimento-medico');
         },
       ),
     ]).toList();

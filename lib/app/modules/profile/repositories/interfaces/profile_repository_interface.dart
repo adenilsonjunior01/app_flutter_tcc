@@ -6,4 +6,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 abstract class IProfileRepository implements Disposable {
   Future get dadosUsuario;
   Future<CreateUserModel> editUser(dynamic data);
+  Future get getProcedimentosMedicos;
+  Future deteleProcedimentoMedico(dynamic id);
 }

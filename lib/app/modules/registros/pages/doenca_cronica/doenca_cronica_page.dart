@@ -33,151 +33,86 @@ class _DoencaCronicaPageState
 
   @override
   Widget build(BuildContext context) {
-    var _altura = MediaQuery.of(context).size.height;
-    var _largura = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-            height: _altura,
-            width: _largura,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/form/bg_cadastro.png'),
-                    fit: BoxFit.fill)),
-            child: Stack(
-              children: [
-                NavBarSilverWidget(),
-                Observer(
-                  builder: (context) {
-                    if (controller.status == RegistroStatusRequest.loading) {
-                      return LoadingLottie();
-                    } else if (controller.status ==
-                        RegistroStatusRequest.success) {
-                      return Padding(
-                        padding:
-                            const EdgeInsets.only(top: 2, left: 20, right: 20),
-                        child: Column(
-                          children: [
-                            _body(context),
-                            FormInputCronicaWidget(
-                              controller: controller,
-                              descHint: 'Descrição da doença crônica',
-                            ),
-                            TexteDeleteItemWidget(),
-                            TitleListaWidget('Lista'),
-                            Expanded(child: Observer(
-                              builder: (_) {
-                                if (controller.listDoencaCronica.length < 1) {
-                                  return NotFound404(
-                                    message: 'Nenhum registro encontrado.',
-                                  );
-                                } else {
-                                  return Observer(builder: (_) {
-                                    return ListView.builder(
-                                        padding: EdgeInsets.only(top: 10),
-                                        itemCount:
-                                            controller.listDoencaCronica.length,
-                                        itemBuilder: (_, index) {
-                                          var list = controller
-                                              .listDoencaCronica[index];
-                                          return Container(
-                                              child: Dismissible(
-                                                  onDismissed: (direction) {
-                                                    _confirmDialog(
-                                                        context, list);
-                                                  },
-                                                  background: Container(
-                                                    color: Colors.red,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment(-0.9, 00.0),
-                                                      child: Icon(
-                                                        Icons.delete,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  direction: DismissDirection
-                                                      .startToEnd,
-                                                  key: Key(DateTime.now()
-                                                      .millisecondsSinceEpoch
-                                                      .toString()),
-                                                  child: ListTile(
-                                                    title: Text(
-                                                        list.descDoencaCronica ==
-                                                                null
-                                                            ? ''
-                                                            : list
-                                                                .descDoencaCronica),
-                                                    // leading: ,
-                                                    trailing: IconButton(
-                                                      icon: Icon(
-                                                        Icons.edit,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      onPressed: () {
-                                                        _dialog(list);
-                                                      },
-                                                    ),
-                                                  )));
-                                        });
-                                  });
-                                }
-                              },
-                            ))
-                          ],
-                        ),
-                      );
-                    } else {
-                      return Container(
-                        height: MediaQuery.of(context).size.height,
-                        padding: EdgeInsets.only(left: 20, right: 20),
-                        alignment: Alignment.center,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomErrorRequestWidget(
-                              message:
-                                  'Ocorreu um erro ao tentar carregar a Lista de doenças crônicas.',
-                            ),
-                            ButtonTheme(
-                              child: FlatButton(
-                                padding: EdgeInsets.all(10),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    side: BorderSide(color: Color(0xFFA49FBB))),
-                                onPressed: () {
-                                  controller.getDoencasCronicas(context);
-                                },
-                                child: Text(
-                                  'Tentar novamente',
-                                  style: TextStyle(
-                                      color: Color(0xFF3B4349),
-                                      fontFamily: 'Inter Medium',
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
-            )));
+    return Scaffold(backgroundColor: Colors.white, body: _body(context));
   }
 
   _body(BuildContext context) {
+    return Container(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/form/bg_cadastro.png'),
+                      fit: BoxFit.fill)),
+              child: Stack(
+                children: [
+                  NavBarSilverWidget(),
+                  Observer(
+                    builder: (context) {
+                      if (controller.status == RegistroStatusRequest.loading) {
+                        return LoadingLottie();
+                      } else if (controller.status ==
+                          RegistroStatusRequest.success) {
+                        return _contentForm(context);
+                      } else {
+                        return Container(
+                          height: MediaQuery.of(context).size.height,
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          alignment: Alignment.center,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomErrorRequestWidget(
+                                message:
+                                    'Ocorreu um erro ao tentar carregar a Lista de doenças crônicas.',
+                              ),
+                              ButtonTheme(
+                                child: FlatButton(
+                                  padding: EdgeInsets.all(10),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      side:
+                                          BorderSide(color: Color(0xFFA49FBB))),
+                                  onPressed: () {
+                                    controller.getDoencasCronicas(context);
+                                  },
+                                  child: Text(
+                                    'Tentar novamente',
+                                    style: TextStyle(
+                                        color: Color(0xFF3B4349),
+                                        fontFamily: 'Inter Medium',
+                                        fontSize: 16),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _title(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
           Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.width / 4,
+                height: MediaQuery.of(context).size.width / 3,
               ),
               Text(
                 "Cadastro de Doenças Crônicas",
@@ -192,6 +127,76 @@ class _DoencaCronicaPageState
         ],
       ),
     );
+  }
+
+  _contentForm(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
+      child: Column(
+        children: [
+          _title(context),
+          FormInputCronicaWidget(
+            controller: controller,
+            descHint: 'Descrição da doença crônica',
+          ),
+          TexteDeleteItemWidget(),
+          TitleListaWidget('Lista'),
+          Expanded(child: Observer(
+            builder: (_) {
+              if (controller.listDoencaCronica.length < 1) {
+                return NotFound404(
+                  message: 'Nenhum registro encontrado.',
+                );
+              } else {
+                return _contentList(context);
+              }
+            },
+          ))
+        ],
+      ),
+    );
+  }
+
+  _contentList(BuildContext context) {
+    return Observer(builder: (_) {
+      return ListView.builder(
+          padding: EdgeInsets.only(top: 10),
+          itemCount: controller.listDoencaCronica.length,
+          itemBuilder: (_, index) {
+            var list = controller.listDoencaCronica[index];
+            return Container(
+                child: Dismissible(
+                    onDismissed: (direction) {
+                      _confirmDialog(context, list);
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      child: Align(
+                        alignment: Alignment(-0.9, 00.0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    direction: DismissDirection.startToEnd,
+                    key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
+                    child: ListTile(
+                      title:
+                          Text(list.descDoenca == null ? '' : list.descDoenca),
+                      // leading: ,
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          _dialog(list);
+                        },
+                      ),
+                    )));
+          });
+    });
   }
 
   _dialog(DoencasCronicas item) {
@@ -229,7 +234,7 @@ class _DoencaCronicaPageState
             actions: <Widget>[
               FlatButton(
                 onPressed: () {
-                  item.descDoencaCronica = controller.newdescDoencaCronica.text;
+                  item.descDoenca = controller.newdescDoencaCronica.text;
                   controller.editItem(item);
                   bool formValido = controller.formKey.currentState.validate();
                   if (!formValido) {

@@ -34,6 +34,9 @@ abstract class _DoencaCronicaControllerBase with Store {
   @observable
   var listDoencaCronica = ObservableList<DoencasCronicas>();
 
+  @observable
+  bool isEmptyList = false;
+
   @action
   Future<void> submitForm(BuildContext context) async {
     if (formBuilderKey.currentState.saveAndValidate()) {
@@ -46,6 +49,7 @@ abstract class _DoencaCronicaControllerBase with Store {
         listDoencaCronica.add(medicamento);
         status = RegistroStatusRequest.success;
         _clearInputDesMedicamento();
+        getDoencasCronicas(context);
       } catch (e) {
         status = RegistroStatusRequest.error..value = e;
       }
@@ -56,7 +60,7 @@ abstract class _DoencaCronicaControllerBase with Store {
 
   toJson2(String desc) {
     return [
-      {'desc': desc}
+      {'descDoenca': desc}
     ];
   }
 
@@ -68,6 +72,11 @@ abstract class _DoencaCronicaControllerBase with Store {
       doencaCronica = doencaCronica.doencasCronicas;
       listDoencaCronica.clear();
       doencaCronica.forEach((e) => listDoencaCronica.add(e));
+      if (listDoencaCronica.length == 0) {
+        isEmptyList = false;
+      } else {
+        isEmptyList = true;
+      }
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
@@ -99,7 +108,7 @@ abstract class _DoencaCronicaControllerBase with Store {
     }
     try {
       var newValue = [
-        {"id": item.id, "desc": item.descDoencaCronica}
+        {"id": item.id, "descDoenca": item.descDoenca}
       ];
       var valueParser = jsonEncode(newValue);
       status = RegistroStatusRequest.loading;
