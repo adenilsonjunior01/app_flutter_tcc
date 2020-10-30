@@ -20,7 +20,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
   @override
   initState() {
     super.initState();
-    controller.verifyToken();
+    controller.verifyToken(context);
     controller.status = LoginStatus.none;
   }
 

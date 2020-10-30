@@ -10,6 +10,7 @@ import 'package:app_tcc/app/shared/widgets/custom-error-request-widget.dart';
 import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:app_tcc/app/shared/widgets/not_found_404.dart';
 import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -27,6 +28,7 @@ class MedicamentoPage extends StatefulWidget {
 class _MedicamentoPageState
     extends ModularState<MedicamentoPage, MedicamentoController> {
   //use 'controller' variable to access controller
+
   @override
   void initState() {
     // TODO: implement initState
@@ -108,30 +110,6 @@ class _MedicamentoPageState
     );
   }
 
-  _title(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 4,
-              ),
-              Text(
-                "Cadastro de Medicamentos",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color(0xFF3F414E),
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
   _contentForm(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
@@ -157,6 +135,30 @@ class _MedicamentoPageState
               }
             },
           )),
+        ],
+      ),
+    );
+  }
+
+  _title(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        children: [
+          Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 4,
+              ),
+              Text(
+                "Cadastro de Medicamentos",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Color(0xFF3F414E),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -241,7 +243,7 @@ class _MedicamentoPageState
               FlatButton(
                 onPressed: () {
                   item.descMedicamento = controller.newDescMedicamento.text;
-                  controller.editItem(item);
+                  controller.editItem(item, context);
                   bool formValido = controller.formKey.currentState.validate();
                   if (!formValido) {
                     return;

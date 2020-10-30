@@ -109,8 +109,8 @@ mixin _$MedicamentoController on _MedicamentoControllerBase, Store {
       AsyncAction('_MedicamentoControllerBase.editItem');
 
   @override
-  Future editItem(Medicamentos item) {
-    return _$editItemAsyncAction.run(() => super.editItem(item));
+  Future editItem(Medicamentos item, BuildContext context) {
+    return _$editItemAsyncAction.run(() => super.editItem(item, context));
   }
 
   final _$submitFormAsyncAction =

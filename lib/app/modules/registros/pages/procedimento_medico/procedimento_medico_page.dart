@@ -54,43 +54,45 @@ class _ProcedimentoMedicoPageState
                       if (controller.status == RegistroStatusRequest.loading) {
                         return LoadingLottie();
                       } else if (controller.status ==
-                          RegistroStatusRequest.success) {
+                              RegistroStatusRequest.success ||
+                          controller.status == RegistroStatusRequest.none) {
                         return _contentForm(context);
-                      } else {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 15, right: 15),
-                              child: CustomErrorRequestWidget(
-                                message:
-                                    'Desculpe, ocorreu um erro, tente novamente mais tarde.',
-                              ),
-                            ),
-                            ButtonTheme(
-                              child: FlatButton(
-                                padding: EdgeInsets.all(10),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    side: BorderSide(color: Color(0xFFA49FBB))),
-                                onPressed: () {
-                                  // Navigator.pop(context);
-                                  controller.resetStatus();
-                                },
-                                child: Text(
-                                  'Tentar novamente',
-                                  style: TextStyle(
-                                      color: Color(0xFF3B4349),
-                                      fontFamily: 'Inter Medium',
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
                       }
+                      // else {
+                      //   return Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Padding(
+                      //         padding:
+                      //             const EdgeInsets.only(left: 15, right: 15),
+                      //         child: CustomErrorRequestWidget(
+                      //           message:
+                      //               'Desculpe, ocorreu um erro, tente novamente mais tarde.',
+                      //         ),
+                      //       ),
+                      //       ButtonTheme(
+                      //         child: FlatButton(
+                      //           padding: EdgeInsets.all(10),
+                      //           shape: RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(5),
+                      //               side: BorderSide(color: Color(0xFFA49FBB))),
+                      //           onPressed: () {
+                      //             // Navigator.pop(context);
+                      //             controller.resetStatus();
+                      //           },
+                      //           child: Text(
+                      //             'Tentar novamente',
+                      //             style: TextStyle(
+                      //                 color: Color(0xFF3B4349),
+                      //                 fontFamily: 'Inter Medium',
+                      //                 fontSize: 16),
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   );
+                      // }
                     },
                   )
                 ],
@@ -114,8 +116,7 @@ class _ProcedimentoMedicoPageState
             height: 10,
           ),
           FormInputProcedimentoMedicoWidget(
-            controller: controller,
-          ),
+              controller: controller, context: context),
         ],
       ),
     );

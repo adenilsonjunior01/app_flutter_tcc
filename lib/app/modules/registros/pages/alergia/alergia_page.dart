@@ -116,9 +116,9 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
           ),
           // Input e botão de adiconar novo medicamento
           FormInputAlergiaWidget(
-            controller: controller,
-            descHint: 'Descrição do medicamento',
-          ),
+              controller: controller,
+              descHint: 'Descrição do medicamento',
+              context2: context),
           // Título da Lista
           TexteDeleteItemWidget(),
           TitleListaWidget('Lista'),

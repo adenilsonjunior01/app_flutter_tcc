@@ -5,6 +5,8 @@ import 'package:app_tcc/app/modules/login/models/create_user_model.dart';
 import 'package:app_tcc/app/modules/login/models/error_cadastro_array_model.dart';
 import 'package:app_tcc/app/modules/login/models/error_cadastro_user_model.dart';
 import 'package:app_tcc/app/modules/login/repositories/register_user_repository.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -76,12 +78,27 @@ abstract class _CadastroUserControllerBase with Store {
             messageRequest = response.message;
           }
           status = LoginStatus.error..value = user;
+          showFlushBar(
+              message: 'Erro ao cadastrar novo Usuário!',
+              title: 'Oops!',
+              type: 'error',
+              context: context);
         } else {
           status = LoginStatus.success..value = user;
           _resetInputsForm();
+          showFlushBar(
+              message: 'Usuário criado com sucesso!',
+              title: 'Sucesso',
+              type: 'success',
+              context: context);
         }
       } catch (e) {
         status = LoginStatus.error..value = e;
+        showFlushBar(
+            message: 'Erro ao cadastrar novo Usuário!',
+            title: 'Oops!',
+            type: 'error',
+            context: context);
       }
     } else {
       return null;
@@ -137,5 +154,48 @@ abstract class _CadastroUserControllerBase with Store {
     dtNascimento.text = '';
     telefone.text = '';
     senha.text = '';
+  }
+
+  showFlushBar(
+      {String message, String type, String title, BuildContext context}) {
+    switch (type) {
+      case 'success':
+        {
+          FlushbarHelper.createSuccess(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'error':
+        {
+          FlushbarHelper.createError(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'warning':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'info':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      default:
+        {
+          Flushbar(
+            title: title,
+            message: message,
+            duration: Duration(seconds: 4),
+          )..show(context);
+          break;
+        }
+    }
   }
 }

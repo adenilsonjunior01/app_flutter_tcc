@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/login/login_status.dart';
+import 'package:app_tcc/app/modules/login/models/user_auth_model.dart';
 import 'package:app_tcc/app/modules/login/repositories/auth_repository.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -53,22 +56,32 @@ abstract class _LoginControllerBase with Store {
       'email': user.text,
       'senha': password.text,
     };
-    // UserLoginModel body = UserLoginModel.fromJson(paramsLogin);
     var body = json.encode(params);
 
-    String login = user.text;
-    String senha = password.text;
-
     try {
-      // var usuario = await LoginApi.login(login, senha);
       errorLogin = false;
-      final usuario = await repository.authentication(body);
-      status = LoginStatus.success..value = usuario;
-      await prefs.setString('token', usuario.token);
-      _navegaHomePage(context);
+      final response = await repository.authentication(body);
+      if (response.statusCode != 200) {
+        status = LoginStatus.error..value = response.statusCode;
+        showFlushBar(
+            message: 'Usuário ou senha inválido!',
+            title: 'Oops!',
+            type: 'error',
+            context: context);
+      } else {
+        status = LoginStatus.success..value = response;
+        var credentials = UserAuthModel.fromJson(response.data);
+        await prefs.setString('token', credentials.token);
+        _navegaHomePage(context);
+      }
     } catch (e) {
-      errorLogin = true;
+      // errorLogin = true;
       status = LoginStatus.error..value = e;
+      showFlushBar(
+          message: 'Usuário ou senha inválido!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -101,7 +114,7 @@ abstract class _LoginControllerBase with Store {
   }
 
   @action
-  verifyToken() async {
+  verifyToken(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var jwtToken = prefs.getString('token');
 
@@ -110,11 +123,57 @@ abstract class _LoginControllerBase with Store {
         Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
         JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
         var nameUser = user.nome;
-        bool isTokenExpired = JwtDecoder.isExpired(jwtToken);
-        if (!isTokenExpired) {
-          Modular.link.pushNamed('/home', arguments: nameUser);
-        }
+        Modular.link.pushNamed('/home', arguments: nameUser);
       }
-    } catch (e) {}
+    } catch (e) {
+      showFlushBar(
+          message: 'Erro ao validar Token!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
+    }
+  }
+
+  showFlushBar(
+      {String message, String type, String title, BuildContext context}) {
+    switch (type) {
+      case 'success':
+        {
+          FlushbarHelper.createSuccess(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'error':
+        {
+          FlushbarHelper.createError(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'warning':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'info':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      default:
+        {
+          Flushbar(
+            title: title,
+            message: message,
+            duration: Duration(seconds: 4),
+          )..show(context);
+          break;
+        }
+    }
   }
 }

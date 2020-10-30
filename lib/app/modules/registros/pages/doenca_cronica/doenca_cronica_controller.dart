@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:app_tcc/app/modules/registros/interfaces/doenca_cronica_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/models/item_model.dart';
 import 'package:app_tcc/app/modules/registros/models/registros_model.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobx/mobx.dart';
@@ -50,8 +52,18 @@ abstract class _DoencaCronicaControllerBase with Store {
         status = RegistroStatusRequest.success;
         _clearInputDesMedicamento();
         getDoencasCronicas(context);
+        showFlushBar(
+            message: 'Doença Crônica cadastrada com sucesso!',
+            title: 'Sucesso',
+            type: 'success',
+            context: context);
       } catch (e) {
         status = RegistroStatusRequest.error..value = e;
+        showFlushBar(
+            message: 'Erro ao cadastrar Doenças Crônicas!',
+            title: 'Oops!',
+            type: 'error',
+            context: context);
       }
     } else {
       return null;
@@ -80,6 +92,11 @@ abstract class _DoencaCronicaControllerBase with Store {
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao buscar Doenças Crônicas!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -91,17 +108,32 @@ abstract class _DoencaCronicaControllerBase with Store {
       var response = await repository.deleteDoencaCronica(medicamento);
       if (response == 400 || response == 500) {
         listDoencaCronica.add(oldValueMedicamento);
+        showFlushBar(
+            message: 'Erro ao excluir Doença Crônica!',
+            title: 'Oops!',
+            type: 'error',
+            context: context);
       } else {
         getDoencasCronicas(context);
+        showFlushBar(
+            message: 'Doença Crônica excluída com sucesso!',
+            title: 'Sucesso',
+            type: 'success',
+            context: context);
       }
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao excluir Doença Crônica!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
   @action
-  editItem(DoencasCronicas item) async {
+  editItem(DoencasCronicas item, BuildContext context) async {
     bool formValido = formKey.currentState.validate();
     if (!formValido) {
       return;
@@ -114,8 +146,18 @@ abstract class _DoencaCronicaControllerBase with Store {
       status = RegistroStatusRequest.loading;
       var response = await repository.editDoencaCronica(valueParser);
       status = RegistroStatusRequest.success;
+      showFlushBar(
+          message: 'Doença Crônica alterada com sucesso!',
+          title: 'Sucesso',
+          type: 'success',
+          context: context);
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao editar Doença Crônica!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
     _clearInputDesMedicamento();
   }
@@ -128,5 +170,48 @@ abstract class _DoencaCronicaControllerBase with Store {
   @action
   backPage(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  showFlushBar(
+      {String message, String type, String title, BuildContext context}) {
+    switch (type) {
+      case 'success':
+        {
+          FlushbarHelper.createSuccess(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'error':
+        {
+          FlushbarHelper.createError(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'warning':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'info':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      default:
+        {
+          Flushbar(
+            title: title,
+            message: message,
+            duration: Duration(seconds: 4),
+          )..show(context);
+          break;
+        }
+    }
   }
 }

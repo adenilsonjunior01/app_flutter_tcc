@@ -111,8 +111,8 @@ mixin _$DoencaCronicaController on _DoencaCronicaControllerBase, Store {
       AsyncAction('_DoencaCronicaControllerBase.editItem');
 
   @override
-  Future editItem(DoencasCronicas item) {
-    return _$editItemAsyncAction.run(() => super.editItem(item));
+  Future editItem(DoencasCronicas item, BuildContext context) {
+    return _$editItemAsyncAction.run(() => super.editItem(item, context));
   }
 
   final _$_DoencaCronicaControllerBaseActionController =

@@ -85,8 +85,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
       AsyncAction('_LoginControllerBase.verifyToken');
 
   @override
-  Future verifyToken() {
-    return _$verifyTokenAsyncAction.run(() => super.verifyToken());
+  Future verifyToken(BuildContext context) {
+    return _$verifyTokenAsyncAction.run(() => super.verifyToken(context));
   }
 
   final _$_LoginControllerBaseActionController =

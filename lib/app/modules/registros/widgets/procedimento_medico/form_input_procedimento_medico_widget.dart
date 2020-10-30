@@ -9,8 +9,9 @@ import 'package:intl/intl.dart';
 
 class FormInputProcedimentoMedicoWidget extends StatefulWidget {
   ProcedimentoMedicoController controller;
+  BuildContext context;
 
-  FormInputProcedimentoMedicoWidget({Key key, this.controller})
+  FormInputProcedimentoMedicoWidget({Key key, this.controller, this.context})
       : super(key: key);
 
   @override
@@ -184,7 +185,7 @@ class _FormInputProcedimentoMedicoWidgetState
                     side: BorderSide(color: Color(0xFFA49FBB))),
                 onPressed: () {
                   // controller.addItem();
-                  widget.controller.submitForm(context);
+                  widget.controller.submitForm(widget.context);
                 },
                 child: Text(
                   'Salvar',

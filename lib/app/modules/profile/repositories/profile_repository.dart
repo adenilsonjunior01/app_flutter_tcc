@@ -55,8 +55,8 @@ class ProfileRepository implements IProfileRepository {
       var values = response.data
           .map((value) => GetProcedimentoMedicoModel.fromJson(value));
       return values;
-    } on DioError catch (e) {
-      throw (e.message);
+    } catch (e) {
+      return e;
     }
   }
 

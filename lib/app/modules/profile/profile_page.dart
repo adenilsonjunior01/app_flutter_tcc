@@ -27,14 +27,17 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
     // TODO: implement initState
     super.initState();
     controller.jwtDecode();
-    controller.getProcedimentosMedicos();
+    controller.getProcedimentosMedicos(context);
   }
 
   @override
   Widget build(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
     var _largura = MediaQuery.of(context).size.width;
-
+    Color lightGreen = Color(0xFF95E08E);
+    Color lightBlueIsh = Color(0xFF33BBB5);
+    Color darkGreen = Color(0xFF00AA12);
+    Color backgroundColor = Color(0xFFEFEEF5);
     return Scaffold(
       body: Container(
         height: _altura,
@@ -50,8 +53,6 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
             Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).size.width / 3),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -64,6 +65,9 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              SizedBox(
+                                height: 200,
+                              ),
                               _header(context),
                               _subHeader(context),
                               _detailsUser(context),
@@ -661,7 +665,7 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
     Widget continueButton = FlatButton(
       child: Text('Sim, continuar'),
       onPressed: () {
-        controller.deleteProcedimentoMedico(procedimento.id);
+        controller.deleteProcedimentoMedico(procedimento.id, context);
         Navigator.pop(context);
       },
     );

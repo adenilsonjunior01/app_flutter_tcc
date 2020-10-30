@@ -19,14 +19,13 @@ class AuthRepository extends Disposable {
     client.interceptors.add(InterceptorLoginDio());
   }
 
-  Future<UserAuthModel> authentication(data) async {
+  Future authentication(data) async {
     UserAuthModel credentials;
     try {
       var response = await client.post('${LOGIN_API}/login', data: data);
-      credentials = UserAuthModel.fromJson(response.data);
-      return credentials;
+      return response;
     } on DioError catch (e) {
-      throw (e.message);
+      return e.response;
     }
   }
 

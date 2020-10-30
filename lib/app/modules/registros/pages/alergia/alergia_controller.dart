@@ -4,6 +4,8 @@ import 'package:app_tcc/app/modules/registros/interfaces/alergia_repository_inte
 import 'package:app_tcc/app/modules/registros/models/item_model.dart';
 import 'package:app_tcc/app/modules/registros/models/registros_model.dart';
 import 'package:app_tcc/app/shared/models/dados_medicos_model.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobx/mobx.dart';
@@ -62,8 +64,18 @@ abstract class _AlergiaControllerBase with Store {
       var response = await repository.deleteAlergia(medicamento);
       getAlergias(context);
       status = RegistroStatusRequest.success;
+      showFlushBar(
+          message: 'Alergia excluída com sucesso!',
+          title: 'Sucesso',
+          type: 'success',
+          context: context);
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao remover Alergia!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -77,6 +89,11 @@ abstract class _AlergiaControllerBase with Store {
       getTiposAlergia(context);
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao buscar Alergias!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -88,6 +105,11 @@ abstract class _AlergiaControllerBase with Store {
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao tipos de Alergias!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -117,8 +139,18 @@ abstract class _AlergiaControllerBase with Store {
         var response = await repository.editAlergia(valueParser);
         getAlergias(context);
         status = RegistroStatusRequest.success;
+        showFlushBar(
+            message: 'Alergia editada com sucesso!',
+            title: 'Sucesso',
+            type: 'success',
+            context: context);
       } catch (e) {
         status = RegistroStatusRequest.error..value = e;
+        showFlushBar(
+            message: 'Erro ao editar Alergia!',
+            title: 'Oops!',
+            type: 'error',
+            context: context);
       }
       _clearInputDesMedicamento();
     } else {
@@ -138,9 +170,19 @@ abstract class _AlergiaControllerBase with Store {
         final medicamento = await repository.registerNewAlergia(jsonConvert);
         listAlergias.add(medicamento);
         status = RegistroStatusRequest.success;
+        showFlushBar(
+            message: 'Alergia cadastrada com sucesso!',
+            title: 'Sucesso',
+            type: 'success',
+            context: context);
         _clearInputDesMedicamento();
       } catch (e) {
         status = RegistroStatusRequest.error..value = e;
+        showFlushBar(
+            message: 'Erro ao cadastrar Alergia!',
+            title: 'Oops!',
+            type: 'error',
+            context: context);
       }
     } else {
       return null;
@@ -162,5 +204,48 @@ abstract class _AlergiaControllerBase with Store {
   _clearInputDesMedicamento() {
     descAlergias.text = '';
     newDescAlergias.text = '';
+  }
+
+  showFlushBar(
+      {String message, String type, String title, BuildContext context}) {
+    switch (type) {
+      case 'success':
+        {
+          FlushbarHelper.createSuccess(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'error':
+        {
+          FlushbarHelper.createError(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'warning':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'info':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      default:
+        {
+          Flushbar(
+            title: title,
+            message: message,
+            duration: Duration(seconds: 4),
+          )..show(context);
+          break;
+        }
+    }
   }
 }

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:app_tcc/app/modules/registros/interfaces/procedimento_medico_interface.dart';
 import 'package:app_tcc/app/modules/registros/models/get_procedimento_medico.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobx/mobx.dart';
@@ -70,8 +72,18 @@ abstract class _ProcedimentoMedicoControllerBase with Store {
     try {
       var procedimento = await repository.cadastroProcedimentoMedico(body);
       status = RegistroStatusRequest.success;
+      showFlushBar(
+          message: 'Procedimento Médico cadastrado com sucesso!',
+          title: 'Sucesso',
+          type: 'success',
+          context: context);
     } catch (e) {
-      status = RegistroStatusRequest.error..value = e;
+      status = RegistroStatusRequest.none..value = e;
+      showFlushBar(
+          message: 'Erro ao cadastrar Procedimento Médico!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -99,8 +111,18 @@ abstract class _ProcedimentoMedicoControllerBase with Store {
         descricao.text = values.descricao;
       }
       status = RegistroStatusRequest.success;
+      showFlushBar(
+          message: 'Procedimento Médico alterado com sucesso!',
+          title: 'Sucesso',
+          type: 'success',
+          context: context);
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao editar Procedimento Médico!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -126,6 +148,11 @@ abstract class _ProcedimentoMedicoControllerBase with Store {
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao buscar Procedimentos Médicos!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -140,11 +167,59 @@ abstract class _ProcedimentoMedicoControllerBase with Store {
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao buscar Tipos de Procedimentos!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
   @action
   resetStatus() {
     status = RegistroStatusRequest.success;
+  }
+
+  showFlushBar(
+      {String message, String type, String title, BuildContext context}) {
+    switch (type) {
+      case 'success':
+        {
+          FlushbarHelper.createSuccess(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'error':
+        {
+          FlushbarHelper.createError(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'warning':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'info':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      default:
+        {
+          Flushbar(
+            title: title,
+            message: message,
+            duration: Duration(seconds: 4),
+          )..show(context);
+          break;
+        }
+    }
   }
 }

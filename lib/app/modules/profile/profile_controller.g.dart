@@ -114,18 +114,18 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
       AsyncAction('_ProfileControllerBase.getProcedimentosMedicos');
 
   @override
-  Future<dynamic> getProcedimentosMedicos() {
+  Future<dynamic> getProcedimentosMedicos(BuildContext context) {
     return _$getProcedimentosMedicosAsyncAction
-        .run(() => super.getProcedimentosMedicos());
+        .run(() => super.getProcedimentosMedicos(context));
   }
 
   final _$deleteProcedimentoMedicoAsyncAction =
       AsyncAction('_ProfileControllerBase.deleteProcedimentoMedico');
 
   @override
-  Future deleteProcedimentoMedico(int id) {
+  Future deleteProcedimentoMedico(int id, BuildContext context) {
     return _$deleteProcedimentoMedicoAsyncAction
-        .run(() => super.deleteProcedimentoMedico(id));
+        .run(() => super.deleteProcedimentoMedico(id, context));
   }
 
   final _$_ProfileControllerBaseActionController =

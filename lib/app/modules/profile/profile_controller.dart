@@ -4,6 +4,8 @@ import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/profile/profile_status_request.dart';
 import 'package:app_tcc/app/modules/profile/repositories/profile_repository.dart';
 import 'package:app_tcc/app/modules/registros/models/get_procedimento_medico.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -69,8 +71,18 @@ abstract class _ProfileControllerBase with Store {
       final user = await repository.editUser(body);
       status = ProfileStatusRequest.success..value = user;
       clearInputDesMedicamento();
+      showFlushBar(
+          message: 'Usuário alterado com sucesso!',
+          title: 'Sucesso',
+          type: 'success',
+          context: context);
     } catch (e) {
       status = ProfileStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao editar Usuário!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 
@@ -81,7 +93,7 @@ abstract class _ProfileControllerBase with Store {
   }
 
   @action
-  Future getProcedimentosMedicos() async {
+  Future getProcedimentosMedicos(BuildContext context) async {
     status = ProfileStatusRequest.loading;
     try {
       var procedimentos = await repository.getProcedimentosMedicos;
@@ -90,19 +102,78 @@ abstract class _ProfileControllerBase with Store {
       status = ProfileStatusRequest.success;
     } catch (e) {
       status = ProfileStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Nenhum registro de Procedimentos Médicos encontrado!',
+          title: 'Oops!',
+          type: 'warning',
+          context: context);
     }
   }
 
   @action
-  deleteProcedimentoMedico(int id) async {
+  deleteProcedimentoMedico(int id, BuildContext context) async {
     status = ProfileStatusRequest.loading;
     try {
       var procedimento = await repository.deteleProcedimentoMedico(id);
       if (procedimento == 200 || procedimento == 204) {
-        getProcedimentosMedicos();
+        status = ProfileStatusRequest.success;
+        getProcedimentosMedicos(context);
+        showFlushBar(
+            message: 'Procedimento Médico excluído com sucesso!',
+            title: 'Sucesso',
+            type: 'success',
+            context: context);
       }
     } catch (e) {
       status = ProfileStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao excluir Procedimento Médico!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
+    }
+  }
+
+  showFlushBar(
+      {String message, String type, String title, BuildContext context}) {
+    switch (type) {
+      case 'success':
+        {
+          FlushbarHelper.createSuccess(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'error':
+        {
+          FlushbarHelper.createError(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'warning':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      case 'info':
+        {
+          FlushbarHelper.createInformation(
+              message: message, title: title, duration: Duration(seconds: 4))
+            ..show(context);
+          break;
+        }
+      default:
+        {
+          Flushbar(
+            title: title,
+            message: message,
+            duration: Duration(seconds: 4),
+          )..show(context);
+          break;
+        }
     }
   }
 }

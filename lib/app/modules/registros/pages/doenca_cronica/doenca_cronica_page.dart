@@ -131,14 +131,14 @@ class _DoencaCronicaPageState
 
   _contentForm(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 2, left: 5, right: 5),
       child: Column(
         children: [
           _title(context),
           FormInputCronicaWidget(
-            controller: controller,
-            descHint: 'Descrição da doença crônica',
-          ),
+              controller: controller,
+              descHint: 'Descrição da doença crônica',
+              context2: context),
           TexteDeleteItemWidget(),
           TitleListaWidget('Lista'),
           Expanded(child: Observer(
@@ -205,7 +205,7 @@ class _DoencaCronicaPageState
         builder: (_) {
           return AlertDialog(
             title: Text(
-              "Editar Medicamento",
+              "Editar Doença Crônica",
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Color(0xFF3F414E),
@@ -227,7 +227,7 @@ class _DoencaCronicaPageState
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFA49FBB))),
                       // hintText: "Descrição do medicamento",
-                      hintText: 'Descrição do medicamento',
+                      hintText: 'Descrição do Doença Crônica',
                       hintStyle:
                           TextStyle(color: Color(0xFF3B4349), fontSize: 14))),
             ),
@@ -235,7 +235,7 @@ class _DoencaCronicaPageState
               FlatButton(
                 onPressed: () {
                   item.descDoenca = controller.newdescDoencaCronica.text;
-                  controller.editItem(item);
+                  controller.editItem(item, context);
                   bool formValido = controller.formKey.currentState.validate();
                   if (!formValido) {
                     return;
@@ -281,7 +281,7 @@ class _DoencaCronicaPageState
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          "Excluir Medicamento",
+          "Excluir Doença Crônica",
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Color(0xFF3F414E),

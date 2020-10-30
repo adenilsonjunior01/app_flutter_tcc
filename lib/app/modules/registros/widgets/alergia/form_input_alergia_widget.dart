@@ -9,8 +9,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class FormInputAlergiaWidget extends StatefulWidget {
   AlergiaController controller;
+  BuildContext context2;
   final String descHint;
-  FormInputAlergiaWidget({this.controller, this.descHint});
+  FormInputAlergiaWidget({this.controller, this.descHint, this.context2});
 
   @override
   _FormInputAlergiaWidgetState createState() => _FormInputAlergiaWidgetState();
@@ -84,7 +85,7 @@ class _FormInputAlergiaWidgetState extends State<FormInputAlergiaWidget> {
                       side: BorderSide(color: Color(0xFFA49FBB))),
                   onPressed: () {
                     // controller.addItem();
-                    widget.controller.submitForm(context);
+                    widget.controller.submitForm(widget.context2);
                   },
                   child: Text(
                     'Add',

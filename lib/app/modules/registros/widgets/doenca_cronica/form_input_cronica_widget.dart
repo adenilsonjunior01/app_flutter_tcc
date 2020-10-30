@@ -6,9 +6,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class FormInputCronicaWidget extends StatelessWidget {
   DoencaCronicaController controller;
+  BuildContext context2;
   final String descHint;
 
-  FormInputCronicaWidget({this.controller, this.descHint});
+  FormInputCronicaWidget({this.controller, this.descHint, this.context2});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class FormInputCronicaWidget extends StatelessWidget {
                       side: BorderSide(color: Color(0xFFA49FBB))),
                   onPressed: () {
                     // controller.addItem();
-                    controller.submitForm(context);
+                    controller.submitForm(context2);
                   },
                   child: Text(
                     'Add',
