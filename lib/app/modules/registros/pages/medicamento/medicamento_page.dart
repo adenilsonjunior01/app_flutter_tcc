@@ -10,7 +10,6 @@ import 'package:app_tcc/app/shared/widgets/custom-error-request-widget.dart';
 import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:app_tcc/app/shared/widgets/not_found_404.dart';
 import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -112,7 +111,7 @@ class _MedicamentoPageState
 
   _contentForm(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
       child: Column(
         children: [
           _title(context),
@@ -142,32 +141,33 @@ class _MedicamentoPageState
 
   _title(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 4,
-              ),
-              Text(
-                "Cadastro de Medicamentos",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color(0xFF3F414E),
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+        child: Column(
+      children: [
+        SizedBox(
+          height: 120,
+        ),
+        Text(
+          "Cadastro de Medicamentos",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Color(0xFF3F414E),
+              fontSize: 28,
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 20,
+        )
+      ],
+    ));
   }
 
   _contentList(BuildContext context) {
     return Observer(builder: (_) {
-      return ListView.builder(
-          padding: EdgeInsets.only(top: 10),
+      return ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+                height: 1,
+                color: Colors.black,
+              ),
           itemCount: controller.listMedicamento.length,
           itemBuilder: (_, index) {
             var list = controller.listMedicamento[index];

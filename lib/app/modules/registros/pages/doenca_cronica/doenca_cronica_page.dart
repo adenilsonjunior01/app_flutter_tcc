@@ -159,7 +159,11 @@ class _DoencaCronicaPageState
 
   _contentList(BuildContext context) {
     return Observer(builder: (_) {
-      return ListView.builder(
+      return ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+                height: 1,
+                color: Colors.black,
+              ),
           padding: EdgeInsets.only(top: 10),
           itemCount: controller.listDoencaCronica.length,
           itemBuilder: (_, index) {

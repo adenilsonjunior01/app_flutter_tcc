@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/login/login_module.dart';
 import 'package:app_tcc/app/modules/profile/repositories/interfaces/profile_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/registros_module.dart';
 import 'package:dio/dio.dart';

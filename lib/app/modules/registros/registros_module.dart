@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/login/login_module.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/procedimento_medico_interface.dart';
 import 'package:app_tcc/app/modules/registros/pages/procedimento_medico/procedimento_medico_controller.dart';
 import 'package:app_tcc/app/modules/registros/pages/procedimento_medico/procedimento_medico_page.dart';
@@ -45,6 +46,7 @@ class RegistrosModule extends ChildModule {
             child: (_, args) => DoencaCronicaPage()),
         ModularRouter('/procedimento-medico',
             child: (_, args) => ProcedimentoMedicoPage()),
+        ModularRouter('/login', module: LoginModule())
       ];
 
   static Inject get to => Inject<RegistrosModule>.of();

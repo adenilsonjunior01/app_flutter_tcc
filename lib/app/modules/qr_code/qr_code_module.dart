@@ -1,3 +1,4 @@
+import 'package:app_tcc/app/modules/login/login_module.dart';
 import 'package:dio/dio.dart';
 import 'repositories/qr_code_repository.dart';
 import 'qr_code_controller.dart';

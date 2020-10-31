@@ -101,7 +101,7 @@ abstract class _ProfileControllerBase with Store {
       procedimentos.forEach((value) => listProcedimentos.add(value));
       status = ProfileStatusRequest.success;
     } catch (e) {
-      status = ProfileStatusRequest.error..value = e;
+      status = ProfileStatusRequest.none..value = e;
       showFlushBar(
           message: 'Nenhum registro de Procedimentos Médicos encontrado!',
           title: 'Oops!',

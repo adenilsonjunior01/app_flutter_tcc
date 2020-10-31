@@ -107,7 +107,7 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
 
   _contentForm(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 2, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
       child: Column(
         children: [
           _title(context),
@@ -142,7 +142,11 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
 
   _contentList(BuildContext context) {
     return Observer(builder: (_) {
-      return ListView.builder(
+      return ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+                height: 1,
+                color: Colors.black,
+              ),
           shrinkWrap: true,
           padding: EdgeInsets.only(top: 10),
           itemCount: controller.listAlergias.length,

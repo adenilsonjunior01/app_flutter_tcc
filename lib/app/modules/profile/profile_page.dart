@@ -9,7 +9,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:random_color/random_color.dart';
 import 'profile_controller.dart';
-import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;
@@ -34,10 +33,6 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
   Widget build(BuildContext context) {
     var _altura = MediaQuery.of(context).size.height;
     var _largura = MediaQuery.of(context).size.width;
-    Color lightGreen = Color(0xFF95E08E);
-    Color lightBlueIsh = Color(0xFF33BBB5);
-    Color darkGreen = Color(0xFF00AA12);
-    Color backgroundColor = Color(0xFFEFEEF5);
     return Scaffold(
       body: Container(
         height: _altura,
@@ -51,46 +46,44 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
           children: [
             NavBarSilverWidget(),
             Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Observer(builder: (_) {
-                        if (controller.status == ProfileStatusRequest.loading) {
-                          return LoadingLottie();
-                        } else if (controller.status ==
-                                ProfileStatusRequest.success ||
-                            controller.status == ProfileStatusRequest.none) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                height: 200,
-                              ),
-                              _header(context),
-                              _subHeader(context),
-                              _detailsUser(context),
-                              _carousel(context)
-                            ],
-                          );
-                        } else {
-                          return Text(
-                            controller.users != null
-                                ? controller.users.toUpperCase()
-                                : '',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Inter Medium',
-                              fontSize: 20,
-                              color: Color(0xFF121212),
-                            ),
-                          );
-                        }
-                      }),
-                    ],
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 120,
                   ),
-                ))
+                  Observer(builder: (_) {
+                    if (controller.status == ProfileStatusRequest.loading) {
+                      return LoadingLottie();
+                    } else if (controller.status ==
+                            ProfileStatusRequest.success ||
+                        controller.status == ProfileStatusRequest.none) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _header(context),
+                          _subHeader(context),
+                          _detailsUser(context),
+                          _carousel(context)
+                        ],
+                      );
+                    } else {
+                      return Text(
+                        controller.users != null
+                            ? controller.users.toUpperCase()
+                            : '',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Inter Medium',
+                          fontSize: 20,
+                          color: Color(0xFF121212),
+                        ),
+                      );
+                    }
+                  }),
+                ],
+              ),
+            ))
           ],
         ),
       ),
@@ -101,41 +94,43 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
     RandomColor _randomColor = RandomColor();
     Color _color = _randomColor.randomColor(
         colorBrightness: ColorBrightness.light, colorHue: ColorHue.blue);
-    return Container(
-      height: 120,
-      width: 120,
-      child: Stack(
-        children: [
-          CircleAvatar(
-            backgroundColor: _color,
-            foregroundColor: _color,
-            radius: 55,
-            child: Text(
-              controller.firstLetter,
-              style: TextStyle(color: Colors.white, fontSize: 38),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              height: 35,
-              width: 35,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                shape: BoxShape.circle,
+    return SafeArea(
+      child: Container(
+        height: 120,
+        width: 120,
+        child: Stack(
+          children: [
+            CircleAvatar(
+              backgroundColor: _color,
+              foregroundColor: _color,
+              radius: 55,
+              child: Text(
+                controller.firstLetter,
+                style: TextStyle(color: Colors.white, fontSize: 38),
               ),
-              child: Align(
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: Icon(Icons.edit, size: 20, color: Color(0xFF2E3A59)),
-                  onPressed: () {
-                    _dialog(context);
-                  },
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                height: 35,
+                width: 35,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  shape: BoxShape.circle,
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: IconButton(
+                    icon: Icon(Icons.edit, size: 20, color: Color(0xFF2E3A59)),
+                    onPressed: () {
+                      _dialog(context);
+                    },
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -228,11 +223,53 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
     return Container(
       padding: EdgeInsets.only(top: 20, left: 15, bottom: 0),
       alignment: Alignment.centerLeft,
-      child: Text(
-        'Procedimentos Médicos',
-        style: TextStyle(
-            color: Color(0xFF3B4349), fontSize: 16, fontFamily: 'Inter Bold'),
-      ),
+      child: Observer(builder: (_) {
+        if (controller.status == ProfileStatusRequest.none) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Procedimentos Médicos',
+                style: TextStyle(
+                    color: Color(0xFF3B4349),
+                    fontSize: 16,
+                    fontFamily: 'Inter Bold'),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Nenhum registro de Procedimentos Médicos encontrado!'),
+              SizedBox(
+                height: 8,
+              ),
+              ButtonTheme(
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(color: Color(0xFFA49FBB))),
+                  onPressed: () =>
+                      Modular.link.pushNamed('/registro/procedimento-medico'),
+                  child: Text(
+                    'Cadastrar',
+                    style: TextStyle(
+                        color: Color(0xFF3B4349),
+                        fontFamily: 'Inter Medium',
+                        fontSize: 14),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else {
+          return Text(
+            'Procedimentos Médicos',
+            style: TextStyle(
+                color: Color(0xFF3B4349),
+                fontSize: 16,
+                fontFamily: 'Inter Bold'),
+          );
+        }
+      }),
     );
   }
 
@@ -244,7 +281,7 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
           return Container(
             padding: EdgeInsets.only(top: 20),
             child: CarouselSlider(
-              options: CarouselOptions(height: 200),
+              options: CarouselOptions(height: 160),
               items: controller.listProcedimentos.map((procedimento) {
                 return Builder(
                   builder: (BuildContext context) {

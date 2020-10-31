@@ -37,7 +37,6 @@ class LoginModule extends ChildModule {
           transition: TransitionType.downToUp,
         ),
         ModularRouter('/cadastro-user', child: (_, args) => CadastroUserPage()),
-        ModularRouter('/home', module: HomeModule()),
       ];
 
   @override
