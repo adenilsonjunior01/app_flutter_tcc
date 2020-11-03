@@ -115,7 +115,7 @@ class _DoencaCronicaPageState
                 height: MediaQuery.of(context).size.width / 3,
               ),
               Text(
-                "Cadastro de Doenças Crônicas",
+                "Doenças Crônicas",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Color(0xFF3F414E),
@@ -140,7 +140,6 @@ class _DoencaCronicaPageState
               descHint: 'Descrição da doença crônica',
               context2: context),
           TexteDeleteItemWidget(),
-          TitleListaWidget('Lista'),
           Expanded(child: Observer(
             builder: (_) {
               if (controller.listDoencaCronica.length < 1) {

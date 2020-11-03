@@ -19,6 +19,9 @@ abstract class _HomeControllerBase with Store {
   @observable
   String users;
 
+  @observable
+  String perfil;
+
   @action
   void increment() {
     value++;
@@ -30,9 +33,8 @@ abstract class _HomeControllerBase with Store {
     var jwtToken = prefs.getString('token');
     Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
     JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
+    perfil = user.perfis.first;
     users = user.nome;
-
-    print(user.nome);
   }
 
   @action

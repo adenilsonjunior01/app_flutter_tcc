@@ -49,6 +49,21 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$perfilAtom = Atom(name: '_HomeControllerBase.perfil');
+
+  @override
+  String get perfil {
+    _$perfilAtom.reportRead();
+    return super.perfil;
+  }
+
+  @override
+  set perfil(String value) {
+    _$perfilAtom.reportWrite(value, super.perfil, () {
+      super.perfil = value;
+    });
+  }
+
   final _$jwtDecodeAsyncAction = AsyncAction('_HomeControllerBase.jwtDecode');
 
   @override
@@ -81,7 +96,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
   String toString() {
     return '''
 value: ${value},
-users: ${users}
+users: ${users},
+perfil: ${perfil}
     ''';
   }
 }

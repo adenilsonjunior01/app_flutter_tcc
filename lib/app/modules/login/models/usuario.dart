@@ -1,24 +1,27 @@
 class Usuario {
-  bool authenticated;
-  String expiration;
-  String token;
-  String message;
+  List<String> perfis;
+  String sub;
+  String dtCadastro;
+  String nome;
+  int expiration;
 
-  Usuario({this.authenticated, this.expiration, this.token, this.message});
+  Usuario({this.perfis, this.sub, this.dtCadastro, this.nome, this.expiration});
 
   Usuario.fromJson(Map<String, dynamic> json) {
-    authenticated = json['authenticated'];
+    perfis = json['perfis'].cast<String>();
+    sub = json['sub'];
+    dtCadastro = json['dtCadastro'];
+    nome = json['nome'];
     expiration = json['expiration'];
-    token = json['token'];
-    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['authenticated'] = this.authenticated;
+    data['perfis'] = this.perfis;
+    data['sub'] = this.sub;
+    data['dtCadastro'] = this.dtCadastro;
+    data['nome'] = this.nome;
     data['expiration'] = this.expiration;
-    data['token'] = this.token;
-    data['message'] = this.message;
     return data;
   }
 }

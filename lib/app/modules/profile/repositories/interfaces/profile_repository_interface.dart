@@ -7,5 +7,6 @@ abstract class IProfileRepository implements Disposable {
   Future get dadosUsuario;
   Future<CreateUserModel> editUser(dynamic data);
   Future get getProcedimentosMedicos;
+  Future get getDadosMedicos;
   Future deteleProcedimentoMedico(dynamic id);
 }

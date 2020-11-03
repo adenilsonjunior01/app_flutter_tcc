@@ -8,6 +8,7 @@ class GetProcedimentoMedicoModel {
   String dtProcedimento;
   String nomeUsuario;
   String descTipoProcedimento;
+  String nomeProfSaude;
 
   GetProcedimentoMedicoModel(
       {this.id,
@@ -30,6 +31,7 @@ class GetProcedimentoMedicoModel {
     dtProcedimento = json['dtProcedimento'];
     nomeUsuario = json['nomeUsuario'];
     descTipoProcedimento = json['descTipoProcedimento'];
+    nomeProfSaude = json['nomeProfSaude'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +44,7 @@ class GetProcedimentoMedicoModel {
     data['dtRetorno'] = this.dtRetorno;
     data['dtProcedimento'] = this.dtProcedimento;
     data['nomeUsuario'] = this.nomeUsuario;
-    data['descTipoProcedimento'] = this.descTipoProcedimento;
+    data['nomeProfSaude'] = this.nomeProfSaude;
     return data;
   }
 }

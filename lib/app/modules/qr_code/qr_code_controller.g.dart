@@ -7,7 +7,7 @@ part of 'qr_code_controller.dart';
 // **************************************************************************
 
 final $QrCodeController = BindInject(
-  (i) => QrCodeController(),
+  (i) => QrCodeController(i<QrCodeRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -64,12 +64,52 @@ mixin _$QrCodeController on _QrCodeControllerBase, Store {
     });
   }
 
+  final _$tokenQrCodeAtom = Atom(name: '_QrCodeControllerBase.tokenQrCode');
+
+  @override
+  String get tokenQrCode {
+    _$tokenQrCodeAtom.reportRead();
+    return super.tokenQrCode;
+  }
+
+  @override
+  set tokenQrCode(String value) {
+    _$tokenQrCodeAtom.reportWrite(value, super.tokenQrCode, () {
+      super.tokenQrCode = value;
+    });
+  }
+
+  final _$statusAtom = Atom(name: '_QrCodeControllerBase.status');
+
+  @override
+  QrCodeStatusRequest get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(QrCodeStatusRequest value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
+  final _$gerarMeuQrCodeAsyncAction =
+      AsyncAction('_QrCodeControllerBase.gerarMeuQrCode');
+
+  @override
+  Future<dynamic> gerarMeuQrCode(BuildContext context) {
+    return _$gerarMeuQrCodeAsyncAction.run(() => super.gerarMeuQrCode(context));
+  }
+
   @override
   String toString() {
     return '''
 isTorchOn: ${isTorchOn},
 captureText: ${captureText},
-readQrCode: ${readQrCode}
+readQrCode: ${readQrCode},
+tokenQrCode: ${tokenQrCode},
+status: ${status}
     ''';
   }
 }

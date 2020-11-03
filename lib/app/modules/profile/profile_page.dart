@@ -50,7 +50,7 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 120,
+                    height: MediaQuery.of(context).size.height / 4,
                   ),
                   Observer(builder: (_) {
                     if (controller.status == ProfileStatusRequest.loading) {
@@ -145,6 +145,23 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
           textAlign: TextAlign.center,
           style: TextStyle(color: Color(0xFF3B4349), fontSize: 20),
         ),
+        Builder(
+          builder: (context) {
+            if (controller.perfil.length > 1) {
+              return Text(
+                'Perfil: ${controller.perfil[0] != null ? controller.perfil[0] : ''}, ${controller.perfil[1] != null ? controller.perfil[1] : ''}',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black38, fontSize: 14),
+              );
+            } else {
+              return Text(
+                'Perfil: ${controller.perfil[0] != null ? controller.perfil[0] : ''}',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black38, fontSize: 14),
+              );
+            }
+          },
+        ),
         Text(
           controller.email != null ? controller.email : '',
           textAlign: TextAlign.center,
@@ -167,9 +184,17 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: [
-                    Text('15 CM',
-                        style:
-                            TextStyle(color: Color(0xFF3B4349), fontSize: 14)),
+                    Observer(
+                      builder: (context) {
+                        return Text(
+                          controller.listDadosMedicos[0].peso == null
+                              ? '0'
+                              : '${controller.listDadosMedicos[0].peso}',
+                          style:
+                              TextStyle(color: Color(0xFF3B4349), fontSize: 14),
+                        );
+                      },
+                    ),
                     Text('Peso',
                         style: TextStyle(color: Colors.black54, fontSize: 12)),
                   ],
@@ -184,10 +209,17 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: [
-                    Text('15 KG',
-                        textAlign: TextAlign.right,
-                        style:
-                            TextStyle(color: Color(0xFF3B4349), fontSize: 14)),
+                    Observer(
+                      builder: (context) {
+                        return Text(
+                          controller.listDadosMedicos[0].peso == null
+                              ? '0'
+                              : '${controller.listDadosMedicos[0].altura}',
+                          style:
+                              TextStyle(color: Color(0xFF3B4349), fontSize: 14),
+                        );
+                      },
+                    ),
                     Text(
                       'Altura',
                       style: TextStyle(color: Colors.black54, fontSize: 12),
@@ -204,9 +236,17 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: [
-                    Text('24 Anos',
-                        style:
-                            TextStyle(color: Color(0xFF3B4349), fontSize: 14)),
+                    Observer(
+                      builder: (context) {
+                        return Text(
+                          controller.listDadosMedicos[0].peso == null
+                              ? '0'
+                              : '${controller.listDadosMedicos[0].peso}',
+                          style:
+                              TextStyle(color: Color(0xFF3B4349), fontSize: 14),
+                        );
+                      },
+                    ),
                     Text('Idade',
                         style: TextStyle(color: Colors.black54, fontSize: 12)),
                   ],
@@ -224,7 +264,8 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
       padding: EdgeInsets.only(top: 20, left: 15, bottom: 0),
       alignment: Alignment.centerLeft,
       child: Observer(builder: (_) {
-        if (controller.status == ProfileStatusRequest.none) {
+        if (controller.status2 == ProfileStatusRequest.none ||
+            controller.status2 == ProfileStatusRequest.error) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

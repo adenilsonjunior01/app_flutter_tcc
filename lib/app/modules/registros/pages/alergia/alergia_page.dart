@@ -121,7 +121,6 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
               context2: context),
           // Título da Lista
           TexteDeleteItemWidget(),
-          TitleListaWidget('Lista'),
           Expanded(
             child: Observer(
               builder: (_) {
@@ -200,7 +199,7 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
                 height: MediaQuery.of(context).size.width / 3,
               ),
               Text(
-                "Cadastro de Alergias",
+                "Alergias",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                     color: Color(0xFF3F414E),

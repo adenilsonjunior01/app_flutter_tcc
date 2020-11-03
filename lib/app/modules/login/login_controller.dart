@@ -126,11 +126,11 @@ abstract class _LoginControllerBase with Store {
         Modular.link.pushNamed('/home', arguments: nameUser);
       }
     } catch (e) {
-      showFlushBar(
-          message: 'Erro ao validar Token!',
-          title: 'Oops!',
-          type: 'error',
-          context: context);
+      // showFlushBar(
+      //     message: 'Erro ao validar usuário, por favor realize a autenticação novamente!',
+      //     title: 'Oops!',
+      //     type: 'warning',
+      //     context: context);
     }
   }
 

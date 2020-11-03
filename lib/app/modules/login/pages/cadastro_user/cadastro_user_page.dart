@@ -301,6 +301,28 @@ class _CadastroUserPageState
                   hintText: "Senha",
                   hintStyle: TextStyle(color: Colors.white))),
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
+          child: FormBuilderCheckbox(
+              contentPadding: EdgeInsets.all(0),
+              attribute: 'Você é um(a) Profissional da saúde?',
+              onChanged: (value) {
+                controller.medico = value;
+              },
+              label: Text(
+                "Você é um(a) Profissional da saúde?",
+                style: TextStyle(color: Colors.white, fontSize: 14),
+              ),
+              decoration: InputDecoration(
+                  // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  contentPadding: EdgeInsets.all(0),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent)),
+                  hintText: "Profissional de saúde?",
+                  hintStyle: TextStyle(color: Colors.white))),
+        ),
         Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),

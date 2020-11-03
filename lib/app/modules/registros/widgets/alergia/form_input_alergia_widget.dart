@@ -27,7 +27,7 @@ class _FormInputAlergiaWidgetState extends State<FormInputAlergiaWidget> {
         child: Column(
           children: [
             FormBuilderTextField(
-                attribute: 'Descrição do medicamento',
+                attribute: 'Descrição do Alergia',
                 controller: widget.controller.descAlergias,
                 validators: [
                   FormBuilderValidators.required(errorText: 'Campo obrigatório')
@@ -48,7 +48,9 @@ class _FormInputAlergiaWidgetState extends State<FormInputAlergiaWidget> {
             ),
             FormBuilderDropdown(
                 attribute: 'Tipo de alergia',
-                validators: [FormBuilderValidators.required()],
+                validators: [
+                  FormBuilderValidators.required(errorText: 'Campo obrigatório')
+                ],
                 onChanged: (newValue) {
                   setState(() {
                     widget.controller.tipoAlergia = newValue;

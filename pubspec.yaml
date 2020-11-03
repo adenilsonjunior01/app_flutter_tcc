@@ -104,7 +104,16 @@ flutter:
     - assets/images/profile/icon_altura.png
     - assets/images/profile/icon_idade.png
     - assets/images/profile/icon_peso.png
+    - assets/images/profile/icon_person_imc.png
     - assets/images/profile/icon_user.png
+    - assets/images/menu/bg_menu_dados_medicos.png
+    - assets/images/menu/bg_menu_alergia.png
+    - assets/images/menu/bg_menu_doenca_cronica.png
+    - assets/images/menu/bg_menu_medicamento.png
+    - assets/images/menu/bg_menu_procedimento.png
+    - assets/images/menu/icon/icon_alergia.svg
+    - assets/images/menu/icon/icon_medicamento.svg
+    - assets/images/menu/icon/icon_procedimento.svg
     - assets/images/login/bg_login.png
     - assets/images/login/bg_login2.png
     - assets/images/step/bg_step.png

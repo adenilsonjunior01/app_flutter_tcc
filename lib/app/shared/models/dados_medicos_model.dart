@@ -3,7 +3,12 @@ class DadosMedicosModel {
   TipoSanguineo tipoSanguineo;
   String dtAtualizacao;
   List<DoencasCronicas> doencasCronicas;
-  List<DoencasCronicas> medicamentos;
+  List<Medicamentos> medicamentos;
+  var peso;
+  var altura;
+  var vlImc;
+  var descImc;
+  var nomeProfissionalSaude;
   List<Alergias> alergias;
 
   DadosMedicosModel(
@@ -12,13 +17,40 @@ class DadosMedicosModel {
       this.dtAtualizacao,
       this.doencasCronicas,
       this.medicamentos,
+      this.peso,
+      this.altura,
+      this.vlImc,
+      this.descImc,
+      this.nomeProfissionalSaude,
       this.alergias});
 
   DadosMedicosModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    tipoSanguineo = json['tipoSanguineo'] != null
+        ? new TipoSanguineo.fromJson(json['tipoSanguineo'])
+        : null;
+    dtAtualizacao = json['dtAtualizacao'];
+    if (json['doencasCronicas'] != null) {
+      doencasCronicas = new List<DoencasCronicas>();
+      json['doencasCronicas'].forEach((v) {
+        doencasCronicas.add(new DoencasCronicas.fromJson(v));
+      });
+    }
     if (json['medicamentos'] != null) {
-      medicamentos = new List<DoencasCronicas>();
-      json['DoencasCronicas'].forEach((v) {
-        medicamentos.add(new DoencasCronicas.fromJson(v));
+      medicamentos = new List<Medicamentos>();
+      json['medicamentos'].forEach((v) {
+        medicamentos.add(new Medicamentos.fromJson(v));
+      });
+    }
+    peso = json['peso'];
+    altura = json['altura'];
+    vlImc = json['vlImc'];
+    descImc = json['descImc'];
+    nomeProfissionalSaude = json['nomeProfissionalSaude'];
+    if (json['alergias'] != null) {
+      alergias = new List<Alergias>();
+      json['alergias'].forEach((v) {
+        alergias.add(new Alergias.fromJson(v));
       });
     }
   }
@@ -29,7 +61,7 @@ class DadosMedicosModel {
     if (this.tipoSanguineo != null) {
       data['tipoSanguineo'] = this.tipoSanguineo.toJson();
     }
-    data['dt_atualizacao'] = this.dtAtualizacao;
+    data['dtAtualizacao'] = this.dtAtualizacao;
     if (this.doencasCronicas != null) {
       data['doencasCronicas'] =
           this.doencasCronicas.map((v) => v.toJson()).toList();
@@ -37,6 +69,11 @@ class DadosMedicosModel {
     if (this.medicamentos != null) {
       data['medicamentos'] = this.medicamentos.map((v) => v.toJson()).toList();
     }
+    data['peso'] = this.peso;
+    data['altura'] = this.altura;
+    data['vlImc'] = this.vlImc;
+    data['descImc'] = this.descImc;
+    data['nomeProfissionalSaude'] = this.nomeProfissionalSaude;
     if (this.alergias != null) {
       data['alergias'] = this.alergias.map((v) => v.toJson()).toList();
     }
@@ -65,19 +102,41 @@ class TipoSanguineo {
 
 class DoencasCronicas {
   int id;
-  String descMedicamento;
+  String descDoenca;
 
-  DoencasCronicas({this.id, this.descMedicamento});
+  DoencasCronicas({this.id, this.descDoenca});
 
   DoencasCronicas.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    descDoenca = json['descDoenca'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['descDoenca'] = this.descDoenca;
+    return data;
+  }
+}
+
+class Medicamentos {
+  int id;
+  String descMedicamento;
+  String dtRegistro;
+
+  Medicamentos({this.id, this.descMedicamento, this.dtRegistro});
+
+  Medicamentos.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     descMedicamento = json['descMedicamento'];
+    dtRegistro = json['dtRegistro'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['descMedicamento'] = this.descMedicamento;
+    data['dtRegistro'] = this.dtRegistro;
     return data;
   }
 }

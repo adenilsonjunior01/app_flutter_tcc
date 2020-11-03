@@ -22,6 +22,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    controller.gerarMeuQrCode(context);
     controller.captureController.onCapture((data) {
       print('onCapture----$data');
       controller.captureText = data;
@@ -139,7 +140,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                           width: 250,
                           height: 250,
                           child: QrImage(
-                            data: controller.mock,
+                            data: controller.tokenQrCode,
                             version: QrVersions.auto,
                             size: 200.0,
                           ),
@@ -191,9 +192,13 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                             ),
                           );
                         } else {
-                          return Lottie.asset(
-                            'assets/lotties-animation/check-success.json',
-                            height: 50,
+                          return Builder(
+                            builder: (context) {
+                              return Lottie.asset(
+                                'assets/lotties-animation/check-success.json',
+                                height: 80,
+                              );
+                            },
                           );
                           //     controller: controller.animationController,
                           //     onLoaded: (composition) {
@@ -223,6 +228,34 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                               ),
                               Text(
                                 'Ler novamente',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontFamily: 'Inter Medium',
+                                    fontSize: 14),
+                              ),
+                            ],
+                          )),
+                    ),
+                    ButtonTheme(
+                      child: FlatButton(
+                          padding: EdgeInsets.all(13),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7),
+                              side: BorderSide(color: Color(0xFFA49FBB))),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Modular.link.pushNamed('/registro/dados-medicos',
+                                arguments: controller.tokenQrCode);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.list),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Visualizar dados',
                                 style: TextStyle(
                                     color: Colors.black54,
                                     fontFamily: 'Inter Medium',

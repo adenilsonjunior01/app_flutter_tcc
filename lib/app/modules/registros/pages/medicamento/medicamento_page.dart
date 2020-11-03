@@ -119,10 +119,10 @@ class _MedicamentoPageState
           FormInputMedicamentoWidget(
             controller: controller,
             descHint: 'Descrição do medicamento',
+            context2: context,
           ),
           // Título da Lista
           TexteDeleteItemWidget(),
-          TitleListaWidget('Lista'),
           Expanded(child: Observer(
             builder: (_) {
               if (controller.listMedicamento.length < 1) {
@@ -147,7 +147,7 @@ class _MedicamentoPageState
           height: 120,
         ),
         Text(
-          "Cadastro de Medicamentos",
+          "Medicamentos",
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Color(0xFF3F414E),

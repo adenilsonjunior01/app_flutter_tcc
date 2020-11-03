@@ -8,9 +8,23 @@ import 'package:app_tcc/app/modules/qr_code/qr_code_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  BuildContext context2;
+  HomeController controller;
+  HomeScreen({this.context2, this.controller});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController();
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -19,9 +33,7 @@ class HomeScreen extends StatelessWidget {
       children: [
         Scaffold(
           drawer: CustomDrawer(pageController: _pageController),
-          body: HomeTab(
-            scaffoldKey: scaffoldKey,
-          ),
+          body: HomeTab(),
         ),
         Scaffold(
           appBar: AppBar(
@@ -30,7 +42,10 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
           ),
           drawer: CustomDrawer(pageController: _pageController),
-          body: TitlesCadastroTab(),
+          body: TitlesCadastroTab(
+            controller: widget.controller,
+            context2: widget.context2,
+          ),
         ),
         // PAGINA DO HISTÓRICO
         Scaffold(

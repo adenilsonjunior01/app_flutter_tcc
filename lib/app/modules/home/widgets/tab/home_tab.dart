@@ -101,7 +101,7 @@ class _HomeTabState extends State<HomeTab> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: Text(
-                        "Perfil: Administrador",
+                        controller.perfil != null ? controller.perfil : '',
                         textAlign: TextAlign.center,
                         style:
                             TextStyle(fontSize: 15, color: Color(0xFFB4B4B4)),

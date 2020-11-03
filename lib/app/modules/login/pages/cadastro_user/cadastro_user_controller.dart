@@ -34,6 +34,7 @@ abstract class _CadastroUserControllerBase with Store {
   TextEditingController nome = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController telefone = TextEditingController();
+  bool medico = false;
   String sexo = 'Masculino';
   String tipoSexo;
   TextEditingController dtNascimento = TextEditingController();
@@ -57,7 +58,8 @@ abstract class _CadastroUserControllerBase with Store {
         'dtNascimento': dtNascimento.text,
         'sexo': tipoSexo,
         'senha': senha.text,
-        'telefone': telefone.text.split(" ").join("")
+        'telefone': telefone.text.split(" ").join(""),
+        'medico': medico
       };
       messagesRequestErrors.clear();
       messageRequest = '';

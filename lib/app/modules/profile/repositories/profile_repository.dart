@@ -1,6 +1,7 @@
 import 'package:app_tcc/app/modules/login/models/create_user_model.dart';
 import 'package:app_tcc/app/modules/registros/models/get_procedimento_medico.dart';
 import 'package:app_tcc/app/shared/custom_dio/interceptor_dio.dart';
+import 'package:app_tcc/app/shared/models/dados_medicos_model.dart';
 import 'package:app_tcc/app/shared/utils/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
@@ -18,12 +19,6 @@ class ProfileRepository implements IProfileRepository {
   ProfileRepository(this.client) {
     client.options.headers = {"Content-type": "application/json"};
     client.interceptors.add(InterceptorDio());
-  }
-
-  Future fetchPost() async {
-    final response =
-        await client.get('https://jsonplaceholder.typicode.com/posts/1');
-    return response.data;
   }
 
   //dispose will be called automatically
@@ -70,6 +65,22 @@ class ProfileRepository implements IProfileRepository {
       return response.statusCode;
     } on DioError catch (e) {
       throw (e.message);
+    }
+  }
+
+  @override
+  // TODO: implement dadosMedicos
+  Future get getDadosMedicos async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    client.options.headers = {"Authorization": "Bearer ${token}"};
+    try {
+      var response = await client.get('${URL_API}/dadosMedicos');
+      var values = DadosMedicosModel.fromJson(response.data);
+      // var newValues = DoencasCronicas.fromJson(values.doencasCronicas);
+      return values;
+    } on DioError catch (e) {
+      return e;
     }
   }
 }

@@ -64,6 +64,21 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
     });
   }
 
+  final _$perfilAtom = Atom(name: '_ProfileControllerBase.perfil');
+
+  @override
+  ObservableList<dynamic> get perfil {
+    _$perfilAtom.reportRead();
+    return super.perfil;
+  }
+
+  @override
+  set perfil(ObservableList<dynamic> value) {
+    _$perfilAtom.reportWrite(value, super.perfil, () {
+      super.perfil = value;
+    });
+  }
+
   final _$listProcedimentosAtom =
       Atom(name: '_ProfileControllerBase.listProcedimentos');
 
@@ -77,6 +92,22 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
   set listProcedimentos(ObservableList<dynamic> value) {
     _$listProcedimentosAtom.reportWrite(value, super.listProcedimentos, () {
       super.listProcedimentos = value;
+    });
+  }
+
+  final _$listDadosMedicosAtom =
+      Atom(name: '_ProfileControllerBase.listDadosMedicos');
+
+  @override
+  ObservableList<dynamic> get listDadosMedicos {
+    _$listDadosMedicosAtom.reportRead();
+    return super.listDadosMedicos;
+  }
+
+  @override
+  set listDadosMedicos(ObservableList<dynamic> value) {
+    _$listDadosMedicosAtom.reportWrite(value, super.listDadosMedicos, () {
+      super.listDadosMedicos = value;
     });
   }
 
@@ -128,6 +159,15 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
         .run(() => super.deleteProcedimentoMedico(id, context));
   }
 
+  final _$getDadosMedicosAsyncAction =
+      AsyncAction('_ProfileControllerBase.getDadosMedicos');
+
+  @override
+  Future<dynamic> getDadosMedicos(BuildContext context) {
+    return _$getDadosMedicosAsyncAction
+        .run(() => super.getDadosMedicos(context));
+  }
+
   final _$_ProfileControllerBaseActionController =
       ActionController(name: '_ProfileControllerBase');
 
@@ -148,7 +188,9 @@ mixin _$ProfileController on _ProfileControllerBase, Store {
 users: ${users},
 firstLetter: ${firstLetter},
 email: ${email},
+perfil: ${perfil},
 listProcedimentos: ${listProcedimentos},
+listDadosMedicos: ${listDadosMedicos},
 status: ${status}
     ''';
   }

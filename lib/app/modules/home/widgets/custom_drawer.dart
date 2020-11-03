@@ -91,7 +91,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ],
                 ),
               ),
-              DrawerTile('icon_inicio.svg', "Início", widget.pageController, 0),
+              DrawerTile(
+                'icon_inicio.svg',
+                "Início",
+                widget.pageController,
+                0,
+              ),
+
               // Meus Dados
               InkWell(
                 onTap: () {
@@ -108,7 +114,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         width: 20,
                       ),
                       Text(
-                        'Meus Dados',
+                        'Perfil',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color(0xFF3B4349),
@@ -143,13 +149,85 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 ),
               ),
-              DrawerTile(
-                  'icon_cadastro.svg', "Cadastro", widget.pageController, 1),
-              DrawerTile(
-                  'icon_historico.svg', "Histórico", widget.pageController, 2),
+              // DrawerTile(
+              //     'icon_cadastro.svg', "Cadastro", widget.pageController, 1),
               InkWell(
                 onTap: () {
-                  Modular.to.pushNamed('/login/resetar-senha');
+                  Navigator.of(context).pop();
+                  widget.pageController.jumpToPage(1);
+                },
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(left: 23),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                              'assets/images/home/icon_meus_dados.svg'),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'Cadastro',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF3B4349),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Observer(
+                            builder: (context) {
+                              if (controller.perfil == 'PENDENTE') {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Icon(
+                                    Icons.error_outline,
+                                    color: Colors.red,
+                                  ),
+                                );
+                              } else {
+                                return Text('');
+                              }
+                            },
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Modular.to.pushNamed('/registro/dados-medicos');
+                },
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(left: 23),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset('assets/images/home/icon_historico.svg'),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Histórico',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF3B4349),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Modular.to.pushNamed('/registro/resetar-senha');
                 },
                 child: Container(
                   height: 50,

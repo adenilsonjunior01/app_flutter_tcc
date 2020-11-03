@@ -5,9 +5,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class FormInputMedicamentoWidget extends StatelessWidget {
   MedicamentoController controller;
+  BuildContext context2;
   final String descHint;
 
-  FormInputMedicamentoWidget({this.controller, this.descHint});
+  FormInputMedicamentoWidget({this.controller, this.descHint, this.context2});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class FormInputMedicamentoWidget extends StatelessWidget {
                     side: BorderSide(color: Color(0xFFA49FBB))),
                 onPressed: () {
                   // controller.addItem();
-                  controller.submitForm(context);
+                  controller.submitForm(context2);
                 },
                 child: Text(
                   'Add',
