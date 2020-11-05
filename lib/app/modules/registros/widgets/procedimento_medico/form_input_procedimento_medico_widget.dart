@@ -58,7 +58,6 @@ class _FormInputProcedimentoMedicoWidgetState
               onChanged: (newValue) {
                 setState(() {
                   widget.controller.idTipoProcedimento = newValue;
-                  print(jsonEncode(widget.controller.idTipoProcedimento));
                 });
               },
               items: widget.controller.listTipoProcedimentos

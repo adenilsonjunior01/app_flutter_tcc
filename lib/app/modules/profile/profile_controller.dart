@@ -67,12 +67,12 @@ abstract class _ProfileControllerBase with Store {
   @action
   Future editUser(BuildContext context) async {
     Map<String, dynamic> params = {
-      'email': '',
+      'email': null,
       'nome': nameUser.text != '' ? nameUser.text : '',
-      'dtNascimento': '',
-      'sexo': '',
-      'senha': '',
-      'telefone': telUser.text != '' ? telUser.text : ''
+      'dtNascimento': null,
+      'sexo': null,
+      'senha': null,
+      'telefone': telUser.text != '' ? telUser.text : null
     };
 
     var body = jsonEncode(params);
@@ -87,7 +87,7 @@ abstract class _ProfileControllerBase with Store {
           type: 'success',
           context: context);
     } catch (e) {
-      status = ProfileStatusRequest.error..value = e;
+      status = ProfileStatusRequest.success..value = e;
       showFlushBar(
           message: 'Erro ao editar Usuário!',
           title: 'Oops!',

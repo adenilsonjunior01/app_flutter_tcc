@@ -1,3 +1,5 @@
+import 'package:app_tcc/app/modules/profile/repositories/interfaces/profile_repository_interface.dart';
+import 'package:app_tcc/app/modules/profile/repositories/profile_repository.dart';
 import 'package:app_tcc/app/modules/qr_code/repositories/interfaces/qr_code_repository_interface.dart';
 import 'package:app_tcc/app/modules/qr_code/repositories/qr_code_repository.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/meus_dados_medicos_interface.dart';
@@ -55,6 +57,7 @@ class RegistrosModule extends ChildModule {
         Bind<IMeusDadosMedicosInterface>(
             (i) => MeusDadosMedicosRepository(i.get<Dio>())),
         Bind<IQrCodeRepository>((i) => QrCodeRepository(i.get<Dio>())),
+        Bind<IProfileRepository>((i) => ProfileRepository(i.get<Dio>())),
         Bind((i) => MedicamentoController(i.get())),
         Bind((i) => DoencaCronicaController(i.get())),
       ];

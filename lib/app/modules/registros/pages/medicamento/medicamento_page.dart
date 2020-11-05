@@ -192,7 +192,15 @@ class _MedicamentoPageState
                       title: Text(list.descMedicamento == null
                           ? ''
                           : list.descMedicamento),
-                      // leading: ,
+                      subtitle: Builder(
+                        builder: (context) {
+                          if (list.profissionalSaude == null) {
+                            return Text('');
+                          } else {
+                            return Text('Médico: ${list.profissionalSaude}');
+                          }
+                        },
+                      ),
                       trailing: IconButton(
                         icon: Icon(
                           Icons.edit,
@@ -200,6 +208,24 @@ class _MedicamentoPageState
                         ),
                         onPressed: () {
                           _dialog(list);
+                        },
+                      ),
+                      leading: Builder(
+                        builder: (context) {
+                          print(
+                              'PROFISSIONAL SAUDE>> ${list.profissionalSaude}');
+                          if (list.profissionalSaude == null) {
+                            return Icon(
+                              Icons.perm_identity,
+                              color: Color(0xFF2E3A59),
+                              size: 30,
+                            );
+                          } else {
+                            return Image.asset(
+                              'assets/images/logo.png',
+                              height: 35,
+                            );
+                          }
                         },
                       ),
                     )));

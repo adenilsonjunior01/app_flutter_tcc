@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:app_tcc/app/modules/profile/repositories/interfaces/profile_repository_interface.dart';
 import 'package:app_tcc/app/modules/qr_code/repositories/interfaces/qr_code_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/interfaces/dados_medicos_repository_interface.dart';
 import 'package:app_tcc/app/modules/registros/registro_status_request.dart';
+import 'package:app_tcc/app/shared/models/dados_medicos_model.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,7 +21,9 @@ class DadosMedicosController = _DadosMedicosControllerBase
 abstract class _DadosMedicosControllerBase with Store {
   IDadosMedicosRepository repository;
   IQrCodeRepository respositoryQrCode;
-  _DadosMedicosControllerBase(this.repository, this.respositoryQrCode);
+  IProfileRepository repositoryProfile;
+  _DadosMedicosControllerBase(
+      this.repository, this.respositoryQrCode, this.repositoryProfile);
 
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   TextEditingController newDescMedicamento = TextEditingController();
@@ -42,6 +46,8 @@ abstract class _DadosMedicosControllerBase with Store {
   @observable
   int idTipoProcedimento;
 
+  TextEditingController descricao = TextEditingController();
+
   @observable
   TextEditingController descMedicamento = TextEditingController();
 
@@ -59,7 +65,13 @@ abstract class _DadosMedicosControllerBase with Store {
   var listTipoSanguineo = ObservableList();
 
   @observable
+  var listTipoProcedimentos = ObservableList();
+
+  @observable
   var listDadosMedicos = ObservableList();
+
+  @observable
+  var listProcedimentosMedicos = ObservableList();
 
   @observable
   var listTiposAlergia = ObservableList();
@@ -129,6 +141,7 @@ abstract class _DadosMedicosControllerBase with Store {
       // tipos.forEach((value) => listDadosMedicos.add(value));
       listDadosMedicos.add(tipos);
       status = RegistroStatusRequest.success;
+      getProcedimentosMedicos(context);
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
       showFlushBar(
@@ -270,10 +283,36 @@ abstract class _DadosMedicosControllerBase with Store {
       };
       var body = json.encode(params);
 
-      var tipos = await respositoryQrCode.getDadosMedicosQrCode(body);
+      var dados = await respositoryQrCode.getDadosMedicosQrCode(body);
+      getProcedimentosMedicosToken(context, paramsRoute);
+
       listDadosMedicos.clear();
-      // tipos.forEach((value) => listDadosMedicos.add(value));
-      listDadosMedicos.add(tipos);
+      // dados.forEach((value) => listDadosMedicos.add(value));
+      listDadosMedicos.add(dados);
+      status = RegistroStatusRequest.success;
+    } catch (e) {
+      getProcedimentosMedicosToken(context, paramsRoute);
+      status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao buscar Dados Médicos!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
+    }
+  }
+
+  @action
+  Future getProcedimentosMedicosToken(
+      BuildContext context, dynamic data) async {
+    try {
+      Map<String, dynamic> params = {
+        'token': data,
+      };
+      var body = json.encode(params);
+
+      var tipos = await respositoryQrCode.getProcedimentosMedicosQrCode(body);
+      listProcedimentosMedicos.clear();
+      tipos.forEach((value) => listProcedimentosMedicos.add(value));
       status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
@@ -285,6 +324,24 @@ abstract class _DadosMedicosControllerBase with Store {
     }
   }
 
+  @action
+  Future getProcedimentosMedicos(BuildContext context) async {
+    status = RegistroStatusRequest.loading;
+    try {
+      var procedimentos = await repositoryProfile.getProcedimentosMedicos;
+      listProcedimentosMedicos.clear();
+      procedimentos.forEach((value) => listProcedimentosMedicos.add(value));
+      status = RegistroStatusRequest.success;
+    } catch (e) {
+      status = RegistroStatusRequest.error;
+      showFlushBar(
+          message: 'Nenhum registro de Procedimentos Médicos encontrado!',
+          title: 'Oops!',
+          type: 'warning',
+          context: context);
+    }
+  }
+
   // CADASTROS FEITO POR PROFISSIONAL DA SAÚDE
   @action
   Future cadastroAlergia(BuildContext context) async {
@@ -292,12 +349,15 @@ abstract class _DadosMedicosControllerBase with Store {
       try {
         status = RegistroStatusRequest.loading;
         Map<String, dynamic> params = {
-          "descAlergia": descAlergia,
+          "descAlergia": descAlergia.text,
+          "idTipoAlergia": tipoAlergia,
           "code": paramsRoute
         };
         var body = json.encode(params);
-
-        var tipos = await respositoryQrCode.cadastroAlergia(body);
+        var alergia = await respositoryQrCode.cadastroAlergia(body);
+        listDadosMedicos.forEach((element) {
+          element.alergias.add(alergia);
+        });
         showFlushBar(
             message: 'Alergia cadastrada com sucesso!',
             title: 'Sucesso',
@@ -313,7 +373,11 @@ abstract class _DadosMedicosControllerBase with Store {
             context: context);
       }
     } else {
-      return null;
+      showFlushBar(
+          message: 'Preencha os campos corretamente!',
+          title: 'Oops!',
+          type: 'warning',
+          context: context);
     }
   }
 
@@ -323,20 +387,20 @@ abstract class _DadosMedicosControllerBase with Store {
       status = RegistroStatusRequest.loading;
       try {
         Map<String, dynamic> params = {
-          "descDoenca": descDoenca,
+          "descDoenca": descDoenca.text,
           "code": paramsRoute
         };
         var body = json.encode(params);
+        var doencaCronica = await respositoryQrCode.cadastroDoencaCronica(body);
 
-        var tipos = await respositoryQrCode.cadastroDoencaCronica(body);
-        listDadosMedicos.clear();
-        // tipos.forEach((value) => listDadosMedicos.add(value));
+        listDadosMedicos.forEach((element) {
+          element.doencasCronicas.add(doencaCronica);
+        });
         showFlushBar(
             message: 'Doença Crônica cadastrada com sucesso!',
             title: 'Sucesso',
             type: 'success',
             context: context);
-        listDadosMedicos.add(tipos);
         status = RegistroStatusRequest.success;
       } catch (e) {
         status = RegistroStatusRequest.error..value = e;
@@ -362,10 +426,11 @@ abstract class _DadosMedicosControllerBase with Store {
         };
         var body = json.encode(params);
 
-        var tipos = await respositoryQrCode.cadastroMedicamento(body);
+        var medicamento = await respositoryQrCode.cadastroMedicamento(body);
         status = RegistroStatusRequest.success;
-        // tipos.forEach((value) => listDadosMedicos.add(value));
-        getDadosMedicosToken(context, paramsRoute);
+        listDadosMedicos.forEach((element) {
+          element.medicamentos.add(medicamento);
+        });
         showFlushBar(
             message: 'Medicamento cadastrado com sucesso!',
             title: 'Sucesso',
@@ -391,20 +456,25 @@ abstract class _DadosMedicosControllerBase with Store {
       try {
         status = RegistroStatusRequest.loading;
         Map<String, dynamic> params = {
-          "titulo": titulo,
+          "titulo": titulo.text,
           "code": paramsRoute,
-          "descLocal": descLocal,
-          "dtRetorno": dtRetorno,
-          "dtProcedimento": dtProcedimento,
+          "descLocal": descLocal.text,
+          "dtRetorno": dtRetorno.text,
+          "dtProcedimento": dtProcedimento.text,
+          "descricao": descricao.text,
           "idTipoProcedimento": idTipoProcedimento
         };
 
         var body = json.encode(params);
 
-        var tipos = await respositoryQrCode.cadastroMedicamento(body);
+        var procedimento =
+            await respositoryQrCode.cadastroProcedimentoMedico(body);
+        listProcedimentosMedicos.forEach((element) {
+          element.add(procedimento);
+        });
         status = RegistroStatusRequest.success;
         showFlushBar(
-            message: 'Procedimento Médico cadastrada com sucesso!',
+            message: 'Procedimento Médico cadastrado com sucesso!',
             title: 'Sucesso',
             type: 'success',
             context: context);
@@ -419,6 +489,25 @@ abstract class _DadosMedicosControllerBase with Store {
       }
     } else {
       return null;
+    }
+  }
+
+  @action
+  Future getTipoProcedimentos(BuildContext context) async {
+    status = RegistroStatusRequest.loading;
+    try {
+      var listaTipos = await repository.getTipoProcedimentoMedico;
+      listTipoProcedimentos.clear();
+      listaTipos.forEach((value) => listTipoProcedimentos.add(value));
+      getParamsRota(context);
+      status = RegistroStatusRequest.success;
+    } catch (e) {
+      status = RegistroStatusRequest.error..value = e;
+      showFlushBar(
+          message: 'Erro ao buscar Tipos de Procedimentos!',
+          title: 'Oops!',
+          type: 'error',
+          context: context);
     }
   }
 

@@ -181,9 +181,42 @@ class _AlergiaPageState extends ModularState<AlergiaPage, AlergiaController> {
                           _dialog(list, context);
                         },
                       ),
-                      subtitle: Text(list.tipoAlergia.descTipo == null
-                          ? ''
-                          : list.tipoAlergia.descTipo),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(list.tipoAlergia.descTipo == null
+                              ? ''
+                              : list.tipoAlergia.descTipo),
+                          Builder(
+                            builder: (context) {
+                              if (list.profissionalSaude == null) {
+                                return Text('');
+                              } else {
+                                return Text(
+                                    'Médico: ${list.profissionalSaude}');
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                      leading: Builder(
+                        builder: (context) {
+                          print(
+                              'PROFISSIONAL SAUDE>> ${list.profissionalSaude}');
+                          if (list.profissionalSaude == null) {
+                            return Icon(
+                              Icons.perm_identity,
+                              color: Color(0xFF2E3A59),
+                              size: 30,
+                            );
+                          } else {
+                            return Image.asset(
+                              'assets/images/logo.png',
+                              height: 35,
+                            );
+                          }
+                        },
+                      ),
                     )));
           });
     });

@@ -165,7 +165,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       Row(
                         children: [
                           SvgPicture.asset(
-                              'assets/images/home/icon_meus_dados.svg'),
+                              'assets/images/home/icon_cadastro.svg'),
                           SizedBox(
                             width: 20,
                           ),
@@ -215,7 +215,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         width: 20,
                       ),
                       Text(
-                        'Histórico',
+                        'Meus Dados',
                         style: TextStyle(
                             fontSize: 16,
                             color: Color(0xFF3B4349),

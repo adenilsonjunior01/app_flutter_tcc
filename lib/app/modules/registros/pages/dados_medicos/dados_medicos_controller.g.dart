@@ -7,8 +7,8 @@ part of 'dados_medicos_controller.dart';
 // **************************************************************************
 
 final $DadosMedicosController = BindInject(
-  (i) => DadosMedicosController(
-      i<IDadosMedicosRepository>(), i<IQrCodeRepository>()),
+  (i) => DadosMedicosController(i<IDadosMedicosRepository>(),
+      i<IQrCodeRepository>(), i<IProfileRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -192,6 +192,23 @@ mixin _$DadosMedicosController on _DadosMedicosControllerBase, Store {
     });
   }
 
+  final _$listTipoProcedimentosAtom =
+      Atom(name: '_DadosMedicosControllerBase.listTipoProcedimentos');
+
+  @override
+  ObservableList<dynamic> get listTipoProcedimentos {
+    _$listTipoProcedimentosAtom.reportRead();
+    return super.listTipoProcedimentos;
+  }
+
+  @override
+  set listTipoProcedimentos(ObservableList<dynamic> value) {
+    _$listTipoProcedimentosAtom.reportWrite(value, super.listTipoProcedimentos,
+        () {
+      super.listTipoProcedimentos = value;
+    });
+  }
+
   final _$listDadosMedicosAtom =
       Atom(name: '_DadosMedicosControllerBase.listDadosMedicos');
 
@@ -205,6 +222,23 @@ mixin _$DadosMedicosController on _DadosMedicosControllerBase, Store {
   set listDadosMedicos(ObservableList<dynamic> value) {
     _$listDadosMedicosAtom.reportWrite(value, super.listDadosMedicos, () {
       super.listDadosMedicos = value;
+    });
+  }
+
+  final _$listProcedimentosMedicosAtom =
+      Atom(name: '_DadosMedicosControllerBase.listProcedimentosMedicos');
+
+  @override
+  ObservableList<dynamic> get listProcedimentosMedicos {
+    _$listProcedimentosMedicosAtom.reportRead();
+    return super.listProcedimentosMedicos;
+  }
+
+  @override
+  set listProcedimentosMedicos(ObservableList<dynamic> value) {
+    _$listProcedimentosMedicosAtom
+        .reportWrite(value, super.listProcedimentosMedicos, () {
+      super.listProcedimentosMedicos = value;
     });
   }
 
@@ -341,6 +375,25 @@ mixin _$DadosMedicosController on _DadosMedicosControllerBase, Store {
         .run(() => super.getDadosMedicosToken(context, data));
   }
 
+  final _$getProcedimentosMedicosTokenAsyncAction =
+      AsyncAction('_DadosMedicosControllerBase.getProcedimentosMedicosToken');
+
+  @override
+  Future<dynamic> getProcedimentosMedicosToken(
+      BuildContext context, dynamic data) {
+    return _$getProcedimentosMedicosTokenAsyncAction
+        .run(() => super.getProcedimentosMedicosToken(context, data));
+  }
+
+  final _$getProcedimentosMedicosAsyncAction =
+      AsyncAction('_DadosMedicosControllerBase.getProcedimentosMedicos');
+
+  @override
+  Future<dynamic> getProcedimentosMedicos(BuildContext context) {
+    return _$getProcedimentosMedicosAsyncAction
+        .run(() => super.getProcedimentosMedicos(context));
+  }
+
   final _$cadastroAlergiaAsyncAction =
       AsyncAction('_DadosMedicosControllerBase.cadastroAlergia');
 
@@ -377,6 +430,15 @@ mixin _$DadosMedicosController on _DadosMedicosControllerBase, Store {
         .run(() => super.cadastroProcedimentoMedico(context));
   }
 
+  final _$getTipoProcedimentosAsyncAction =
+      AsyncAction('_DadosMedicosControllerBase.getTipoProcedimentos');
+
+  @override
+  Future<dynamic> getTipoProcedimentos(BuildContext context) {
+    return _$getTipoProcedimentosAsyncAction
+        .run(() => super.getTipoProcedimentos(context));
+  }
+
   final _$_DadosMedicosControllerBaseActionController =
       ActionController(name: '_DadosMedicosControllerBase');
 
@@ -405,7 +467,9 @@ descDoenca: ${descDoenca},
 descAlergia: ${descAlergia},
 tipoAlergia: ${tipoAlergia},
 listTipoSanguineo: ${listTipoSanguineo},
+listTipoProcedimentos: ${listTipoProcedimentos},
 listDadosMedicos: ${listDadosMedicos},
+listProcedimentosMedicos: ${listProcedimentosMedicos},
 listTiposAlergia: ${listTiposAlergia},
 status: ${status},
 paramsRoute: ${paramsRoute},

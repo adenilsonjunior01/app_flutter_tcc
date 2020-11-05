@@ -7,7 +7,7 @@ part of 'home_controller.dart';
 // **************************************************************************
 
 final $HomeController = BindInject(
-  (i) => HomeController(),
+  (i) => HomeController(repository: i<HomeRepository>()),
   singleton: true,
   lazy: true,
 );
@@ -64,6 +64,68 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$listProcedimentosGeralAtom =
+      Atom(name: '_HomeControllerBase.listProcedimentosGeral');
+
+  @override
+  ObservableList<dynamic> get listProcedimentosGeral {
+    _$listProcedimentosGeralAtom.reportRead();
+    return super.listProcedimentosGeral;
+  }
+
+  @override
+  set listProcedimentosGeral(ObservableList<dynamic> value) {
+    _$listProcedimentosGeralAtom
+        .reportWrite(value, super.listProcedimentosGeral, () {
+      super.listProcedimentosGeral = value;
+    });
+  }
+
+  final _$statusAtom = Atom(name: '_HomeControllerBase.status');
+
+  @override
+  HomeStatusRequest get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(HomeStatusRequest value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
+  final _$firstLetterAtom = Atom(name: '_HomeControllerBase.firstLetter');
+
+  @override
+  String get firstLetter {
+    _$firstLetterAtom.reportRead();
+    return super.firstLetter;
+  }
+
+  @override
+  set firstLetter(String value) {
+    _$firstLetterAtom.reportWrite(value, super.firstLetter, () {
+      super.firstLetter = value;
+    });
+  }
+
+  final _$dataMapAtom = Atom(name: '_HomeControllerBase.dataMap');
+
+  @override
+  Map<String, double> get dataMap {
+    _$dataMapAtom.reportRead();
+    return super.dataMap;
+  }
+
+  @override
+  set dataMap(Map<String, double> value) {
+    _$dataMapAtom.reportWrite(value, super.dataMap, () {
+      super.dataMap = value;
+    });
+  }
+
   final _$jwtDecodeAsyncAction = AsyncAction('_HomeControllerBase.jwtDecode');
 
   @override
@@ -78,18 +140,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
-  final _$_HomeControllerBaseActionController =
-      ActionController(name: '_HomeControllerBase');
+  final _$getProcedimentosGeralAsyncAction =
+      AsyncAction('_HomeControllerBase.getProcedimentosGeral');
 
   @override
-  void increment() {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.increment');
-    try {
-      return super.increment();
-    } finally {
-      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future<dynamic> getProcedimentosGeral(BuildContext context) {
+    return _$getProcedimentosGeralAsyncAction
+        .run(() => super.getProcedimentosGeral(context));
   }
 
   @override
@@ -97,7 +154,11 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return '''
 value: ${value},
 users: ${users},
-perfil: ${perfil}
+perfil: ${perfil},
+listProcedimentosGeral: ${listProcedimentosGeral},
+status: ${status},
+firstLetter: ${firstLetter},
+dataMap: ${dataMap}
     ''';
   }
 }

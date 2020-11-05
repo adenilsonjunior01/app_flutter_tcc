@@ -239,9 +239,9 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
                     Observer(
                       builder: (context) {
                         return Text(
-                          controller.listDadosMedicos[0].peso == null
+                          controller.listDadosMedicos[0].idade == null
                               ? '0'
-                              : '${controller.listDadosMedicos[0].peso}',
+                              : '${controller.listDadosMedicos[0].idade}',
                           style:
                               TextStyle(color: Color(0xFF3B4349), fontSize: 14),
                         );
@@ -263,9 +263,8 @@ class _ProfilePageState extends ModularState<ProfilePage, ProfileController> {
     return Container(
       padding: EdgeInsets.only(top: 20, left: 15, bottom: 0),
       alignment: Alignment.centerLeft,
-      child: Observer(builder: (_) {
-        if (controller.status2 == ProfileStatusRequest.none ||
-            controller.status2 == ProfileStatusRequest.error) {
+      child: Builder(builder: (_) {
+        if (controller.status2 == ProfileStatusRequest.error) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

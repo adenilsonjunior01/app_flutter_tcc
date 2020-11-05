@@ -26,12 +26,13 @@ class ProcedimentoMedicoRepository extends Disposable
   void dispose() {}
 
   @override
-  Future<ProcedimentoMedicoModel> cadastroProcedimentoMedico(data) async {
+  Future cadastroProcedimentoMedico(data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
-      var response = await client.post('${URL_API}/procedimentoMedico');
+      var response =
+          await client.post('${URL_API}/procedimentoMedico', data: data);
       return response.data;
     } on DioError catch (e) {
       throw (e.message);

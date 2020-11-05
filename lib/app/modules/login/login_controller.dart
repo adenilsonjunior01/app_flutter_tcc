@@ -53,8 +53,8 @@ abstract class _LoginControllerBase with Store {
 
     status = LoginStatus.loading;
     Map<String, dynamic> params = {
-      'email': user.text,
-      'senha': password.text,
+      'email': user.text.trim(),
+      'senha': password.text.trim(),
     };
     var body = json.encode(params);
 

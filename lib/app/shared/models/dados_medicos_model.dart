@@ -8,7 +8,8 @@ class DadosMedicosModel {
   var altura;
   var vlImc;
   var descImc;
-  var nomeProfissionalSaude;
+  var idade;
+  var profissionalSaude;
   List<Alergias> alergias;
 
   DadosMedicosModel(
@@ -21,7 +22,8 @@ class DadosMedicosModel {
       this.altura,
       this.vlImc,
       this.descImc,
-      this.nomeProfissionalSaude,
+      this.idade,
+      this.profissionalSaude,
       this.alergias});
 
   DadosMedicosModel.fromJson(Map<String, dynamic> json) {
@@ -46,7 +48,8 @@ class DadosMedicosModel {
     altura = json['altura'];
     vlImc = json['vlImc'];
     descImc = json['descImc'];
-    nomeProfissionalSaude = json['nomeProfissionalSaude'];
+    idade = json['idade'];
+    profissionalSaude = json['profissionalSaude'];
     if (json['alergias'] != null) {
       alergias = new List<Alergias>();
       json['alergias'].forEach((v) {
@@ -73,7 +76,8 @@ class DadosMedicosModel {
     data['altura'] = this.altura;
     data['vlImc'] = this.vlImc;
     data['descImc'] = this.descImc;
-    data['nomeProfissionalSaude'] = this.nomeProfissionalSaude;
+    data['idade'] = this.idade;
+    data['profissionalSaude'] = this.profissionalSaude;
     if (this.alergias != null) {
       data['alergias'] = this.alergias.map((v) => v.toJson()).toList();
     }
@@ -103,18 +107,21 @@ class TipoSanguineo {
 class DoencasCronicas {
   int id;
   String descDoenca;
+  String profissionalSaude;
 
-  DoencasCronicas({this.id, this.descDoenca});
+  DoencasCronicas({this.id, this.descDoenca, this.profissionalSaude});
 
   DoencasCronicas.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     descDoenca = json['descDoenca'];
+    profissionalSaude = json['profissionalSaude'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['descDoenca'] = this.descDoenca;
+    data['profissionalSaude'] = this.profissionalSaude;
     return data;
   }
 }
@@ -123,13 +130,16 @@ class Medicamentos {
   int id;
   String descMedicamento;
   String dtRegistro;
+  String profissionalSaude;
 
-  Medicamentos({this.id, this.descMedicamento, this.dtRegistro});
+  Medicamentos(
+      {this.id, this.descMedicamento, this.dtRegistro, this.profissionalSaude});
 
   Medicamentos.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     descMedicamento = json['descMedicamento'];
     dtRegistro = json['dtRegistro'];
+    profissionalSaude = json['profissionalSaude'];
   }
 
   Map<String, dynamic> toJson() {
@@ -137,6 +147,7 @@ class Medicamentos {
     data['id'] = this.id;
     data['descMedicamento'] = this.descMedicamento;
     data['dtRegistro'] = this.dtRegistro;
+    data['profissionalSaude'] = this.profissionalSaude;
     return data;
   }
 }
@@ -145,12 +156,15 @@ class Alergias {
   int id;
   String descAlergia;
   TipoAlergia tipoAlergia;
+  String profissionalSaude;
 
-  Alergias({this.id, this.descAlergia, this.tipoAlergia});
+  Alergias(
+      {this.id, this.descAlergia, this.tipoAlergia, this.profissionalSaude});
 
   Alergias.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     descAlergia = json['descAlergia'];
+    profissionalSaude = json['profissionalSaude'];
     tipoAlergia = json['tipoAlergia'] != null
         ? new TipoAlergia.fromJson(json['tipoAlergia'])
         : null;
@@ -160,6 +174,7 @@ class Alergias {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['descAlergia'] = this.descAlergia;
+    data['profissionalSaude'] = this.profissionalSaude;
     if (this.tipoAlergia != null) {
       data['tipoAlergia'] = this.tipoAlergia.toJson();
     }

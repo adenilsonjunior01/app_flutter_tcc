@@ -19,7 +19,8 @@ class GetProcedimentoMedicoModel {
       this.dtRetorno,
       this.dtProcedimento,
       this.nomeUsuario,
-      this.descTipoProcedimento});
+      this.descTipoProcedimento,
+      this.nomeProfSaude});
 
   GetProcedimentoMedicoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

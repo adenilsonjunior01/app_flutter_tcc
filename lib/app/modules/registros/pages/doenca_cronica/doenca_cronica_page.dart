@@ -187,6 +187,15 @@ class _DoencaCronicaPageState
                     child: ListTile(
                       title:
                           Text(list.descDoenca == null ? '' : list.descDoenca),
+                      subtitle: Builder(
+                        builder: (context) {
+                          if (list.profissionalSaude == null) {
+                            return Text('');
+                          } else {
+                            return Text('Médico: ${list.profissionalSaude}');
+                          }
+                        },
+                      ),
                       // leading: ,
                       trailing: IconButton(
                         icon: Icon(
@@ -195,6 +204,22 @@ class _DoencaCronicaPageState
                         ),
                         onPressed: () {
                           _dialog(list);
+                        },
+                      ),
+                      leading: Builder(
+                        builder: (context) {
+                          if (list.profissionalSaude == null) {
+                            return Icon(
+                              Icons.perm_identity,
+                              color: Color(0xFF2E3A59),
+                              size: 30,
+                            );
+                          } else {
+                            return Image.asset(
+                              'assets/images/logo.png',
+                              height: 35,
+                            );
+                          }
                         },
                       ),
                     )));

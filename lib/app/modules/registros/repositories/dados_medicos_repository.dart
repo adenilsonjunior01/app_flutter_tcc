@@ -1,4 +1,5 @@
 import 'package:app_tcc/app/modules/registros/interfaces/dados_medicos_repository_interface.dart';
+import 'package:app_tcc/app/modules/registros/models/tipo_procedimento_model.dart';
 import 'package:app_tcc/app/modules/registros/models/tipo_sanguineo_model.dart';
 import 'package:app_tcc/app/shared/custom_dio/interceptor_dio.dart';
 import 'package:app_tcc/app/shared/models/dados_medicos_model.dart';
@@ -118,5 +119,34 @@ class DadosMedicosRepository extends Disposable
       var parser = datas.map((value) => TipoAlergia.fromJson(value));
       return parser;
     } on DioError catch (e) {}
+  }
+
+  @override
+  Future get getTipoProcedimentoMedico async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    client.options.headers = {"Authorization": "Bearer ${token}"};
+    try {
+      var response = await client.get('${URL_API}/procedimentoMedico/tipos');
+      var values =
+          response.data.map((value) => TipoProcedimentoModel.fromJson(value));
+      return values;
+    } on DioError catch (e) {
+      throw (e.message);
+    }
+  }
+
+  @override
+  Future cadastroProcedimentoMedico(data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    client.options.headers = {"Authorization": "Bearer ${token}"};
+    try {
+      var response =
+          await client.post('${URL_API}/procedimentoMedico', data: data);
+      return response.data;
+    } on DioError catch (e) {
+      throw (e.message);
+    }
   }
 }

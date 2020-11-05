@@ -1,3 +1,6 @@
+import 'package:app_tcc/app/modules/home/repositories/interfaces/home_repository_interface.dart';
+
+import 'repositories/home_repository.dart';
 import 'package:app_tcc/app/modules/login/login_controller.dart';
 import 'package:app_tcc/app/modules/login/login_module.dart';
 import 'package:app_tcc/app/modules/profile/profile_controller.dart';
@@ -40,6 +43,7 @@ class HomeModule extends ChildModule {
         Bind<IAlergiaRepostory>((i) => AlergiaRepository(i.get<Dio>())),
         Bind<IProfileRepository>((i) => ProfileRepository(i.get<Dio>())),
         Bind<IQrCodeRepository>((i) => QrCodeRepository(i.get<Dio>())),
+        Bind<IHomeRepository>((i) => HomeRepository(i.get<Dio>())),
         $RegistrosController,
         $HomeController,
         $AlergiaController,
@@ -58,13 +62,6 @@ class HomeModule extends ChildModule {
           child: (_, args) => AlergiaPage(),
           transition: TransitionType.downToUp,
         ),
-        // ModularRouter('/registro/medicamento',
-        //     transition: TransitionType.downToUp,
-        //     child: (_, args) => MedicamentoPage()),
-        // ModularRouter('/registro/doenca-cronica',
-        //     transition: TransitionType.downToUp,
-        //     child: (_, args) => DoencaCronicaPage()),
-        // ModularRouter('/login', module: LoginModule()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

@@ -1,6 +1,5 @@
 import 'package:app_tcc/app/modules/qr_code/models/qr_code_token_model.dart';
 import 'package:app_tcc/app/modules/registros/models/get_procedimento_medico.dart';
-import 'package:app_tcc/app/modules/registros/models/procedimento_medico_model.dart';
 import 'package:app_tcc/app/shared/custom_dio/interceptor_dio.dart';
 import 'package:app_tcc/app/shared/models/dados_medicos_model.dart';
 import 'package:app_tcc/app/shared/utils/constants.dart';
@@ -66,7 +65,8 @@ class QrCodeRepository implements IQrCodeRepository {
     try {
       var response = await client.post('${URL_API}/QRCode/procedimentosMedicos',
           data: data);
-      var values = GetProcedimentoMedicoModel.fromJson(response.data);
+      var values = response.data
+          .map((value) => GetProcedimentoMedicoModel.fromJson(value));
       return values;
     } on DioError catch (e) {
       return e;
@@ -80,7 +80,7 @@ class QrCodeRepository implements IQrCodeRepository {
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
       var response = await client.post('${URL_API}/QRCode/alergia', data: data);
-      return response.data;
+      return Alergias.fromJson(response.data);
     } on DioError catch (e) {
       return e;
     }
@@ -94,7 +94,7 @@ class QrCodeRepository implements IQrCodeRepository {
     try {
       var response =
           await client.post('${URL_API}/QRCode/doencaCronica', data: data);
-      return response.data;
+      return DoencasCronicas.fromJson(response.data);
     } on DioError catch (e) {
       return e;
     }
@@ -108,7 +108,7 @@ class QrCodeRepository implements IQrCodeRepository {
     try {
       var response =
           await client.post('${URL_API}/QRCode/medicamento', data: data);
-      return response.data;
+      return Medicamentos.fromJson(response.data);
     } on DioError catch (e) {
       return e;
     }

@@ -64,7 +64,8 @@ abstract class _ProcedimentoMedicoControllerBase with Store {
       'descLocal': descLocal.text,
       'dtProcedimento': dtProcedimento.text,
       'descricao': descricao.text,
-      'idTipoProcedimento': idTipoProcedimento.id
+      'idTipoProcedimento': idTipoProcedimento.id,
+      'dtRetorno': dtRetorno.text == '' ? null : dtRetorno.text
     };
     var body = json.encode(params);
     status = RegistroStatusRequest.loading;
@@ -95,7 +96,8 @@ abstract class _ProcedimentoMedicoControllerBase with Store {
       'descLocal': descLocal.text,
       'dtProcedimento': dtProcedimento.text,
       'descricao': descricao.text,
-      'idTipoProcedimento': idTipoProcedimento.id
+      'idTipoProcedimento': idTipoProcedimento.id,
+      'dtRetorno': dtRetorno.text
     };
     var body = json.encode(params);
     status = RegistroStatusRequest.loading;
