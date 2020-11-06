@@ -48,7 +48,7 @@ class FormInputMedicamentoWidget extends StatelessWidget {
                   controller.submitForm(context2);
                 },
                 child: Text(
-                  'Add',
+                  'Salvar',
                   style: TextStyle(
                       color: Color(0xFF3B4349),
                       fontFamily: 'Inter Medium',

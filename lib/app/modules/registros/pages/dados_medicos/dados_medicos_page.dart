@@ -293,7 +293,7 @@ class _DadosMedicosPageState
                           builder: (context) {
                             return Text(
                                 controller.listDadosMedicos[0].vlImc == null
-                                    ? 'Sem registro'
+                                    ? '0'
                                     : '${controller.listDadosMedicos[0].vlImc}',
                                 style: TextStyle(
                                     color: Color(0xFF3B4349), fontSize: 14));

@@ -126,6 +126,22 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$listQuantitativoAtom =
+      Atom(name: '_HomeControllerBase.listQuantitativo');
+
+  @override
+  dynamic get listQuantitativo {
+    _$listQuantitativoAtom.reportRead();
+    return super.listQuantitativo;
+  }
+
+  @override
+  set listQuantitativo(dynamic value) {
+    _$listQuantitativoAtom.reportWrite(value, super.listQuantitativo, () {
+      super.listQuantitativo = value;
+    });
+  }
+
   final _$jwtDecodeAsyncAction = AsyncAction('_HomeControllerBase.jwtDecode');
 
   @override
@@ -149,6 +165,15 @@ mixin _$HomeController on _HomeControllerBase, Store {
         .run(() => super.getProcedimentosGeral(context));
   }
 
+  final _$getQuantitativosAsyncAction =
+      AsyncAction('_HomeControllerBase.getQuantitativos');
+
+  @override
+  Future<dynamic> getQuantitativos(BuildContext context) {
+    return _$getQuantitativosAsyncAction
+        .run(() => super.getQuantitativos(context));
+  }
+
   @override
   String toString() {
     return '''
@@ -158,7 +183,8 @@ perfil: ${perfil},
 listProcedimentosGeral: ${listProcedimentosGeral},
 status: ${status},
 firstLetter: ${firstLetter},
-dataMap: ${dataMap}
+dataMap: ${dataMap},
+listQuantitativo: ${listQuantitativo}
     ''';
   }
 }

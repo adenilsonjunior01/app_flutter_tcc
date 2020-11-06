@@ -75,13 +75,13 @@ mixin _$MeusDadosMedicosController on _MeusDadosMedicosControllerBase, Store {
         .run(() => super.editDadosMedicos(context));
   }
 
-  final _$getTiposAlergiaAsyncAction =
-      AsyncAction('_MeusDadosMedicosControllerBase.getTiposAlergia');
+  final _$getTiposSanguineoAsyncAction =
+      AsyncAction('_MeusDadosMedicosControllerBase.getTiposSanguineo');
 
   @override
-  Future getTiposAlergia(BuildContext context) {
-    return _$getTiposAlergiaAsyncAction
-        .run(() => super.getTiposAlergia(context));
+  Future getTiposSanguineo(BuildContext context) {
+    return _$getTiposSanguineoAsyncAction
+        .run(() => super.getTiposSanguineo(context));
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:app_tcc/app/modules/home/home_controller.dart';
+import 'package:app_tcc/app/modules/home/home_page.dart';
 import 'package:app_tcc/app/modules/home/widgets/custom_drawer.dart';
 import 'package:app_tcc/app/modules/home/widgets/tab/home_tab.dart';
 import 'package:app_tcc/app/modules/home/widgets/tab/titles_cadastro_tab.dart';
@@ -33,7 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Scaffold(
           drawer: CustomDrawer(pageController: _pageController),
-          body: HomeTab(),
+          body: HomeTab(
+            controller: widget.controller,
+          ),
         ),
         Scaffold(
           appBar: AppBar(
@@ -48,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         // PAGINA DO HISTÓRICO
-        Scaffold(
-          body: HomeTab(),
-          drawer: CustomDrawer(pageController: _pageController),
-        ),
+        // Scaffold(
+        //   body: HomeTab(),
+        //   drawer: CustomDrawer(pageController: _pageController),
+        // ),
         // PAGINA DE ALTERAR SENHA
         Scaffold(
           body: ResetarSenhaPage(),

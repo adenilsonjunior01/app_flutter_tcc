@@ -109,7 +109,7 @@ class _FormInputDadosMedicosWidgetState
                                     borderSide:
                                         BorderSide(color: Color(0xFFA49FBB))),
                                 // hintText: "Descrição do medicamento",
-                                hintText: 'Tipo da alergia',
+                                hintText: 'Tipo Sanguíneo',
                                 hintStyle: TextStyle(
                                     color: Color(0xFF3B4349), fontSize: 14))),
                       )

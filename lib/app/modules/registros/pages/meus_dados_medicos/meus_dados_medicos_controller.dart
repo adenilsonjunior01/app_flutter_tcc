@@ -61,10 +61,10 @@ abstract class _MeusDadosMedicosControllerBase with Store {
   }
 
   @action
-  getTiposAlergia(BuildContext context) async {
+  getTiposSanguineo(BuildContext context) async {
     status = RegistroStatusRequest.loading;
     try {
-      var tipos = await repository.getTiposAlergia;
+      var tipos = await repository.getTiposSanguineo;
       listSanguineo.clear();
       tipos.forEach((value) => listSanguineo.add(value));
       status = RegistroStatusRequest.success;

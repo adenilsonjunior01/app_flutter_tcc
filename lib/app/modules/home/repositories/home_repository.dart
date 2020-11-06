@@ -1,4 +1,5 @@
 import 'package:app_tcc/app/modules/home/models/procedimentos_geral_model.dart';
+import 'package:app_tcc/app/modules/home/models/quantitativo_model.dart';
 import 'package:app_tcc/app/modules/home/repositories/interfaces/home_repository_interface.dart';
 import 'package:app_tcc/app/shared/custom_dio/interceptor_dio.dart';
 import 'package:app_tcc/app/shared/utils/constants.dart';
@@ -30,8 +31,8 @@ class HomeRepository extends Disposable implements IHomeRepository {
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
       var response = await client.get('${URL_API}/dashboard/procedimentos');
-      // var values = ProcedimentosGeralModel.fromJson(response.data);
-      return response.data;
+      var values = ProcedimentosGeralModel.fromJson(response.data);
+      return values;
     } catch (e) {
       return e;
     }
@@ -60,7 +61,8 @@ class HomeRepository extends Disposable implements IHomeRepository {
     client.options.headers = {"Authorization": "Bearer ${token}"};
     try {
       var response = await client.get('${URL_API}/dashboard/quantitativo');
-      return response.data;
+      var values = QuantitativoModel.fromJson(response.data);
+      return values;
     } catch (e) {
       return e;
     }

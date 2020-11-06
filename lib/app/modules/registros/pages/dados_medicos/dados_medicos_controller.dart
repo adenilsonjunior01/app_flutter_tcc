@@ -250,7 +250,7 @@ abstract class _DadosMedicosControllerBase with Store {
       var tipos = await repository.getTipoAlergias;
       listTiposAlergia.clear();
       tipos.forEach((value) => listTiposAlergia.add(value));
-      // status = RegistroStatusRequest.success;
+      status = RegistroStatusRequest.success;
     } catch (e) {
       status = RegistroStatusRequest.error..value = e;
       showFlushBar(

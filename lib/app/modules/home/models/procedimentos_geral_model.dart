@@ -30,14 +30,14 @@ class Quantidade {
 
   Quantidade.fromJson(Map<String, dynamic> json) {
     exame = json['Exame'];
-    consultaMDica = json['Consulta mÃ©dica'];
+    consultaMDica = json['Consulta médica'];
     cirurgia = json['Cirurgia'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Exame'] = this.exame;
-    data['Consulta mÃ©dica'] = this.consultaMDica;
+    data['Consulta médica'] = this.consultaMDica;
     data['Cirurgia'] = this.cirurgia;
     return data;
   }

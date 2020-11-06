@@ -36,7 +36,7 @@ class MeusDadosMedicosRepository extends Disposable
   }
 
   @override
-  Future get getTiposAlergia async {
+  Future get getTiposSanguineo async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     client.options.headers = {"Authorization": "Bearer ${token}"};

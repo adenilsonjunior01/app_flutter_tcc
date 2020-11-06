@@ -97,8 +97,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 widget.pageController,
                 0,
               ),
-
-              // Meus Dados
               InkWell(
                 onTap: () {
                   Modular.to.pushNamed('/profile');

@@ -30,6 +30,21 @@ class ProfileRepository implements IProfileRepository {
   Future get dadosUsuario => throw UnimplementedError();
 
   @override
+  // TODO: implement getDadosProcedimentosGeral
+  Future get getDadosProcedimentosGeral async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    client.options.headers = {"Authorization": "Bearer ${token}"};
+    try {
+      var response = await client.get('${URL_API}/dashboard/procedimentos');
+      // var values = ProcedimentosGeralModel.fromJson(response.data);
+      return response.data;
+    } catch (e) {
+      return e;
+    }
+  }
+
+  @override
   Future<CreateUserModel> editUser(data) async {
     // TODO: implement editUser
     try {

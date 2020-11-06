@@ -56,6 +56,7 @@ dependencies:
   pie_chart: ^4.0.1
   qrcode: ^1.0.4
   flushbar: ^1.10.4
+  shimmer: ^1.1.2
   scoped_model: ^1.0.1
   flutter:
     sdk: flutter
@@ -124,6 +125,15 @@ flutter:
     - assets/lotties-animation/check-success.json
     - assets/lotties-animation/not-found-404.json
     - assets/lotties-animation/error-request.json
+    - assets/images/home/qtd_medicamentos/bg_quantitativo_medicamento.svg
+    - assets/images/home/qtd_medicamentos/icon_med.svg
+    - assets/images/home/qtd_alergias/bg_quantitativo_alergias.svg
+    - assets/images/home/qtd_alergias/bg_quantitativo_alergias.png
+    - assets/images/home/qtd_alergias/icon_alergia.svg
+    - assets/images/home/qtd_doencas/bg_quantitativo_doencas.svg
+    - assets/images/home/qtd_doencas/icon_doencas.svg
+    - assets/images/home/qtd_procedimentos/bg_quantitativo_procedimentos.svg
+    - assets/images/home/qtd_procedimentos/icon_procedimentos.svg
   # To add assets to your application, add an assets section, like this:
  
 

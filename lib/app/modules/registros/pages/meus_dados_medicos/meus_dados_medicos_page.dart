@@ -23,7 +23,7 @@ class _MeusDadosMedicosPageState
   @override
   void initState() {
     super.initState();
-    controller.getTiposAlergia(context);
+    controller.getTiposSanguineo(context);
   }
 
   @override

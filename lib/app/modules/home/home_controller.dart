@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:app_tcc/app/modules/home/home_status_request.dart';
+import 'package:app_tcc/app/modules/home/models/procedimentos_geral_model.dart';
 import 'package:app_tcc/app/modules/home/repositories/home_repository.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
@@ -18,7 +20,7 @@ part 'home_controller.g.dart';
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  HomeRepository repository;
+  final HomeRepository repository;
   _HomeControllerBase({this.repository});
   @observable
   int value = 0;
@@ -37,6 +39,12 @@ abstract class _HomeControllerBase with Store {
 
   @observable
   String firstLetter;
+
+  @observable
+  Map<String, double> dataMap;
+
+  @observable
+  var listQuantitativo;
 
   @action
   Future jwtDecode() async {
@@ -58,11 +66,33 @@ abstract class _HomeControllerBase with Store {
 
   @action
   Future getProcedimentosGeral(BuildContext context) async {
-    // status = HomeStatusRequest.loading;
+    status = HomeStatusRequest.loading;
     try {
       var procedimentos = await repository.getDadosProcedimentosGeral;
-      listProcedimentosGeral.clear();
-      // listProcedimentosGeral.add(procedimentos);
+      dataMaps(procedimentos);
+
+      status = HomeStatusRequest.success;
+    } catch (e) {
+      status = HomeStatusRequest.error..value = e;
+      dataMap = {
+        "Exame": 0,
+        "Cirurgia": 0,
+        "Consulta Médica": 0,
+      };
+      showFlushBar(
+          message: 'Nenhum Procedimento Geral encontrado!',
+          title: 'Oops!',
+          type: 'warning',
+          context: context);
+    }
+  }
+
+  @action
+  Future getQuantitativos(BuildContext context) async {
+    status = HomeStatusRequest.loading;
+    try {
+      var quantitativos = await repository.getQuantitativo;
+      listQuantitativo = quantitativos;
       status = HomeStatusRequest.success;
     } catch (e) {
       status = HomeStatusRequest.error..value = e;
@@ -74,12 +104,18 @@ abstract class _HomeControllerBase with Store {
     }
   }
 
-  @observable
-  Map<String, double> dataMap = {
-    "Exame": 5,
-    "Emergência": 3,
-    "Consulta Médica": 2,
-  };
+  Map<String, double> dataMaps(qtd) {
+    return dataMap = {
+      "Exame":
+          qtd.quantidade.exame != null ? qtd.quantidade.exame.toDouble() : 0,
+      "Cirurgia": qtd.quantidade.cirurgia != null
+          ? qtd.quantidade.cirurgia.toDouble()
+          : 0,
+      "Consulta Médica": qtd.quantidade.consultaMDica != null
+          ? qtd.quantidade.consultaMDica.toDouble()
+          : 0,
+    };
+  }
 
   showFlushBar(
       {String message, String type, String title, BuildContext context}) {
