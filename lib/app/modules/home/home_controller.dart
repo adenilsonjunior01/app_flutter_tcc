@@ -41,7 +41,11 @@ abstract class _HomeControllerBase with Store {
   String firstLetter;
 
   @observable
-  Map<String, double> dataMap;
+  Map<String, double> dataMap = {
+    "Exame": 0,
+    "Cirurgia": 0,
+    "Consulta Médica": 0,
+  };
 
   @observable
   var listQuantitativo;
@@ -79,11 +83,6 @@ abstract class _HomeControllerBase with Store {
         "Cirurgia": 0,
         "Consulta Médica": 0,
       };
-      showFlushBar(
-          message: 'Nenhum Procedimento Geral encontrado!',
-          title: 'Oops!',
-          type: 'warning',
-          context: context);
     }
   }
 

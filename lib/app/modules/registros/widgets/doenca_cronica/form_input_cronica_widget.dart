@@ -35,7 +35,7 @@ class FormInputCronicaWidget extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFA49FBB))),
                       // hintText: "Descrição do medicamento",
-                      hintText: 'Descrição do medicamento',
+                      hintText: descHint,
                       hintStyle:
                           TextStyle(color: Color(0xFF3B4349), fontSize: 14))),
             ),

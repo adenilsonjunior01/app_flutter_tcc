@@ -148,7 +148,7 @@ class _HomeTabState extends State<HomeTab> {
                                     ),
                                     Text("Alergia",
                                         style: TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 15,
                                             color: Colors.black54)),
                                   ],
                                 ),
@@ -166,7 +166,7 @@ class _HomeTabState extends State<HomeTab> {
                                   ),
                                   Text("Medicamento",
                                       style: TextStyle(
-                                          fontSize: 13, color: Colors.black54)),
+                                          fontSize: 15, color: Colors.black54)),
                                 ],
                               ),
                             ),
@@ -182,7 +182,7 @@ class _HomeTabState extends State<HomeTab> {
                                     Text(
                                       'Doenças \nCrônicas',
                                       style: TextStyle(
-                                          fontSize: 13, color: Colors.black54),
+                                          fontSize: 15, color: Colors.black54),
                                     ),
                                   ],
                                 ),
@@ -536,7 +536,7 @@ class _HomeTabState extends State<HomeTab> {
   _quantitativoProcedimentoMedico(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 92,
+      height: 95,
       margin: _margin,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -589,20 +589,13 @@ class _HomeTabState extends State<HomeTab> {
                     child: Row(
                       children: [
                         Observer(builder: (_) {
-                          if (widget.controller.listQuantitativo != null) {
-                            return Text(
-                              '${widget.controller.listQuantitativo.procedimentos} Registros',
-                              style: TextStyle(
-                                  color: Color(0xFF3B4349),
-                                  fontWeight: FontWeight.bold),
-                            );
-                          } else {
-                            return Text('0 Registro',
-                                style: TextStyle(
-                                    color: Color(0xFF3B4349),
-                                    fontWeight: FontWeight.bold));
-                          }
-                        })
+                          return Text(
+                            '${widget.controller.listQuantitativo != null ? widget.controller.listQuantitativo.procedimentos : '0'} Registros',
+                            style: TextStyle(
+                                color: Color(0xFF3B4349),
+                                fontWeight: FontWeight.bold),
+                          );
+                        }),
                       ],
                     ),
                   )

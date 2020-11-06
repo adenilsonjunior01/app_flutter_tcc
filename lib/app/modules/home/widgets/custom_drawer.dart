@@ -225,7 +225,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               ),
               InkWell(
                 onTap: () {
-                  Modular.to.pushNamed('/registro/resetar-senha');
+                  Modular.to.pushNamed('/login/resetar-senha');
                 },
                 child: Container(
                   height: 50,

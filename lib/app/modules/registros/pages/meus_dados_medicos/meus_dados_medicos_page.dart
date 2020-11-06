@@ -113,7 +113,7 @@ class _MeusDadosMedicosPageState
         child: Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width * 0.5,
         ),
         Text(
           "Dados Médicos",

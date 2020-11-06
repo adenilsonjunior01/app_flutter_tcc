@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ShimmerLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double containerWidth = 150;
+    double containerWidth = 200;
     double containerHeight = 15;
 
     return Container(
@@ -13,8 +13,8 @@ class ShimmerLayout extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            height: 80,
-            width: 130,
+            height: 60,
+            width: 90,
             color: Colors.grey,
           ),
           Column(

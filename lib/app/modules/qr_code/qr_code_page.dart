@@ -1,3 +1,5 @@
+import 'package:app_tcc/app/modules/qr_code/qr_code_status_request.dart';
+import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -35,83 +37,93 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          image: DecorationImage(
-              image: AssetImage('assets/images/form/bg_cadastro.png'),
-              fit: BoxFit.fill)),
-      child: Stack(
-        children: [
-          NavBarSilverWidget(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ListView(
-                shrinkWrap: true,
-                children: [
-                  Container(
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/step/step2_img.png',
-                        height: 250,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10, bottom: 10, left: 20, right: 20),
-                    child: ButtonTheme(
-                      child: FlatButton(
-                        padding: EdgeInsets.all(13),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                            side: BorderSide(color: Color(0xFFA49FBB))),
-                        onPressed: () {
-                          _dialogCreateQrCode(context);
-                        },
-                        child: Text(
-                          'Gerar meu QR Code',
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontFamily: 'Inter Medium',
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10, bottom: 10, left: 20, right: 20),
-                    child: ButtonTheme(
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                            left: 37, right: 37, top: 11, bottom: 11),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                            side: BorderSide(color: Color(0xFFA49FBB))),
-                        onPressed: () {
-                          controller.captureText = '';
-                          controller.readQrCode = true;
-                          _dialogReadQrCode(context);
-                        },
-                        child: Text(
-                          'Ler QR Code',
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontFamily: 'Inter Medium',
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          )
-        ],
+    return Scaffold(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            image: DecorationImage(
+                image: AssetImage('assets/images/form/bg_cadastro.png'),
+                fit: BoxFit.fill)),
+        child: Stack(
+          children: [
+            NavBarSilverWidget(),
+            Observer(
+              builder: (context) {
+                if (controller.status == QrCodeStatusRequest.loading) {
+                  return LoadingLottie();
+                } else {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ListView(
+                        shrinkWrap: true,
+                        children: [
+                          Container(
+                            child: Center(
+                              child: Image.asset(
+                                'assets/images/step/step2_img.png',
+                                height: 250,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, bottom: 10, left: 20, right: 20),
+                            child: ButtonTheme(
+                              child: FlatButton(
+                                padding: EdgeInsets.all(13),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Color(0xFFA49FBB))),
+                                onPressed: () {
+                                  _dialogCreateQrCode(context);
+                                },
+                                child: Text(
+                                  'Gerar meu QR Code',
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontFamily: 'Inter Medium',
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, bottom: 10, left: 20, right: 20),
+                            child: ButtonTheme(
+                              child: FlatButton(
+                                padding: EdgeInsets.only(
+                                    left: 37, right: 37, top: 11, bottom: 11),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(7),
+                                    side: BorderSide(color: Color(0xFFA49FBB))),
+                                onPressed: () {
+                                  controller.captureText = '';
+                                  controller.readQrCode = true;
+                                  _dialogReadQrCode(context);
+                                },
+                                child: Text(
+                                  'Ler QR Code',
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontFamily: 'Inter Medium',
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }
@@ -130,11 +142,12 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                   fontWeight: FontWeight.bold),
             ),
             content: Container(
-              child: SingleChildScrollView(child: Observer(builder: (_) {
-                return Column(
-                  children: [
-                    Observer(
-                      builder: (context) {
+              child: SingleChildScrollView(
+                  child: Column(
+                children: [
+                  Observer(
+                    builder: (context) {
+                      if (controller.tokenQrCode != '') {
                         return Container(
                           padding: EdgeInsets.only(bottom: 8),
                           width: 250,
@@ -145,11 +158,19 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                             size: 200.0,
                           ),
                         );
-                      },
-                    ),
-                  ],
-                );
-              })),
+                      } else {
+                        return Container(
+                          child: Text(
+                            'Desculpe, não foi possível gerar seu Qr Code',
+                            style: TextStyle(
+                                color: Color(0xFF3B4349), fontSize: 16),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              )),
             ),
             actions: <Widget>[
               FlatButton(
@@ -236,34 +257,34 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                             ],
                           )),
                     ),
-                    ButtonTheme(
-                      child: FlatButton(
-                          padding: EdgeInsets.all(13),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7),
-                              side: BorderSide(color: Color(0xFFA49FBB))),
-                          onPressed: () {
-                            Navigator.pop(context);
-                            Modular.link.pushNamed('/registro/dados-medicos',
-                                arguments: controller.tokenQrCode);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.list),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Visualizar dados',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontFamily: 'Inter Medium',
-                                    fontSize: 14),
-                              ),
-                            ],
-                          )),
-                    ),
+                    // ButtonTheme(
+                    //   child: FlatButton(
+                    //       padding: EdgeInsets.all(13),
+                    //       shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(7),
+                    //           side: BorderSide(color: Color(0xFFA49FBB))),
+                    //       onPressed: () {
+                    //         Navigator.pop(context);
+                    //         Modular.link.pushNamed('/registro/dados-medicos',
+                    //             arguments: controller.tokenQrCode);
+                    //       },
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           Icon(Icons.list),
+                    //           SizedBox(
+                    //             width: 10,
+                    //           ),
+                    //           Text(
+                    //             'Visualizar dados',
+                    //             style: TextStyle(
+                    //                 color: Colors.black54,
+                    //                 fontFamily: 'Inter Medium',
+                    //                 fontSize: 14),
+                    //           ),
+                    //         ],
+                    //       )),
+                    // ),
                     SizedBox(
                       height: 10,
                     ),
@@ -276,7 +297,12 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(7),
                                     side: BorderSide(color: Color(0xFFA49FBB))),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Modular.link.pushNamed(
+                                      '/registro/dados-medicos',
+                                      arguments: controller.tokenQrCode);
+                                },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

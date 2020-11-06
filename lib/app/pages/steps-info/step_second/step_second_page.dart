@@ -111,10 +111,17 @@ class _StepSecondPageState
               SizedBox(
                 height: 10,
               ),
-              Text(
-                "Escaneie e gere QR Codes para obter dados Médicos.",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Color(0xFF3B4349)),
+              Container(
+                width: 250,
+                child: Text(
+                  "Escaneie e gere QR Codes para obter dados Médicos.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF3B4349),
+                    fontFamily: 'Inter Medium',
+                  ),
+                ),
               )
             ],
           ),

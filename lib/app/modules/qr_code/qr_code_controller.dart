@@ -31,7 +31,7 @@ abstract class _QrCodeControllerBase with Store {
   bool readQrCode = true;
 
   @observable
-  String tokenQrCode;
+  String tokenQrCode = '';
 
   @observable
   QrCodeStatusRequest status = QrCodeStatusRequest.none;

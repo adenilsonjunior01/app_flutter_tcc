@@ -113,7 +113,8 @@ class _StepFirstPageState
                 "Registre seus dados médicos e acompanhe sua rotina com facilidade.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
+                  color: Color(0xFF3B4349),
                   fontFamily: 'Inter Medium',
                 ),
               ),

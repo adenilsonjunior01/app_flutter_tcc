@@ -7,10 +7,12 @@ import 'package:app_tcc/app/modules/registros/widgets/doenca_cronica/form_input_
 import 'package:app_tcc/app/shared/widgets/custom-error-request-widget.dart';
 import 'package:app_tcc/app/shared/widgets/loading-lottie.dart';
 import 'package:app_tcc/app/shared/widgets/not_found_404.dart';
+import 'package:app_tcc/app/shared/widgets/shimmer_layout_widget.dart';
 import 'package:app_tcc/app/widgets/nav_bar_silver_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DoencaCronicaPage extends StatefulWidget {
   final String title;
@@ -51,51 +53,7 @@ class _DoencaCronicaPageState
               child: Stack(
                 children: [
                   NavBarSilverWidget(),
-                  Observer(
-                    builder: (context) {
-                      if (controller.status == RegistroStatusRequest.loading) {
-                        return LoadingLottie();
-                      } else if (controller.status ==
-                          RegistroStatusRequest.success) {
-                        return _contentForm(context);
-                      } else {
-                        return Container(
-                          height: MediaQuery.of(context).size.height,
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          alignment: Alignment.center,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomErrorRequestWidget(
-                                message:
-                                    'Ocorreu um erro ao tentar carregar a Lista de doenças crônicas.',
-                              ),
-                              ButtonTheme(
-                                child: FlatButton(
-                                  padding: EdgeInsets.all(10),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      side:
-                                          BorderSide(color: Color(0xFFA49FBB))),
-                                  onPressed: () {
-                                    controller.getDoencasCronicas(context);
-                                  },
-                                  child: Text(
-                                    'Tentar novamente',
-                                    style: TextStyle(
-                                        color: Color(0xFF3B4349),
-                                        fontFamily: 'Inter Medium',
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    },
-                  ),
+                  _contentForm(context),
                 ],
               ),
             )
@@ -112,7 +70,7 @@ class _DoencaCronicaPageState
           Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.width * 0.5,
               ),
               Text(
                 "Doenças Crônicas",
@@ -135,22 +93,15 @@ class _DoencaCronicaPageState
       child: Column(
         children: [
           _title(context),
+          SizedBox(
+            height: 15,
+          ),
           FormInputCronicaWidget(
               controller: controller,
               descHint: 'Descrição da doença crônica',
               context2: context),
           TexteDeleteItemWidget(),
-          Expanded(child: Observer(
-            builder: (_) {
-              if (controller.listDoencaCronica.length < 1) {
-                return NotFound404(
-                  message: 'Nenhum registro encontrado.',
-                );
-              } else {
-                return _contentList(context);
-              }
-            },
-          ))
+          Expanded(child: _contentList(context))
         ],
       ),
     );
@@ -158,72 +109,112 @@ class _DoencaCronicaPageState
 
   _contentList(BuildContext context) {
     return Observer(builder: (_) {
-      return ListView.separated(
-          separatorBuilder: (context, index) => Divider(
-                height: 1,
-                color: Colors.black,
-              ),
-          padding: EdgeInsets.only(top: 10),
-          itemCount: controller.listDoencaCronica.length,
-          itemBuilder: (_, index) {
-            var list = controller.listDoencaCronica[index];
-            return Container(
-                child: Dismissible(
-                    onDismissed: (direction) {
-                      _confirmDialog(context, list);
-                    },
-                    background: Container(
-                      color: Colors.red,
-                      child: Align(
-                        alignment: Alignment(-0.9, 00.0),
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.white,
+      // controller.status == RegistroStatusRequest.loading
+      if (controller.status == RegistroStatusRequest.loading) {
+        return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 80,
+                  child: Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: Colors.grey[300],
+                      child: ShimmerLayout()),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 80,
+                  child: Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: Colors.grey[300],
+                      child: ShimmerLayout()),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 80,
+                  child: Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: Colors.grey[300],
+                      child: ShimmerLayout()),
+                ),
+              ],
+            ));
+      } else if (controller.listDoencaCronica.length < 1) {
+        return NotFound404(
+          message: 'Nenhum registro encontrado.',
+        );
+      } else {
+        return ListView.separated(
+            separatorBuilder: (context, index) => Divider(
+                  height: 1,
+                  color: Colors.black,
+                ),
+            padding: EdgeInsets.only(top: 10),
+            itemCount: controller.listDoencaCronica.length,
+            itemBuilder: (_, index) {
+              var list = controller.listDoencaCronica[index];
+              return Container(
+                  child: Dismissible(
+                      onDismissed: (direction) {
+                        _confirmDialog(context, list);
+                      },
+                      background: Container(
+                        color: Colors.red,
+                        child: Align(
+                          alignment: Alignment(-0.9, 00.0),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    direction: DismissDirection.startToEnd,
-                    key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
-                    child: ListTile(
-                      title:
-                          Text(list.descDoenca == null ? '' : list.descDoenca),
-                      subtitle: Builder(
-                        builder: (context) {
-                          if (list.profissionalSaude == null) {
-                            return Text('');
-                          } else {
-                            return Text('Médico: ${list.profissionalSaude}');
-                          }
-                        },
-                      ),
-                      // leading: ,
-                      trailing: IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.grey,
+                      direction: DismissDirection.startToEnd,
+                      key:
+                          Key(DateTime.now().millisecondsSinceEpoch.toString()),
+                      child: ListTile(
+                        title: Text(
+                            list.descDoenca == null ? '' : list.descDoenca),
+                        subtitle: Builder(
+                          builder: (context) {
+                            if (list.profissionalSaude == null) {
+                              return Text('');
+                            } else {
+                              return Text('Médico: ${list.profissionalSaude}');
+                            }
+                          },
                         ),
-                        onPressed: () {
-                          _dialog(list);
-                        },
-                      ),
-                      leading: Builder(
-                        builder: (context) {
-                          if (list.profissionalSaude == null) {
-                            return Icon(
-                              Icons.perm_identity,
-                              color: Color(0xFF2E3A59),
-                              size: 30,
-                            );
-                          } else {
-                            return Image.asset(
-                              'assets/images/logo.png',
-                              height: 35,
-                            );
-                          }
-                        },
-                      ),
-                    )));
-          });
+                        // leading: ,
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            _dialog(list);
+                          },
+                        ),
+                        leading: Builder(
+                          builder: (context) {
+                            if (list.profissionalSaude == null) {
+                              return Icon(
+                                Icons.perm_identity,
+                                color: Color(0xFF2E3A59),
+                                size: 30,
+                              );
+                            } else {
+                              return Image.asset(
+                                'assets/images/logo.png',
+                                height: 35,
+                              );
+                            }
+                          },
+                        ),
+                      )));
+            });
+      }
     });
   }
 

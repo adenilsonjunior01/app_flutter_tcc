@@ -54,8 +54,9 @@ class HomeModule extends ChildModule {
 
   @override
   List<ModularRouter> get routers => [
-        ModularRouter('/homepage',
+        ModularRouter('/',
             child: (_, args) => HomePage(), transition: TransitionType.fadeIn),
+        ModularRouter('/login', module: LoginModule()),
         ModularRouter('/registro', module: RegistrosModule()),
         ModularRouter(
           '/registro/alergia',

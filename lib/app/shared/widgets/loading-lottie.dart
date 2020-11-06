@@ -20,7 +20,11 @@ class _LoadingLottieState extends State<LoadingLottie> {
           Lottie.asset('assets/lotties-animation/loading.json', height: 120),
           Text(
             'Aguarde...',
-            style: TextStyle(color: Color(0xFF3B4349), fontSize: 18),
+            style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF3B4349),
+              fontFamily: 'Inter Medium',
+            ),
           )
         ],
       ),

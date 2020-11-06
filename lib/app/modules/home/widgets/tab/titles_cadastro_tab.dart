@@ -290,50 +290,47 @@ class _TitlesCadastroTabState extends State<TitlesCadastroTab> {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () =>
-                    Modular.link.pushNamed('/registro/procedimento-medico'),
-                child: Container(
-                  height: 145,
-                  width: 170,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/menu/bg_menu_procedimento.png'),
-                          fit: BoxFit.cover)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 25, left: 30),
-                        child: Text(
-                          'Procedimento \nMédico',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () =>
+                  Modular.link.pushNamed('/registro/procedimento-medico'),
+              child: Container(
+                height: 145,
+                width: 170,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/menu/bg_menu_procedimento.png'),
+                        fit: BoxFit.cover)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 25, left: 30),
+                      child: Text(
+                        'Procedimento \nMédico',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 15, left: 30),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                                'assets/images/menu/icon/icon_procedimento.svg'),
-                            Icon(Icons.add, size: 25, color: Colors.white),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 15, left: 30),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                              'assets/images/menu/icon/icon_procedimento.svg'),
+                          Icon(Icons.add, size: 25, color: Colors.white),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

@@ -130,13 +130,13 @@ class _ProcedimentoMedicoPageState
             return Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.width / 3,
+                  height: MediaQuery.of(context).size.width * 0.5,
                 ),
                 Text(
                   controller.paramsRoute != null
                       ? "Editar Procedimento Médico"
                       : 'Cadastro Procedimento Médico',
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Color(0xFF3F414E),
                       fontSize: 28,
