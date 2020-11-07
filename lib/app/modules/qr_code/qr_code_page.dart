@@ -25,6 +25,7 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
     // TODO: implement initState
     super.initState();
     controller.gerarMeuQrCode(context);
+    controller.jwtDecode();
     controller.captureController.onCapture((data) {
       print('onCapture----$data');
       controller.captureText = data;
@@ -90,31 +91,41 @@ class _QrCodePageState extends ModularState<QrCodePage, QrCodeController> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, bottom: 10, left: 20, right: 20),
-                            child: ButtonTheme(
-                              child: FlatButton(
-                                padding: EdgeInsets.only(
-                                    left: 37, right: 37, top: 11, bottom: 11),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                    side: BorderSide(color: Color(0xFFA49FBB))),
-                                onPressed: () {
-                                  controller.captureText = '';
-                                  controller.readQrCode = true;
-                                  _dialogReadQrCode(context);
-                                },
-                                child: Text(
-                                  'Ler QR Code',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontFamily: 'Inter Medium',
-                                      fontSize: 16),
+                          Observer(builder: (_) {
+                            if (controller.perfilMed == true) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, bottom: 10, left: 20, right: 20),
+                                child: ButtonTheme(
+                                  child: FlatButton(
+                                    padding: EdgeInsets.only(
+                                        left: 37,
+                                        right: 37,
+                                        top: 11,
+                                        bottom: 11),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(7),
+                                        side: BorderSide(
+                                            color: Color(0xFFA49FBB))),
+                                    onPressed: () {
+                                      controller.captureText = '';
+                                      controller.readQrCode = true;
+                                      _dialogReadQrCode(context);
+                                    },
+                                    child: Text(
+                                      'Ler QR Code',
+                                      style: TextStyle(
+                                          color: Colors.black54,
+                                          fontFamily: 'Inter Medium',
+                                          fontSize: 16),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
+                              );
+                            } else {
+                              return Text('');
+                            }
+                          }),
                         ],
                       )
                     ],

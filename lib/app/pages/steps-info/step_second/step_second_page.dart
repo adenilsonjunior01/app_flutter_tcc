@@ -104,10 +104,6 @@ class _StepSecondPageState
                   ],
                 ),
               ),
-              Text(
-                "Escaneie QR Code",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
               SizedBox(
                 height: 10,
               ),

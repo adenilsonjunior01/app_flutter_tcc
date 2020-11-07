@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:app_tcc/app/modules/home/models/jwt_token_model.dart';
 import 'package:app_tcc/app/modules/qr_code/qr_code_status_request.dart';
 import 'package:app_tcc/app/modules/qr_code/repositories/qr_code_repository.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:qrcode/qrcode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'qr_code_controller.g.dart';
 
@@ -36,6 +39,12 @@ abstract class _QrCodeControllerBase with Store {
   @observable
   QrCodeStatusRequest status = QrCodeStatusRequest.none;
 
+  @observable
+  var perfil = ObservableList();
+
+  @observable
+  bool perfilMed = false;
+
   var mock =
       jsonEncode({'name': 'adenislon', 'idade': 27, 'sexo': 'masculino'});
 
@@ -58,6 +67,21 @@ abstract class _QrCodeControllerBase with Store {
           title: 'Oops!',
           type: 'error',
           context: context);
+    }
+  }
+
+  @action
+  Future jwtDecode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var jwtToken = prefs.getString('token');
+    Map<String, dynamic> tokenDecode = JwtDecoder.decode(jwtToken);
+    JWTTokenModel user = JWTTokenModel.fromJson(tokenDecode);
+    perfil.clear();
+    for (var i = 0; i < user.perfis.length; i++) {
+      perfil.add(user.perfis[i]);
+      if (user.perfis[i] == 'MEDICO') {
+        perfilMed = true;
+      }
     }
   }
 
